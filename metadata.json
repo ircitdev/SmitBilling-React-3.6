@@ -1,0 +1,6 @@
+{
+  "name": "СмИТ Биллинг 3.6 — Биллинговая система для операторов связи",
+  "description": "Современная биллинговая платформа для интернет-провайдеров: тарификация, FreeRADIUS, СОРМ-3, ЛК, мобильное приложение iOS/Android, склад ТМЦ, авторазбор выписок 54-ФЗ и встроенный AI-агент.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
