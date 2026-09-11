@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { Sun, Moon, Menu, X, Terminal, ArrowRight, ShieldCheck, Play } from 'lucide-react';
+import { Sun, Moon, Monitor, Menu, X, Terminal, ArrowRight, ShieldCheck, Play } from 'lucide-react';
+import { ThemeMode } from '../types';
 
 interface NavbarProps {
   isDark: boolean;
+  themeMode?: ThemeMode;
   onToggleTheme: () => void;
+  onSetThemeMode?: (mode: ThemeMode) => void;
   onOpenDemoModal: (plan?: string) => void;
   onOpenAiDrawer: () => void;
   onOpenVideoModal?: () => void;
@@ -11,7 +14,9 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({
   isDark,
+  themeMode = 'system',
   onToggleTheme,
+  onSetThemeMode,
   onOpenDemoModal,
   onOpenAiDrawer,
   onOpenVideoModal,
@@ -94,14 +99,39 @@ export const Navbar: React.FC<NavbarProps> = ({
             AI-чат
           </button>
 
-          {/* Theme toggle */}
+          {/* Theme toggle with system sync detection */}
           <button
             id="theme-toggle-btn"
             onClick={onToggleTheme}
-            aria-label={isDark ? 'Включить светлую тему' : 'Включить тёмную тему'}
-            className="w-9 h-9 rounded-lg border flex items-center justify-center transition-colors cursor-pointer border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400"
+            aria-label={
+              themeMode === 'system'
+                ? `Тема: Авто-синхронизация с системой (ОС: ${isDark ? 'тёмная' : 'светлая'}). Нажмите для переключения`
+                : isDark
+                ? 'Тема: Тёмная. Нажмите для переключения на светлую'
+                : 'Тема: Светлая. Нажмите для авто-синхронизации с ОС'
+            }
+            title={
+              themeMode === 'system'
+                ? `Тема: Авто-синхронизация с ОС (${isDark ? 'тёмная' : 'светлая'}). Нажмите для переключения на ${isDark ? 'светлую' : 'тёмную'}`
+                : themeMode === 'dark'
+                ? 'Тема: Тёмная (пользовательский выбор). Нажмите для переключения на светлую'
+                : 'Тема: Светлая (пользовательский выбор). Нажмите для авто-синхронизации с ОС'
+            }
+            className="relative w-9 h-9 rounded-lg border flex items-center justify-center transition-all cursor-pointer border-slate-300 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
           >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            {themeMode === 'system' ? (
+              <>
+                <Monitor className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                <span
+                  className="absolute bottom-1 right-1 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"
+                  title="Синхронизировано с ОС"
+                />
+              </>
+            ) : isDark ? (
+              <Moon className="w-4 h-4" />
+            ) : (
+              <Sun className="w-4 h-4 text-amber-500" />
+            )}
           </button>
 
           {/* Demo CTA */}
@@ -140,6 +170,52 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {link.label}
               </a>
             ))}
+          </div>
+
+          {/* Mobile Theme Preference Selector */}
+          <div className="pt-3 pb-2 px-1 border-t border-slate-800 flex items-center justify-between text-xs">
+            <span className="text-slate-400 font-medium">Тема оформления:</span>
+            <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-lg p-1">
+              <button
+                type="button"
+                onClick={() => onSetThemeMode ? onSetThemeMode('system') : onToggleTheme()}
+                className={`px-2.5 py-1 rounded-md text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
+                  themeMode === 'system'
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Автоматическая синхронизация с системной темой ОС"
+              >
+                <Monitor className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Авто ({isDark ? 'Тёмная' : 'Светлая'})</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onSetThemeMode ? onSetThemeMode('dark') : onToggleTheme()}
+                className={`px-2.5 py-1 rounded-md text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
+                  themeMode === 'dark'
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Принудительно тёмная тема"
+              >
+                <Moon className="w-3.5 h-3.5" />
+                <span>Тёмная</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => onSetThemeMode ? onSetThemeMode('light') : onToggleTheme()}
+                className={`px-2.5 py-1 rounded-md text-xs flex items-center gap-1.5 transition-all cursor-pointer ${
+                  themeMode === 'light'
+                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-semibold'
+                    : 'text-slate-400 hover:text-slate-200'
+                }`}
+                title="Принудительно светлая тема"
+              >
+                <Sun className="w-3.5 h-3.5 text-amber-400" />
+                <span>Светлая</span>
+              </button>
+            </div>
           </div>
 
           <div className="pt-4 border-t border-slate-800 flex flex-col gap-2.5">

@@ -8,12 +8,37 @@
     <meta property="og:title" content="СмИТ Биллинг 3.6 — Биллинговая система для операторов связи" />
     <meta property="og:description" content="Современная биллинговая платформа для интернет-провайдеров: тарификация, FreeRADIUS, СОРМ-3, ЛК, мобильное приложение iOS/Android, склад ТМЦ, авторазбор выписок 54-ФЗ и встроенный AI-агент." />
     <meta property="og:type" content="website" />
-    <meta name="theme-color" content="#10b981" />
+    <meta name="theme-color" content="#020617" id="theme-color-meta" />
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('smit_billing_theme');
+          var isDark = true;
+          if (saved === 'dark') {
+            isDark = true;
+          } else if (saved === 'light') {
+            isDark = false;
+          } else {
+            // 'system' or not set: detect system preference
+            isDark = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)').matches : true;
+          }
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+          var meta = document.getElementById('theme-color-meta');
+          if (meta) {
+            meta.setAttribute('content', isDark ? '#020617' : '#f8fafc');
+          }
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-300">
+  <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-300">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

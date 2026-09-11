@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+@keyframes successScalePop {
+  0% {
+    transform: scale(0.4) rotate(-10deg);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.15) rotate(3deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes pulseGlowRing {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes sparkleFloat {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-28px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+.animate-success-pop {
+  animation: successScalePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-glow-ring {
+  animation: pulseGlowRing 1.8s ease-out infinite;
+}
+
+.animate-sparkle-float {
+  animation: sparkleFloat 1.2s ease-out forwards;
+}

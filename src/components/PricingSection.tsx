@@ -3,11 +3,20 @@ import { Check, ArrowRight, Sparkles, Shield, Zap } from 'lucide-react';
 import { PRICING_PLANS } from '../data/landingData';
 
 interface PricingSectionProps {
-  onSelectPlan: (planName: string) => void;
+  onSelectPlan?: (planName: string) => void;
+  onOpenDemoModal?: (planName: string) => void;
 }
 
-export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) => {
+export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, onOpenDemoModal }) => {
   const [isAnnual, setIsAnnual] = useState(true);
+
+  const handlePlanClick = (planName: string) => {
+    if (typeof onSelectPlan === 'function') {
+      onSelectPlan(planName);
+    } else if (typeof onOpenDemoModal === 'function') {
+      onOpenDemoModal(planName);
+    }
+  };
 
   return (
     <section id="pricing" className="relative py-20 z-10">
@@ -120,7 +129,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
                 {/* Plan Action CTA */}
                 <div className="pt-8">
                   <button
-                    onClick={() => onSelectPlan(plan.name)}
+                    onClick={() => handlePlanClick(plan.name)}
                     className={`w-full py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                       plan.highlighted
                         ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-600'
@@ -143,7 +152,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan }) 
         <div className="text-center mt-12 text-sm text-slate-500 dark:text-slate-400">
           Нужен индивидуальный набор модулей?{' '}
           <button
-            onClick={() => onSelectPlan('Индивидуальный')}
+            onClick={() => handlePlanClick('Индивидуальный')}
             className="text-emerald-600 dark:text-emerald-400 font-semibold underline underline-offset-4 cursor-pointer"
           >
             Соберём персональный тариф под ваши задачи

@@ -17,13 +17,15 @@ import { BillingModule, ScreenshotItem } from '../types';
 interface ModuleDetailModalProps {
   module: BillingModule | null;
   onClose: () => void;
-  onSelectModuleForDemo: (moduleName: string) => void;
+  onSelectModuleForDemo?: (moduleName: string) => void;
+  onOpenDemo?: (moduleName?: string) => void;
 }
 
 export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
   module,
   onClose,
   onSelectModuleForDemo,
+  onOpenDemo,
 }) => {
   const [selectedShot, setSelectedShot] = useState<ScreenshotItem | null>(null);
 
@@ -305,7 +307,11 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
           <button
             onClick={() => {
               onClose();
-              onSelectModuleForDemo(module.name);
+              if (typeof onSelectModuleForDemo === 'function') {
+                onSelectModuleForDemo(module.name);
+              } else if (typeof onOpenDemo === 'function') {
+                onOpenDemo(module.title || module.name);
+              }
             }}
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md shadow-emerald-500/20 hover:from-emerald-600 hover:to-teal-600 transition-all cursor-pointer"
           >

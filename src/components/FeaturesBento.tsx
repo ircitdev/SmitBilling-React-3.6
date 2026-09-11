@@ -10,7 +10,9 @@ import {
   Package,
   Layers,
   CheckCircle,
+  HelpCircle,
 } from 'lucide-react';
+import { TelecomTermTooltip } from './TelecomTermTooltip';
 
 export const FeaturesBento: React.FC = () => {
   return (
@@ -25,10 +27,14 @@ export const FeaturesBento: React.FC = () => {
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
             Всё для управления современным ISP
           </h2>
-          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-3">
             Откажитесь от зоопарка разрозненных скриптов и сторонних сервисов. Полный цикл работы
             оператора связи в единой экосистеме.
           </p>
+          <div className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700/60">
+            <HelpCircle className="w-3.5 h-3.5 text-emerald-500" />
+            <span>Наведите на любой подчеркнутый термин для просмотра спецификаций и назначения</span>
+          </div>
         </div>
 
         {/* Bento Grid */}
@@ -40,32 +46,44 @@ export const FeaturesBento: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/25">
                   <Network className="w-6 h-6" />
                 </div>
-                <span className="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500">
-                  FreeRADIUS 3.2.3
-                </span>
+                <div className="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500">
+                  <TelecomTermTooltip termKey="freeradius">
+                    FreeRADIUS 3.2.3
+                  </TelecomTermTooltip>
+                </div>
               </div>
               <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                 Сетевой доступ и RADIUS-авторизация
               </h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
-                Асинхронный Python-движок с задержкой отклика 0.03 мс. PPPoE, IPoE (DHCP Option 82),
+                Асинхронный Python-движок с задержкой отклика 0.03 мс.{' '}
+                <TelecomTermTooltip termKey="pppoe">PPPoE</TelecomTermTooltip>,{' '}
+                <TelecomTermTooltip termKey="ipoe">IPoE (DHCP Option 82)</TelecomTermTooltip>,
                 динамическое управление пулами адресов, шейпинг скорости прямо из тарифа, мгновенная
-                блокировка должников через CoA/PoD и совместимость с MikroTik, Cisco, Huawei и Juniper.
+                блокировка должников через{' '}
+                <TelecomTermTooltip termKey="coapod">CoA/PoD</TelecomTermTooltip> и совместимость с
+                MikroTik, Cisco, Huawei и Juniper.
               </p>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
               <div className="flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300">
                 <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>PPPoE / IPoE Opt.82</span>
+                <TelecomTermTooltip termKey="pppoe">
+                  <span>PPPoE / IPoE Opt.82</span>
+                </TelecomTermTooltip>
               </div>
               <div className="flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300">
                 <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>CoA-разрыв сессий</span>
+                <TelecomTermTooltip termKey="coapod">
+                  <span>CoA-разрыв сессий</span>
+                </TelecomTermTooltip>
               </div>
               <div className="flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300">
                 <CheckCircle className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>BlastRADIUS защита</span>
+                <TelecomTermTooltip termKey="blastradius">
+                  <span>BlastRADIUS защита</span>
+                </TelecomTermTooltip>
               </div>
             </div>
           </div>
@@ -101,7 +119,9 @@ export const FeaturesBento: React.FC = () => {
                 <ShieldCheck className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-                СОРМ-3 (Приказ №573)
+                <TelecomTermTooltip termKey="sorm3">
+                  СОРМ-3 (Приказ №573)
+                </TelecomTermTooltip>
               </h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
                 13 регламентированных отчётов: абоненты, договоры, IP-сессии, платежи. Готовые
@@ -120,11 +140,15 @@ export const FeaturesBento: React.FC = () => {
                 <CreditCard className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-                Деньги и кассы 54-ФЗ
+                Деньги и{' '}
+                <TelecomTermTooltip termKey="54fz">
+                  кассы 54-ФЗ
+                </TelecomTermTooltip>
               </h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
-                ЮKassa, СБП, Wallet One и автоматический разбор банковских выписок 1C (Сбербанк,
-                Альфа-Банк). Фискализация через АТОЛ Онлайн с отправкой чеков клиентам.
+                ЮKassa, <TelecomTermTooltip termKey="sbp">СБП</TelecomTermTooltip>, Wallet One и
+                автоматический разбор банковских выписок 1C (Сбербанк, Альфа-Банк). Фискализация
+                через АТОЛ Онлайн с отправкой чеков клиентам.
               </p>
             </div>
             <div className="text-xs text-amber-600 dark:text-amber-400 font-medium">
@@ -142,8 +166,9 @@ export const FeaturesBento: React.FC = () => {
                 Поддержка и CRM оператора
               </h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
-                Омниканальные тикеты с контролем SLA, Salesbot-сценарии привлечения абонентов,
-                канбан-воронки подключения и мобильные наряды для инженеров.
+                Омниканальные тикеты с контролем{' '}
+                <TelecomTermTooltip termKey="sla">SLA</TelecomTermTooltip>, Salesbot-сценарии
+                привлечения абонентов, канбан-воронки подключения и мобильные наряды для инженеров.
               </p>
             </div>
             <div className="text-xs text-blue-600 dark:text-blue-400 font-medium">
@@ -158,7 +183,10 @@ export const FeaturesBento: React.FC = () => {
                 <MapPin className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-                Карта сети ВОЛС (GIS)
+                Карта сети{' '}
+                <TelecomTermTooltip termKey="gis">
+                  ВОЛС (GIS)
+                </TelecomTermTooltip>
               </h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
                 Узлы, кабельные трассы, оптические муфты со схемами сварок, опоры ЛЭП и аварийные
@@ -199,8 +227,12 @@ export const FeaturesBento: React.FC = () => {
                 Склад ТМЦ и Оборудование
               </h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
-                Серийный учёт оптических роутеров ONT, привязка материалов к нарядам монтажа, списание
-                в аренду абоненту и сканирование штрихкодов с камеры смартфона.
+                Серийный учёт оптических{' '}
+                <TelecomTermTooltip termKey="ont">
+                  роутеров ONT
+                </TelecomTermTooltip>
+                , привязка материалов к нарядам монтажа, списание в аренду абоненту и сканирование
+                штрихкодов с камеры смартфона.
               </p>
             </div>
             <div className="text-xs text-indigo-600 dark:text-indigo-400 font-medium">

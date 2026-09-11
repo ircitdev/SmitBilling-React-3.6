@@ -135,3 +135,5 @@ export interface DemoFormData {
   selectedPlan: string;
   comment: string;
 }
+
+export type ThemeMode = 'system' | 'dark' | 'light';

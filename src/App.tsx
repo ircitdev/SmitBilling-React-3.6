@@ -23,18 +23,29 @@ import { DemoModal } from './components/DemoModal';
 import { AiAssistantDrawer } from './components/AiAssistantDrawer';
 import { VideoModal } from './components/VideoModal';
 import { Footer } from './components/Footer';
-import { BillingModule } from './types';
+import { BillingModule, ThemeMode } from './types';
 import { MEDIA_URLS } from './data/landingData';
 import { Bot, Play } from 'lucide-react';
 
 export default function App() {
-  // Theme state: default to dark for telecom high-tech aesthetics
-  const [isDark, setIsDark] = useState<boolean>(() => {
+  // Theme state: supports 'system' | 'dark' | 'light' with automatic OS preference sync
+  const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('smit_billing_theme');
-      if (saved) return saved === 'dark';
+      if (saved === 'dark' || saved === 'light' || saved === 'system') {
+        return saved as ThemeMode;
+      }
     }
-    return true; // default dark
+    // Default to 'system' to automatically detect and synchronize with OS theme on initial load
+    return 'system';
+  });
+
+  // Track the OS/browser preferred color scheme dynamically
+  const [systemPrefersDark, setSystemPrefersDark] = useState<boolean>(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    return true; // Fallback default
   });
 
   // Modal & Drawer states
@@ -44,23 +55,90 @@ export default function App() {
   const [selectedModule, setSelectedModule] = useState<BillingModule | null>(null);
   const [selectedPlanForDemo, setSelectedPlanForDemo] = useState('Pro');
   const [subscriberCountForDemo, setSubscriberCountForDemo] = useState(1500);
+  const [demoCompanyName, setDemoCompanyName] = useState('');
+  const [demoComment, setDemoComment] = useState('');
 
-  // Sync dark class with document element
+  // Listen for system-level color scheme changes in real-time
   useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Ensure state matches current query on mount
+    setSystemPrefersDark(mediaQuery.matches);
+
+    const handleSystemChange = (e: MediaQueryListEvent) => {
+      setSystemPrefersDark(e.matches);
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleSystemChange);
+    } else if ((mediaQuery as unknown as { addListener?: (cb: (e: MediaQueryListEvent) => void) => void }).addListener) {
+      (mediaQuery as unknown as { addListener: (cb: (e: MediaQueryListEvent) => void) => void }).addListener(handleSystemChange);
+    }
+
+    return () => {
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleSystemChange);
+      } else if ((mediaQuery as unknown as { removeListener?: (cb: (e: MediaQueryListEvent) => void) => void }).removeListener) {
+        (mediaQuery as unknown as { removeListener: (cb: (e: MediaQueryListEvent) => void) => void }).removeListener(handleSystemChange);
+      }
+    };
+  }, []);
+
+  // Compute active dark mode state
+  const isDark = themeMode === 'system' ? systemPrefersDark : themeMode === 'dark';
+
+  // Synchronize document root classes and meta theme-color with current dark state
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const root = document.documentElement;
     if (isDark) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('smit_billing_theme', 'dark');
+      root.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('smit_billing_theme', 'light');
+      root.classList.remove('dark');
+    }
+
+    const meta = document.getElementById('theme-color-meta') || document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', isDark ? '#020617' : '#f8fafc');
     }
   }, [isDark]);
 
-  const toggleTheme = () => setIsDark((prev) => !prev);
+  // Persist theme preference to localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('smit_billing_theme', themeMode);
+    }
+  }, [themeMode]);
 
-  const handleOpenDemo = (planName = 'Pro', subscribers = 1500) => {
+  // Toggle theme cycling: system -> explicit opposite -> other -> back to system
+  const handleToggleTheme = () => {
+    setThemeMode((prev) => {
+      if (prev === 'system') {
+        // From system, switch to the opposite of current system theme
+        return systemPrefersDark ? 'light' : 'dark';
+      } else if (prev === 'dark') {
+        return 'light';
+      } else {
+        return 'system';
+      }
+    });
+  };
+
+  const handleSetThemeMode = (mode: ThemeMode) => {
+    setThemeMode(mode);
+  };
+
+  const handleOpenDemo = (
+    planName = 'Pro',
+    subscribers = 1500,
+    companyName = '',
+    comment = ''
+  ) => {
     setSelectedPlanForDemo(planName);
     setSubscriberCountForDemo(subscribers);
+    setDemoCompanyName(companyName);
+    setDemoComment(comment);
     setIsDemoModalOpen(true);
   };
 
@@ -76,7 +154,9 @@ export default function App() {
       {/* Navigation Bar */}
       <Navbar
         isDark={isDark}
-        onToggleTheme={toggleTheme}
+        themeMode={themeMode}
+        onToggleTheme={handleToggleTheme}
+        onSetThemeMode={handleSetThemeMode}
         onOpenDemoModal={() => handleOpenDemo()}
         onOpenAiDrawer={() => setIsAiDrawerOpen(true)}
         onOpenVideoModal={() => setIsVideoModalOpen(true)}
@@ -107,7 +187,14 @@ export default function App() {
         <MoneyVideoSection onOpenDemoModal={() => handleOpenDemo()} />
 
         {/* Interactive ROI & Savings Calculator */}
-        <Calculator onOpenDemoModal={(subs) => handleOpenDemo('Pro', subs)} />
+        <Calculator
+          onSelectPlan={(plan, subs) => handleOpenDemo(plan, subs)}
+          onOpenDemoModal={(subs, plan) => handleOpenDemo(plan || 'Pro', subs)}
+          onOpenAiCase={(subs) => {
+            setSubscriberCountForDemo(subs);
+            setIsAiDrawerOpen(true);
+          }}
+        />
 
         {/* Mobile Subscriber Experience Showcase & App Mockup */}
         <MobileAppShowcase />
@@ -191,6 +278,11 @@ export default function App() {
       <ModuleDetailModal
         module={selectedModule}
         onClose={() => setSelectedModule(null)}
+        onSelectModuleForDemo={(moduleName) => {
+          const modTitle = selectedModule?.title || moduleName;
+          setSelectedModule(null);
+          handleOpenDemo(modTitle ? `Модуль: ${modTitle}` : 'Pro');
+        }}
         onOpenDemo={() => {
           const modTitle = selectedModule?.title;
           setSelectedModule(null);
@@ -203,6 +295,8 @@ export default function App() {
         isOpen={isDemoModalOpen}
         preselectedPlan={selectedPlanForDemo}
         initialSubscribers={subscriberCountForDemo}
+        initialCompanyName={demoCompanyName}
+        initialComment={demoComment}
         onClose={() => setIsDemoModalOpen(false)}
       />
 
@@ -210,9 +304,15 @@ export default function App() {
       <AiAssistantDrawer
         isOpen={isAiDrawerOpen}
         onClose={() => setIsAiDrawerOpen(false)}
-        onOpenDemo={() => {
+        demoCompanyName={demoCompanyName}
+        onOpenDemo={(prefill) => {
           setIsAiDrawerOpen(false);
-          handleOpenDemo();
+          handleOpenDemo(
+            prefill?.plan || 'Pro',
+            prefill?.subscribers || subscriberCountForDemo,
+            prefill?.companyName || '',
+            prefill?.comment || ''
+          );
         }}
       />
     </div>
