@@ -4,6 +4,9 @@ import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { StatsBar } from './components/StatsBar';
 import { FeaturesBento } from './components/FeaturesBento';
+import { HowItWorksSection } from './components/HowItWorksSection';
+import { KnowledgeGraphSection } from './components/KnowledgeGraphSection';
+import { DemoSection } from './components/DemoSection';
 import { ScreenshotsGallery } from './components/ScreenshotsGallery';
 import { ModulesSection } from './components/ModulesSection';
 import { ModuleDetailModal } from './components/ModuleDetailModal';
@@ -182,6 +185,9 @@ export default function App() {
         {/* Core Architecture & Features Bento Grid */}
         <FeaturesBento onOpenDemoModal={() => handleOpenDemo()} />
 
+        {/* Запуск за три шага: Docker → инфраструктура → работает */}
+        <HowItWorksSection />
+
         {/* Interactive Screenshots Gallery with Category Filters */}
         <ScreenshotsGallery />
 
@@ -210,6 +216,9 @@ export default function App() {
         {/* Architecture, Stack & Docker Deployment */}
         <ArchitectureSection onOpenDemoModal={() => handleOpenDemo()} />
 
+        {/* Граф знаний: интерактивная карта архитектуры в документации */}
+        <KnowledgeGraphSection />
+
         {/* Ready Out-of-the-Box Integrations Catalog */}
         <IntegrationsSection />
 
@@ -221,6 +230,9 @@ export default function App() {
 
         {/* Transparent Pricing Plans */}
         <PricingSection onSelectPlan={(plan) => handleOpenDemo(plan)} />
+
+        {/* Посмотрите в действии: видеопрезентация и PDF для руководства */}
+        <DemoSection onOpenVideoModal={() => setIsVideoModalOpen(true)} />
 
         {/* Audio Podcast for ISP Engineers and Executives */}
         <PodcastSection />

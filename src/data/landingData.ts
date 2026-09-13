@@ -286,82 +286,82 @@ export const MEDIA_URLS = {
 
 export const GALLERY_SHOTS: import('../types').ScreenshotItem[] = [
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/dashboard.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/dashboard.png',
     label: 'Сводный дашборд оператора: ключевые показатели сети',
     cat: 'admin',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/abonents.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/abonents.png',
     label: 'Список абонентов: древовидная структура и статусы',
     cat: 'admin',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/abonent_card.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/abonent_card.png',
     label: 'Карточка абонента с 13 специализированными вкладками',
     cat: 'admin',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/debtors.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/debtors.png',
     label: 'Реестр должников и управление финансовыми блокировками',
     cat: 'admin',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/tarifs.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/tarifs.png',
     label: 'Тарифные планы, периодические услуги и опции скорости',
     cat: 'admin',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/finops.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/finops.png',
     label: 'Финансовые операции: журнал проводок и распределение',
     cat: 'reports',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/reports_dashboard.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/reports_dashboard.png',
     label: 'Аналитика и динамика выручки, ARPU и оттока',
     cat: 'reports',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/paylog.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/paylog.png',
     label: 'Журнал PayLog: фиксация каждого рубля с миллионной ёмкостью',
     cat: 'reports',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/custom_reports.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/custom_reports.png',
     label: 'Конструктор параметрических SQL-отчётов с графиками',
     cat: 'reports',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/dev_reports.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/dev_reports.png',
     label: 'Dev Reports: трассировка сетевых событий и аудит воркеров',
     cat: 'reports',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/payment.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/payment.png',
     label: 'Настройка шлюзов эквайринга: ЮKassa, Wallet One, СБП',
     cat: 'settings',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/crm_v1846/crm_kanban.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/crm_v1846/crm_kanban.png',
     label: 'CRM-воронка заявок на подключение новых клиентов',
     cat: 'admin',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/ai_v1846/ai_hub.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/ai_v1846/ai_hub.png',
     label: 'AI-ассистент: единый хаб 7 каналов и автоматические сценарии',
     cat: 'admin',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/integrations.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/integrations.png',
     label: 'Интеграции: FreeRADIUS, АТОЛ Онлайн, SMS Aero, DaData',
     cat: 'settings',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/backup.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/backup.png',
     label: 'Автоматическое резервное копирование баз и конфигураций',
     cat: 'settings',
   },
   {
-    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/screenshots/billing_v1847/homes.png',
+    src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/homes.png',
     label: 'География сети: дома, адреса, подъезды и порты коммутаторов',
     cat: 'admin',
   },
@@ -376,8 +376,8 @@ export const BLOG_ARTICLES: import('../types').BlogArticle[] = [
     date: '30 августа 2026',
     dateIso: '2026-08-30',
     readTime: '7 мин',
-    cover: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/blog/sorm-573.jpg',
-    coverLight: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/blog/sorm-573-light.jpg',
+    cover: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/blog/covers/sorm-573.jpg',
+    coverLight: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/blog/covers/sorm-573-light.jpg',
     href: '/blog/sorm-573',
   },
   {
@@ -388,8 +388,8 @@ export const BLOG_ARTICLES: import('../types').BlogArticle[] = [
     date: '29 августа 2026',
     dateIso: '2026-08-29',
     readTime: '6 мин',
-    cover: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/blog/karta-seti.jpg',
-    coverLight: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/blog/karta-seti-light.jpg',
+    cover: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/blog/covers/karta-seti.jpg',
+    coverLight: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/blog/covers/karta-seti-light.jpg',
     href: '/blog/karta-seti',
   },
   {
@@ -400,8 +400,8 @@ export const BLOG_ARTICLES: import('../types').BlogArticle[] = [
     date: '27 августа 2026',
     dateIso: '2026-08-27',
     readTime: '7 мин',
-    cover: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/blog/bankovskie-vypiski.jpg',
-    coverLight: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/blog/bankovskie-vypiski-light.jpg',
+    cover: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/blog/covers/bankovskie-vypiski.jpg',
+    coverLight: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/blog/covers/bankovskie-vypiski-light.jpg',
     href: '/blog/bankovskie-vypiski',
   },
 ];
@@ -415,7 +415,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
     version: '1.2.0',
     icon: 'Bot',
     desc: 'Сводный отчёт по конверсии чат-бота: сколько лидов квалифицировано и передано в отдел продаж.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/salesbot-summary-cover_877a7868.jpg',
+    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/salesbot-summary-cover_877a7868.jpg',
     developer: 'СмИТ Лабс',
     features: [
       'Анализ эффективности шагов воронки Salesbot',
@@ -427,7 +427,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
       'Каждую ночь агрегирует события и строит наглядный отчет.',
     ],
     shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/salesbot-summary-cover_877a7868.jpg',
+      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/salesbot-summary-cover_877a7868.jpg',
     ],
   },
   {
@@ -438,7 +438,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
     version: '2.0.1',
     icon: 'MapPin',
     desc: 'Автоматический поиск соседей и ближайших подключённых домов для проведения допродаж и акций.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/deal-nearby_60e2a812.webp',
+    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/deal-nearby_60e2a812.webp',
     developer: 'СмИТ Лабс',
     features: [
       'Поиск в радиусе 100-500 метров от существующего абонента',
@@ -450,7 +450,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
       'Формирует список потенциальных адресов прямо в карточке наряда.',
     ],
     shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/deal-nearby_60e2a812.webp',
+      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/deal-nearby_60e2a812.webp',
     ],
   },
   {
@@ -461,7 +461,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
     version: '1.4.0',
     icon: 'BarChart2',
     desc: 'Детализированная аналитика прохождения лидов от первого звонка до подписания акта инсталляции.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/funnel-summary_c4f9a10b.webp',
+    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/funnel-summary_c4f9a10b.webp',
     developer: 'СмИТ Лабс',
     features: [
       'Расчёт стоимости привлечения абонента (CAC)',
@@ -473,7 +473,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
       'Выводит понятные дашборды для руководителя.',
     ],
     shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/funnel-summary_c4f9a10b.webp',
+      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/funnel-summary_c4f9a10b.webp',
     ],
   },
   {
@@ -484,7 +484,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
     version: '1.1.0',
     icon: 'PieChart',
     desc: 'UTM-анализ входящих заявок с сайта, рекламы, промо-стоек и рекомендаций «Приведи друга».',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/lead-sources-stats_ad5cb384.webp',
+    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/lead-sources-stats_ad5cb384.webp',
     developer: 'СмИТ Лабс',
     features: [
       'Сквозная аналитика UTM-меток до факта оплаты абонплаты',
@@ -496,7 +496,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
       'Связывает лид с договором в биллинге.',
     ],
     shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/lead-sources-stats_ad5cb384.webp',
+      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/lead-sources-stats_ad5cb384.webp',
     ],
   },
   {
@@ -507,7 +507,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
     version: '1.0.4',
     icon: 'TrendingUp',
     desc: 'Контроль маркетинговых кампаний: срок окупаемости акционных тарифов и процент удержания абонентов.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/campaign-performance-cover_c212814f.jpg',
+    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/campaign-performance-cover_c212814f.jpg',
     developer: 'СмИТ Лабс',
     features: [
       'Отслеживание когорт абонентов, подключившихся по спецпредложениям',
@@ -519,30 +519,7 @@ export const WIDGETS_DATA: import('../types').WidgetItem[] = [
       'Рассчитывает чистый LTV по каждой запущенной акции.',
     ],
     shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/campaign-performance-cover_c212814f.jpg',
-    ],
-  },
-  {
-    id: 'telegram-broadcast',
-    name: 'Массовые рассылки Telegram',
-    cat: 'support',
-    catName: 'Поддержка',
-    version: '2.1.0',
-    icon: 'Send',
-    desc: 'Таргетированные уведомления об авариях, плановых работах и спецпредложениях в Telegram-бота абонента.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/telegram-broadcasts-cover_e4896d8b.jpg',
-    developer: 'СмИТ Лабс',
-    features: [
-      'Сегментация по адресам, домам, коммутаторам и тарифам',
-      'Скорость отправки до 10 000 сообщений в минуту без банов',
-      'Аналитика прочтений и кликов по кнопкам в сообщениях',
-    ],
-    how: [
-      'Связывает Telegram ID абонента с номером договора в ЛК.',
-      'При выборе аварийного узла автоматически находит всех затронутых абонентов.',
-    ],
-    shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/widgets/telegram-broadcasts-cover_e4896d8b.jpg',
+      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/campaign-performance-cover_c212814f.jpg',
     ],
   },
 ];

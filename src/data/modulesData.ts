@@ -27,18 +27,10 @@ export const BILLING_MODULES: BillingModule[] = [
     plans: ['Все тарифы'],
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/core.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/core-1.png",
-                "cap": "Карточка абонента — вкладка «Услуги» и тарифный план"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/core-2.png",
-                "cap": "Журнал начислений абонентской платы и списаний"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/core-3.png",
-                "cap": "Глобальный умный поиск по договорам, ФИО и IP"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_1.jpg", cap: "Дашборд: деньги, подключения, задачи дня" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_2.jpg", cap: "Список абонентов: фильтры, статусы, массовые действия" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_3.jpg", cap: "Финансовые операции: начисления и платежи одной лентой" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_7138b3e4.jpg", cap: "Дашборд биллинга" }
     ],
     icon: 'Layers',
     stats: 'Базовый модуль',
@@ -72,14 +64,9 @@ export const BILLING_MODULES: BillingModule[] = [
     plans: ['Все тарифы'],
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/radius.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/radius-1.png",
-                "cap": "Список активных сессий абонентов и BNG серверов"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/radius-2.png",
-                "cap": "Конфигурация профилей скорости и пулов IP-адресов"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_1.jpg", cap: "Список оборудования доступа" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_2.jpg", cap: "Состояние: кто в сети, что не отвечает" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_65119394.jpg", cap: "Оборудование и NAS" }
     ],
     icon: 'Network',
     stats: 'FreeRADIUS 3.2',
@@ -109,14 +96,9 @@ export const BILLING_MODULES: BillingModule[] = [
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/reports-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/reports-training-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/reports-1.png",
-                "cap": "Сводный дашборд оператора: ARPU, выручка, отток"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/reports-2.png",
-                "cap": "Редактор параметрических SQL-отчётов с графиками"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_1.jpg", cap: "Панель руководителя" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_2.jpg", cap: "Журнал платежей за период" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_ca1f2fb5.jpg", cap: "Дашборд отчётов" }
     ],
     icon: 'BarChart3',
     stats: '29 готовых отчётов',
@@ -147,14 +129,8 @@ export const BILLING_MODULES: BillingModule[] = [
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_netmap_training_2026-09-11.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_netmap_training_2026-09-11-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/netmap-1.png",
-                "cap": "Интерактивная карта оптических трасс, муфт и домов"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/netmap-2.png",
-                "cap": "Схема разварки оптической муфты с волокнами"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/netmap_1.jpg", cap: "Карта сети: оборудование, зоны, мониторинг" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/netmap_dc70e7ff.jpg", cap: "Карта сети: узлы и трассы" }
     ],
     icon: 'MapPin',
     stats: 'KML/GIS импорт',
@@ -181,18 +157,12 @@ export const BILLING_MODULES: BillingModule[] = [
       'Связь с биллингом происходит через безопасный JWT REST API v2.',
     ],
     plans: ['Старт', 'Видеонаблюдение', 'Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/lk.jpg',
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/lk_base.jpg',
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/lk-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/lk-training-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/lk-1.png",
-                "cap": "Личный кабинет абонента: баланс, оплата, тарифы"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/lk-2.png",
-                "cap": "Мобильная версия личного кабинета PWA"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/lk_1.jpg", cap: "Настройки кабинета и мобильных приложений" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/lk_base_d12978d6.jpg", cap: "Настройки личного кабинета" }
     ],
     icon: 'Smartphone',
     stats: 'iOS & Android',
@@ -222,14 +192,8 @@ export const BILLING_MODULES: BillingModule[] = [
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/sorm-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/sorm-training-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/sorm-1.png",
-                "cap": "13 отчётов по приказу №573: статистика выгрузок"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/sorm-2.png",
-                "cap": "Валидатор паспортных данных и адресов абонентов"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/sorm_1.jpg", cap: "Настройки СОРМ и отчёты" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/sorm_495a3260.jpg", cap: "Настройки СОРМ и выгрузки" }
     ],
     icon: 'ShieldCheck',
     stats: 'Приказ №573',
@@ -287,14 +251,9 @@ export const BILLING_MODULES: BillingModule[] = [
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/bank-statements-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/bank-statements-training-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/bank-1.png",
-                "cap": "Разбор выписки Клиент-Банк с сопоставлением ИНН"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/bank-2.png",
-                "cap": "Реестр нераспознанных платежей и ручная привязка"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bank_1.jpg", cap: "Настройки приёма и разбора выписок" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bank_97871ca0.jpg", cap: "Настройки приёма выписок" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bankq_6fa9cead.jpg", cap: "Очередь модерации платежей" }
     ],
     icon: 'CreditCard',
     stats: 'Автозачисление',
@@ -324,14 +283,8 @@ export const BILLING_MODULES: BillingModule[] = [
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_fiscal_training_2026-08-26.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_fiscal_training_2026-08-26-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/fiscal-1.png",
-                "cap": "Очередь фискализации чеков в АТОЛ Онлайн"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/fiscal-2.png",
-                "cap": "Статусы ОФД и автоматический повтор при сбоях"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/fiscal_1.jpg", cap: "Настройки фискализации" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/fiscal_e7358711.jpg", cap: "Фискализация (АТОЛ)" }
     ],
     icon: 'Receipt',
     stats: 'АТОЛ / 54-ФЗ',
@@ -409,14 +362,9 @@ export const BILLING_MODULES: BillingModule[] = [
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/crm-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/crm-training-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/crm-1.png",
-                "cap": "Канбан-доска заявок на подключение новых абонентов"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/crm-2.png",
-                "cap": "Наряд монтажнику с геолокацией и списком работ"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_1.jpg", cap: "Воронка сделок" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_2.jpg", cap: "Дашборд продаж" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_26b39028.jpg", cap: "CRM-дашборд и воронка" }
     ],
     icon: 'TrendingUp',
     stats: 'Salesbot + Канбан',
@@ -442,18 +390,13 @@ export const BILLING_MODULES: BillingModule[] = [
       'Если вопрос сложный или абонент просит оператора, диалог мгновенно маршрутизируется дежурному.',
     ],
     plans: ['Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/ai_agent.jpg',
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/ai.jpg',
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/ai-agent-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/ai-agent-training-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/ai_agent-1.png",
-                "cap": "Диалоги AI-ассистента в Telegram, WhatsApp и VK"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/ai_agent-2.png",
-                "cap": "База знаний и автоматические сценарии решений"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_1.jpg", cap: "Настройки AI-агента" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_2.jpg", cap: "Дашборд AI-чата: обращения и расход" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_a2f0a41e.jpg", cap: "AI-хаб" }
     ],
     icon: 'Bot',
     stats: '73% автозакрытия',
@@ -510,14 +453,14 @@ export const BILLING_MODULES: BillingModule[] = [
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20-poster.jpg',
     shots: [
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/stock-1.png",
-                "cap": "Складской учет ТМЦ: остатки роутеров и кабеля"
-          },
-          {
-                "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/stock-2.png",
-                "cap": "Перемещение оборудования со склада монтажнику"
-          }
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_1.jpg", cap: "Остатки по складам" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_2.jpg", cap: "Номенклатура и серийные номера" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_dashboard_20891168.png", cap: "Остатки склада" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_receipt_6ce624df.png", cap: "Приход и этикетки" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_issue_profileselect_9c7148ae.png", cap: "Выдача в подотчёт" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_montazh_materials_modal_b7606783.png", cap: "Материалы наряда" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_abonent_equipment_tab_be9b7747.png", cap: "Оборудование абонента" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_analytics_9d1bf473.png", cap: "Аналитика склада" }
     ],
     icon: 'Package',
     stats: 'Штрихкод & Серийники',
@@ -544,6 +487,11 @@ export const BILLING_MODULES: BillingModule[] = [
     ],
     plans: ['Видеонаблюдение', 'Pro', 'Бизнес', 'Enterprise'],
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/video.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_1.jpg", cap: "Дашборд видеонаблюдения" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_2.jpg", cap: "Объекты и камеры клиентов" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_c954085e.jpg", cap: "Видеонаблюдение" }
+    ],
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/video-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/video-training-poster.jpg',
     icon: 'Video',
@@ -571,6 +519,11 @@ export const BILLING_MODULES: BillingModule[] = [
     ],
     plans: ['Pro', 'Бизнес', 'Enterprise'],
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/iptv.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_1.jpg", cap: "Дашборд IPTV" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_2.jpg", cap: "Пакеты каналов" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_b2cca36b.jpg", cap: "IPTV-дашборд" }
+    ],
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_iptv_training_2026-09-10.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_iptv_training_2026-09-10-poster.jpg',
     icon: 'Tv',
@@ -598,6 +551,10 @@ export const BILLING_MODULES: BillingModule[] = [
     ],
     plans: ['Бизнес', 'Enterprise'],
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/telephony.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/telephony_1.jpg", cap: "Настройки телефонии и линий" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/telephony_b3641007.jpg", cap: "IP-телефония" }
+    ],
     icon: 'PhoneCall',
     stats: 'Asterisk / Mango',
   },
@@ -693,7 +650,13 @@ export const BILLING_MODULES: BillingModule[] = [
       'Настройка нового ящика в панели занимает 30 секунд.',
     ],
     plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/mailserver.jpg',
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/mailserv.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_1.jpg", cap: "Обзор: состояние сервера и доставляемость" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_2.jpg", cap: "Ящики: организация, роли, письма" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_3.jpg", cap: "Состояние сервера и ограничения" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_58758465.jpg", cap: "Почтовый сервер" }
+    ],
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/mailserver-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/mailserver-training-poster.jpg',
     icon: 'Mail',
@@ -720,6 +683,10 @@ export const BILLING_MODULES: BillingModule[] = [
     ],
     plans: ['Enterprise'],
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/whitelabel.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/whitelabel_1.jpg", cap: "Настройки бренда и оформления" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/whitelabel_2260ff24.jpg", cap: "Брендинг системы" }
+    ],
     icon: 'Sparkles',
     stats: '100% White-Label',
   },
@@ -742,7 +709,11 @@ export const BILLING_MODULES: BillingModule[] = [
       'Абонент крутит рулетку или выполняет задание. Бонусный движок начисляет виртуальные баллы.',
     ],
     plans: ['Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/gamification.jpg',
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/games.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/games_1.jpg", cap: "Рейтинг участников" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/games_d0c4349d.jpg", cap: "Маркетинг и игры" }
+    ],
     icon: 'Gamepad2',
     stats: 'Бонусы и лояльность',
   }
