@@ -20,12 +20,12 @@ import { PodcastSection } from './components/PodcastSection';
 import { BlogSection } from './components/BlogSection';
 import { FaqSection } from './components/FaqSection';
 import { DemoModal } from './components/DemoModal';
-import { AiAssistantDrawer } from './components/AiAssistantDrawer';
 import { VideoModal } from './components/VideoModal';
 import { Footer } from './components/Footer';
 import { BillingModule, ThemeMode } from './types';
 import { MEDIA_URLS } from './data/landingData';
-import { Bot, Play } from 'lucide-react';
+import { openAiChat, openBusinessCase } from './lib/aiWidget';
+import { Play } from 'lucide-react';
 
 export default function App() {
   // Theme state: supports 'system' | 'dark' | 'light' with automatic OS preference sync
@@ -50,7 +50,6 @@ export default function App() {
 
   // Modal & Drawer states
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
-  const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const [selectedModule, setSelectedModule] = useState<BillingModule | null>(null);
   const [selectedPlanForDemo, setSelectedPlanForDemo] = useState('Pro');
@@ -142,6 +141,12 @@ export default function App() {
     setIsDemoModalOpen(true);
   };
 
+  // AI-консультант — виджет сервера лицензий. Не загрузился (блокировщик, сеть) —
+  // остаётся форма заявки, чтобы вопрос всё равно дошёл до нас.
+  const handleOpenAiChat = () => {
+    void openAiChat(undefined, () => handleOpenDemo());
+  };
+
   const handleOpenModuleModal = (module: BillingModule) => {
     setSelectedModule(module);
   };
@@ -158,7 +163,7 @@ export default function App() {
         onToggleTheme={handleToggleTheme}
         onSetThemeMode={handleSetThemeMode}
         onOpenDemoModal={() => handleOpenDemo()}
-        onOpenAiDrawer={() => setIsAiDrawerOpen(true)}
+        onOpenAiDrawer={handleOpenAiChat}
         onOpenVideoModal={() => setIsVideoModalOpen(true)}
       />
 
@@ -167,7 +172,7 @@ export default function App() {
         {/* Hero Section with Live Interactive Mockup and Video Play */}
         <Hero
           onOpenDemoModal={() => handleOpenDemo()}
-          onOpenAiDrawer={() => setIsAiDrawerOpen(true)}
+          onOpenAiDrawer={handleOpenAiChat}
           onOpenVideoModal={() => setIsVideoModalOpen(true)}
         />
 
@@ -192,7 +197,7 @@ export default function App() {
           onOpenDemoModal={(subs, plan) => handleOpenDemo(plan || 'Pro', subs)}
           onOpenAiCase={(subs) => {
             setSubscriberCountForDemo(subs);
-            setIsAiDrawerOpen(true);
+            void openBusinessCase({ subscribers: subs }, () => handleOpenDemo('Pro', subs));
           }}
         />
 
@@ -225,7 +230,7 @@ export default function App() {
 
         {/* Searchable Telecom FAQ */}
         <FaqSection
-          onOpenAiDrawer={() => setIsAiDrawerOpen(true)}
+          onOpenAiDrawer={handleOpenAiChat}
           onOpenDemoModal={() => handleOpenDemo()}
         />
       </main>
@@ -233,11 +238,11 @@ export default function App() {
       {/* Footer */}
       <Footer
         onOpenDemo={() => handleOpenDemo()}
-        onOpenAi={() => setIsAiDrawerOpen(true)}
+        onOpenAi={handleOpenAiChat}
       />
 
-      {/* Floating Action Buttons */}
-      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-2.5">
+      {/* Кнопка видео — над круглой кнопкой AI-виджета (она в правом нижнем углу) */}
+      <div className="fixed bottom-24 right-6 z-40 flex flex-col items-end gap-2.5">
         {/* Floating Quick Video Button */}
         <button
           onClick={() => setIsVideoModalOpen(true)}
@@ -250,19 +255,6 @@ export default function App() {
           <span className="hidden sm:inline">Видео 4 мин</span>
         </button>
 
-        {/* Sticky Floating AI Assistant Widget */}
-        <button
-          onClick={() => setIsAiDrawerOpen(true)}
-          aria-label="Открыть AI-консультанта"
-          className="group relative flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold text-xs sm:text-sm shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/40 hover:scale-105 active:scale-95 transition-all cursor-pointer"
-        >
-          <div className="relative">
-            <Bot className="w-5 h-5" />
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-300 animate-ping" />
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-white" />
-          </div>
-          <span className="hidden sm:inline">AI-консультант</span>
-        </button>
       </div>
 
       {/* Fullscreen Video Presentation Modal */}
@@ -298,22 +290,6 @@ export default function App() {
         initialCompanyName={demoCompanyName}
         initialComment={demoComment}
         onClose={() => setIsDemoModalOpen(false)}
-      />
-
-      {/* Telecom Knowledge AI Assistant Drawer */}
-      <AiAssistantDrawer
-        isOpen={isAiDrawerOpen}
-        onClose={() => setIsAiDrawerOpen(false)}
-        demoCompanyName={demoCompanyName}
-        onOpenDemo={(prefill) => {
-          setIsAiDrawerOpen(false);
-          handleOpenDemo(
-            prefill?.plan || 'Pro',
-            prefill?.subscribers || subscriberCountForDemo,
-            prefill?.companyName || '',
-            prefill?.comment || ''
-          );
-        }}
       />
     </div>
   );

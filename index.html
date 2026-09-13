@@ -8,6 +8,17 @@
     <meta property="og:title" content="СмИТ Биллинг 3.6 — Биллинговая система для операторов связи" />
     <meta property="og:description" content="Современная биллинговая платформа для интернет-провайдеров: тарификация, FreeRADIUS, СОРМ-3, ЛК, мобильное приложение iOS/Android, склад ТМЦ, авторазбор выписок 54-ФЗ и встроенный AI-агент." />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://billing.smit34.ru/" />
+    <meta property="og:site_name" content="СмИТ Биллинг 3.6" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:image" content="https://billing.smit34.ru/og-image.jpg?v=20260812" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="СмИТ Биллинг 3.6 — Биллинговая система для операторов связи" />
+    <meta name="twitter:description" content="Биллинговая платформа для интернет-провайдеров: тарификация, FreeRADIUS, СОРМ-3, ЛК и мобильное приложение, склад, разбор выписок 54-ФЗ и AI-агент." />
+    <meta name="twitter:image" content="https://billing.smit34.ru/og-image.jpg?v=20260812" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#020617" id="theme-color-meta" />
     <script>
       (function() {
@@ -37,8 +48,62 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111523440', 'ym');
+      ym(111523440, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+      window.ymGoal = function(g, p){ try { if (window.ym) ym(111523440, 'reachGoal', g, p || {}); } catch (e) {} };
+    </script>
+    <!-- /Yandex.Metrika counter (noscript — в начале body: в head div недопустим) -->
+    <!-- AI-агент СмИТ с лицензионного сервера: тот же, что на прежнем лендинге -->
+    <script src="https://license.billing.smit34.ru/widget.js" data-widget="P6kNI2OPzLjak" defer></script>
+    <script>
+      // Ссылка со стороны (документация, блог, реклама) может привести сразу к нужной
+      // вкладке виджета: ?open=book — запись, ?open=case — бизнес-кейс, ?open=chat —
+      // разговор, ?ask=... — открыть разговор и сразу задать вопрос.
+      (function () {
+        var qs = new URLSearchParams(location.search);
+        var want = qs.get('open');
+        var ask = (qs.get('ask') || '').trim().slice(0, 300);
+        if (ask && !want) want = 'chat';
+        if (want !== 'book' && want !== 'chat' && want !== 'case') return;
+        function open() {
+          var W = window.SmitWidget;
+          if (!W || !W.open) return false;
+          if (ask && W.ask) W.ask(ask); else W.open(want);
+          return true;
+        }
+        document.addEventListener('smit-widget-ready', open, { once: true });
+        var timer = setInterval(function () { if (open()) clearInterval(timer); }, 200);
+        setTimeout(function () { clearInterval(timer); }, 10000);
+      })();
+
+      // Цели Метрики: виджет живёт в теневом DOM, счётчик его кликов не видит.
+      (function () {
+        function goal(name, params) {
+          if (typeof window.ymGoal === 'function') window.ymGoal(name, params || {});
+        }
+        document.addEventListener('smit-widget-open', function (e) {
+          goal('widget_open', { tab: (e.detail && e.detail.tab) || 'chat' });
+        });
+        document.addEventListener('smit-widget-ask', function () { goal('widget_ask'); });
+        document.addEventListener('smit-widget-lead', function (e) {
+          goal('lead_sent', { contact: (e.detail && e.detail.contact_type) || '' });
+        });
+        document.addEventListener('smit-widget-case', function (e) {
+          goal('business_case', { subscribers: (e.detail && e.detail.subscribers) || 0 });
+        });
+        document.addEventListener('smit-widget-case-pdf', function () { goal('business_case_pdf'); });
+      })();
+    </script>
   </head>
   <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased selection:bg-emerald-500/30 selection:text-emerald-300">
+    <noscript><div><img src="https://mc.yandex.ru/watch/111523440" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

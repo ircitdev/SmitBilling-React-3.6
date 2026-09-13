@@ -23,19 +23,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navLinks = [
+  // Пункты — как на прежнем billing.smit34.ru; внешние открываются в новой вкладке.
+  const navLinks: { href: string; label: string; external?: boolean }[] = [
     { href: '#features', label: 'Возможности' },
     { href: '#modules', label: 'Модули' },
-    { href: '#screenshots', label: 'Интерфейс' },
-    { href: '#money', label: 'Деньги & Видео' },
-    { href: '#calculator', label: 'Калькулятор' },
     { href: '#mobile-app', label: 'Приложение' },
-    { href: '#widgets', label: 'Виджеты' },
-    { href: '#migrate', label: 'Миграция' },
-    { href: '#integrations', label: 'Интеграции' },
     { href: '#pricing', label: 'Тарифы' },
-    { href: '#blog', label: 'Блог' },
-    { href: '#faq', label: 'FAQ' },
+    { href: '#api', label: 'API' },
+    { href: '#demo', label: 'Демо' },
+    { href: '/compare/', label: 'Сравнение' },
+    { href: '/blog/', label: 'Блог' },
+    { href: 'https://docs.billing.smit34.ru', label: 'Документация', external: true },
   ];
 
   return (
@@ -67,6 +65,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <a
               key={link.href}
               href={link.href}
+              target={link.external ? '_blank' : undefined}
+              rel={link.external ? 'noopener noreferrer' : undefined}
               className="text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors py-1 whitespace-nowrap"
             >
               {link.label}
@@ -164,6 +164,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               <a
                 key={link.href}
                 href={link.href}
+                target={link.external ? '_blank' : undefined}
+                rel={link.external ? 'noopener noreferrer' : undefined}
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-sm font-medium text-slate-200 hover:text-emerald-400 p-2 rounded-lg bg-slate-900/60 hover:bg-slate-800"
               >

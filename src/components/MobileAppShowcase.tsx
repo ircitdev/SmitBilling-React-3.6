@@ -83,6 +83,28 @@ export const MobileAppShowcase: React.FC = () => {
               </div>
             </div>
 
+            {/* Store links — те же приложения, что на прежнем сайте */}
+            <div className="flex flex-wrap gap-3 pt-2">
+              <a
+                href="https://apps.apple.com/app/smit-billing/id6743112840"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold hover:opacity-90 transition-opacity"
+              >
+                <Smartphone className="w-4 h-4" />
+                <span>App Store</span>
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=ru.smit34.smit_billing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold hover:opacity-90 transition-opacity"
+              >
+                <Smartphone className="w-4 h-4" />
+                <span>Google Play</span>
+              </a>
+            </div>
+
             {/* View Mode Toggle */}
             <div className="pt-4">
               <div className="flex items-center gap-2 mb-3">

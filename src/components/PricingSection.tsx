@@ -31,8 +31,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
             Лицензия по составу модулей
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            Без скрытых платежей, без комиссии за абонента. Все обновления ядра, законодательства
-            и техподдержка уже включены в стоимость.
+            Цены без НДС (УСН), обновления и базовая поддержка включены. Цена не зависит от числа
+            клиентов — только от набора модулей, поэтому чем вы больше, тем дешевле каждый.
           </p>
 
           {/* Billing Toggle */}
@@ -139,9 +139,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
                     <span>Выбрать {plan.name}</span>
                     <ArrowRight className="w-4 h-4" />
                   </button>
-                  <div className="text-[11px] text-center text-slate-400 mt-2">
-                    {plan.targetAudience}
-                  </div>
+                  {plan.targetAudience && (
+                    <div className="text-[11px] text-center text-slate-400 mt-2">
+                      {plan.targetAudience}
+                    </div>
+                  )}
                 </div>
               </div>
             );
@@ -157,6 +159,16 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
           >
             Соберём персональный тариф под ваши задачи
           </button>
+          <div className="mt-3">
+            <a
+              href="/SMIT_Billing_KP.pdf"
+              target="_blank"
+              rel="noopener"
+              className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline underline-offset-4"
+            >
+              Скачать коммерческое предложение (PDF, 4 страницы) →
+            </a>
+          </div>
         </div>
       </div>
     </section>
