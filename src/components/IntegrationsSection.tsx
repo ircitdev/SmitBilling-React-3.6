@@ -49,10 +49,10 @@ export const IntegrationsSection: React.FC = () => {
   };
 
   return (
-    <section id="integrations" className="py-20 sm:py-28 relative">
+    <section id="integrations" className="py-14 sm:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <Cpu className="w-3.5 h-3.5" />
             <span>Экосистема и совместимость</span>
@@ -80,10 +80,10 @@ export const IntegrationsSection: React.FC = () => {
           </div>
 
           {/* Group Filter Buttons */}
-          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-center sm:justify-end">
+          <div className="m-scroll flex flex-nowrap sm:flex-wrap items-center gap-2 overflow-x-auto sm:overflow-visible w-[calc(100%+2rem)] -mx-4 px-4 sm:mx-0 sm:px-0 sm:w-auto justify-start sm:justify-end">
             <button
               onClick={() => setActiveGroup('all')}
-              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+              className={`shrink-0 px-3.5 py-3 sm:py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeGroup === 'all'
                   ? 'bg-emerald-500 text-white shadow-sm'
                   : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
@@ -97,7 +97,7 @@ export const IntegrationsSection: React.FC = () => {
                 <button
                   key={gid}
                   onClick={() => setActiveGroup(gid)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                  className={`shrink-0 px-3.5 py-3 sm:py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     activeGroup === gid
                       ? 'bg-emerald-500 text-white shadow-sm'
                       : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
@@ -111,13 +111,13 @@ export const IntegrationsSection: React.FC = () => {
         </div>
 
         {/* Integration Groups Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
           {filteredGroups.map((group) => {
             const gid = group.groupId;
             return (
               <div
                 key={gid}
-                className="p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-lg transition-all"
+                className="p-4 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:shadow-lg transition-all"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <span className="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold">
@@ -134,7 +134,7 @@ export const IntegrationsSection: React.FC = () => {
                 </div>
 
                 {/* Items Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-6">
+                <div className="grid grid-cols-2 gap-2 sm:gap-2.5 mt-4 sm:mt-6">
                   {group.items.map((item: any, idx: number) => {
                     const itemName = typeof item === 'string' ? item : item.name;
                     const itemDesc = typeof item === 'string' ? '' : item.description;
@@ -142,14 +142,14 @@ export const IntegrationsSection: React.FC = () => {
                     return (
                       <div
                         key={idx}
-                        className="flex flex-col p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 text-slate-800 dark:text-slate-200 text-xs hover:border-emerald-500/40 transition-colors"
+                        className="flex flex-col min-w-0 p-2.5 sm:p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 text-slate-800 dark:text-slate-200 text-xs hover:border-emerald-500/40 transition-colors"
                       >
                         <div className="flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
                           <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 flex-shrink-0" />
                           <span className="truncate">{itemName}</span>
                         </div>
                         {itemDesc && (
-                          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-1 pl-5.5">
+                          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 sm:line-clamp-1 sm:pl-5.5">
                             {itemDesc}
                           </span>
                         )}

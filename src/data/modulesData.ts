@@ -222,6 +222,10 @@ export const BILLING_MODULES: BillingModule[] = [
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/captive.jpg',
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/captive-portal-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/captive-portal-training-poster.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/captive_1.jpg", cap: "Настройки портала и гостевых точек" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/captive_c0cecc0e.jpg", cap: "Captive Portal" }
+    ],
     icon: 'Radio',
     stats: '152-ФЗ Wi-Fi',
   },
@@ -310,6 +314,10 @@ export const BILLING_MODULES: BillingModule[] = [
       'Документ сохраняется в хранилище и доступен для скачивания абонентом в личном кабинете.',
     ],
     plans: ['Старт', 'Видеонаблюдение', 'Pro', 'Бизнес', 'Enterprise'],
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/document.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/document_1.jpg", cap: "Документы и шаблоны" }
+    ],
     icon: 'FileText',
     stats: 'WeasyPrint PDF',
   },
@@ -334,6 +342,12 @@ export const BILLING_MODULES: BillingModule[] = [
       'Оператор видит всю историю обращений и может прямо из тикета активировать обещанный платёж.',
     ],
     plans: ['Видеонаблюдение', 'Pro', 'Бизнес', 'Enterprise'],
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/helpdesk.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_1.jpg", cap: "Входящие обращения" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_2.jpg", cap: "Дашборд поддержки" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_2661b5e5.jpg", cap: "Поддержка: тикеты" }
+    ],
     icon: 'Headphones',
     stats: 'Омниканальность',
   },
@@ -425,6 +439,10 @@ export const BILLING_MODULES: BillingModule[] = [
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/multiorg.jpg',
     video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/org-training.mp4',
     vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/org-training-poster.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/multiorg_1.jpg", cap: "Организации и их настройки" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/multiorg_7e956db3.jpg", cap: "Организации" }
+    ],
     icon: 'Building2',
     stats: 'Multi-Tenant',
   },
@@ -579,6 +597,11 @@ export const BILLING_MODULES: BillingModule[] = [
       'При успешном контакте результат и реакция абонента фиксируются в биллинге.',
     ],
     plans: ['Enterprise'],
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/autodial.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/autodial_1.jpg", cap: "Сценарии и кампании автообзвона" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/autodial_74323bb8.jpg", cap: "Автообзвон" }
+    ],
     icon: 'PhoneForwarded',
     stats: 'SpeechKit TTS',
   },
@@ -602,6 +625,11 @@ export const BILLING_MODULES: BillingModule[] = [
       'Запись транскрибируется и падает в инбокс дежурной смены с высоким приоритетом.',
     ],
     plans: ['Pro', 'Бизнес', 'Enterprise'],
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/voice.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/voice_1.jpg", cap: "Голосовая почта: сообщения и заявки" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/voice_9e4921d5.jpg", cap: "Голосовая связь: провайдеры" }
+    ],
     icon: 'Voicemail',
     stats: 'Speech-to-Text',
   },
@@ -626,6 +654,17 @@ export const BILLING_MODULES: BillingModule[] = [
       'Каждая отправка формы создаёт сделку в воронке продаж с UTM-метками источника.',
     ],
     plans: ['Pro', 'Бизнес', 'Enterprise'],
+    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/landing.jpg',
+    shots: [
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_1.jpg", cap: "Список лендингов и их публикация" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_1_f908f062.jpg", cap: "Публичный сайт: floating-nav, hero, форма с согласием ПД" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_2_4c88e781.jpg", cap: "Редактор-конструктор: палитра блоков, live-превью, инспектор" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_3_192ff095.jpg", cap: "Список лендингов в биллинге" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_4_c1a71c0f.jpg", cap: "Мобильная версия" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_5_c6078dab.jpg", cap: "Тёмная тема" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_6_a8d0bbc2.webp", cap: "Блок «Слайдер»: hero с несколькими слайдами, фон из облака, стрелки и точки" },
+      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_7_07f967f8.webp", cap: "Переключение слайдов: автопрокрутка + навигация точками" }
+    ],
     icon: 'Layout',
     stats: '23 блока',
   },

@@ -6,7 +6,7 @@ const FACTS = ['11 логических слоёв', 'Обзор · Обучен
 
 export const KnowledgeGraphSection: React.FC = () => {
   return (
-    <section id="understand" className="relative py-16 sm:py-20 z-10">
+    <section id="understand" className="relative py-10 sm:py-20 z-10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="rounded-3xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/10 via-white to-teal-500/5 dark:via-slate-900 dark:to-teal-500/10 p-8 sm:p-12 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">

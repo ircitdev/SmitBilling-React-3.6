@@ -34,15 +34,15 @@ const LEGAL_LINKS = [
   { href: '/copyright.html', label: 'Авторские права' },
 ];
 
-const linkClass = 'hover:text-emerald-400 transition-colors';
+const linkClass = 'inline-block py-1.5 sm:py-0 hover:text-emerald-400 transition-colors';
 
 export const Footer: React.FC<FooterProps> = ({ onOpenDemo, onOpenAi }) => {
   return (
     <footer className="relative bg-slate-950 text-slate-400 border-t border-slate-800/80 pt-16 pb-12 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-10 mb-12">
           {/* Бренд */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="col-span-2 space-y-4">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-slate-950 font-black text-sm shadow-md shadow-emerald-500/20">
                 С
@@ -67,7 +67,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo, onOpenAi }) => {
                 href="https://t.me/smit34"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-emerald-500/40 hover:text-emerald-400 flex items-center gap-1.5 transition-colors"
+                className="px-3 py-2.5 sm:px-2.5 sm:py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-emerald-500/40 hover:text-emerald-400 flex items-center gap-1.5 transition-colors"
               >
                 <Send className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Telegram</span>
@@ -76,7 +76,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo, onOpenAi }) => {
                 href="https://vk.com/smit34"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-emerald-500/40 hover:text-emerald-400 flex items-center gap-1.5 transition-colors"
+                className="px-3 py-2.5 sm:px-2.5 sm:py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-emerald-500/40 hover:text-emerald-400 flex items-center gap-1.5 transition-colors"
               >
                 <ExternalLink className="w-3.5 h-3.5 text-emerald-400" />
                 <span>ВКонтакте</span>
@@ -87,7 +87,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo, onOpenAi }) => {
           {/* Продукт */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">Продукт</h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-1 sm:space-y-2.5 text-sm sm:text-xs">
               {PRODUCT_LINKS.map((l) => (
                 <li key={l.href}>
                   <a href={l.href} className={linkClass}>
@@ -101,7 +101,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo, onOpenAi }) => {
           {/* Ресурсы */}
           <div>
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">Ресурсы</h4>
-            <ul className="space-y-2.5 text-xs">
+            <ul className="space-y-1 sm:space-y-2.5 text-sm sm:text-xs">
               {RESOURCE_LINKS.map((l) => (
                 <li key={l.href}>
                   <a
@@ -119,7 +119,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo, onOpenAi }) => {
           </div>
 
           {/* Контакты */}
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h4 className="text-xs font-bold uppercase tracking-wider text-slate-200 mb-4">Контакты</h4>
             <div className="space-y-3 text-xs">
               <div className="flex items-center gap-2 text-slate-300">

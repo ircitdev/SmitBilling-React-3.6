@@ -10,6 +10,9 @@ interface ModulesSectionProps {
 export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModal }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
+  // на телефоне 24 карточки — это 9 экранов; показываем первые, остальные по кнопке
+  const [showAll, setShowAll] = useState(false);
+  const MOBILE_LIMIT = 8;
 
   const categories: Array<{ id: CategoryId; label: string }> = [
     { id: 'all', label: 'Все модули' },
@@ -38,10 +41,10 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
   }, [searchQuery, selectedCategory]);
 
   return (
-    <section id="modules" className="relative py-20 sm:py-28 z-10">
+    <section id="modules" className="relative py-14 sm:py-28 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div className="text-center mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <Layers className="w-3.5 h-3.5" />
             <span>Каталог 24 модулей</span>
@@ -71,12 +74,12 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
           </div>
 
           {/* Category Pills */}
-          <div className="flex flex-wrap gap-1.5 justify-center w-full md:w-auto">
+          <div className="m-scroll flex flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-visible gap-1.5 justify-start sm:justify-center w-[calc(100%+2rem)] sm:w-auto -mx-4 px-4 sm:mx-0 sm:px-0 md:w-auto">
             {categories.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                className={`shrink-0 px-3.5 py-3 sm:px-3 sm:py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                   selectedCategory === cat.id
                     ? 'bg-emerald-500 text-white shadow-sm'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
@@ -89,16 +92,21 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
         </div>
 
         {/* Modules Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filteredModules.map((mod) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-5">
+          {filteredModules.map((mod, idx) => (
             <div
               key={mod.id}
+              role="button"
+              tabIndex={0}
               onClick={() => onOpenModuleModal(mod)}
-              className="group relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all cursor-pointer flex flex-col justify-between overflow-hidden"
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenModuleModal(mod); } }}
+              className={`group relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all cursor-pointer flex-row sm:flex-col justify-between overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                !showAll && idx >= MOBILE_LIMIT ? 'hidden sm:flex' : 'flex'
+              }`}
             >
               {/* Module Image Thumbnail */}
               {mod.img && (
-                <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
+                <div className="relative w-28 shrink-0 sm:w-full sm:aspect-[16/9] overflow-hidden bg-slate-950">
                   <img
                     src={mod.img}
                     alt={mod.name}
@@ -108,7 +116,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-black/30" />
 
                   {/* Top Badges over image */}
-                  <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                  <div className="absolute top-2.5 left-2.5 right-2.5 hidden sm:flex items-center justify-between">
                     <span className="text-[10px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-md bg-slate-900/80 backdrop-blur-md text-emerald-400 border border-slate-700/60">
                       {mod.categoryName}
                     </span>
@@ -118,7 +126,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
                   </div>
 
                   {/* Media Indicators (Video & Shots) */}
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center gap-1.5">
+                  <div className="absolute bottom-1.5 left-1.5 right-1.5 sm:bottom-2.5 sm:left-2.5 sm:right-2.5 flex flex-wrap items-center gap-1 sm:gap-1.5">
                     {mod.video && (
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[10px] shadow-sm">
                         <Play className="w-2.5 h-2.5 fill-current" />
@@ -126,7 +134,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
                       </span>
                     )}
                     {mod.shots && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-900/85 text-slate-300 text-[10px] border border-slate-700/60">
+                      <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-900/85 text-slate-300 text-[10px] border border-slate-700/60">
                         <ImageIcon className="w-2.5 h-2.5 text-emerald-400" />
                         <span>{mod.shots.length} фото</span>
                       </span>
@@ -136,7 +144,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
               )}
 
               {/* Card Body */}
-              <div className="p-5 flex-1 flex flex-col justify-between">
+              <div className="p-3.5 sm:p-5 flex-1 min-w-0 flex flex-col justify-between">
                 <div>
                   {!mod.img && (
                     <div className="flex items-center justify-between mb-3">
@@ -152,12 +160,12 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
                     <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 flex-shrink-0 ml-1" />
                   </h3>
 
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-2 line-clamp-3">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1 sm:mt-2 line-clamp-2 sm:line-clamp-3">
                     {mod.shortDesc}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
+                <div className="mt-2 pt-2 sm:mt-4 sm:pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2 text-[11px] text-slate-400">
                   <span>{mod.isCore ? 'Включён в ядро' : mod.plans[0]}</span>
                   <span className="text-emerald-600 dark:text-emerald-400 font-semibold group-hover:underline">
                     Подробнее →
@@ -167,6 +175,18 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
             </div>
           ))}
         </div>
+
+        {!showAll && filteredModules.length > MOBILE_LIMIT && (
+          <div className="mt-5 sm:hidden">
+            <button
+              type="button"
+              onClick={() => setShowAll(true)}
+              className="w-full py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-semibold text-slate-800 dark:text-slate-100 cursor-pointer"
+            >
+              Показать все модули ({filteredModules.length})
+            </button>
+          </div>
+        )}
 
         {/* Empty State */}
         {filteredModules.length === 0 && (

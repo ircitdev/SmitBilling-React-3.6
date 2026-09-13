@@ -54,7 +54,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
   return (
     <div
       id="module-detail-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-0 sm:p-6 overflow-y-auto overscroll-contain bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-module-title"
@@ -63,7 +63,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
       <div className="fixed inset-0" onClick={onClose} />
 
       {/* Modal Container */}
-      <div className="relative w-full max-w-3xl my-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden z-10 animate-in zoom-in-95 duration-200 flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-3xl min-h-[100dvh] sm:min-h-0 sm:my-6 rounded-none sm:rounded-3xl border-0 sm:border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden z-10 animate-in zoom-in-95 duration-200 flex flex-col max-h-[92vh]">
         {/* Module Cover Image Banner (if exists) */}
         {module.img && (
           <div className="relative h-44 sm:h-56 w-full overflow-hidden bg-slate-950 flex-shrink-0 border-b border-slate-800">

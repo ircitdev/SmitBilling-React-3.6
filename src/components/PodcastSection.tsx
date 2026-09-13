@@ -74,7 +74,7 @@ export const PodcastSection: React.FC = () => {
   };
 
   return (
-    <section id="podcast" className="py-20 sm:py-24 relative overflow-hidden">
+    <section id="podcast" className="py-14 sm:py-24 relative overflow-hidden">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="relative rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-slate-900 via-slate-850 to-slate-950 text-white p-6 sm:p-10 shadow-2xl overflow-hidden">
           {/* Subtle Ambient Glow */}

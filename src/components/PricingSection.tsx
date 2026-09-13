@@ -19,7 +19,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
   };
 
   return (
-    <section id="pricing" className="relative py-20 z-10">
+    <section id="pricing" className="relative py-14 sm:py-20 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -39,7 +39,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
           <div className="inline-flex items-center p-1.5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/80 mt-8">
             <button
               onClick={() => setIsAnnual(false)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+              className={`px-4 py-3 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
                 !isAnnual
                   ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -49,7 +49,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
             </button>
             <button
               onClick={() => setIsAnnual(true)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
+              className={`px-4 py-3 sm:py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer flex items-center gap-2 ${
                 isAnnual
                   ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md shadow-emerald-500/25'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -64,7 +64,8 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
         </div>
 
         {/* Pricing Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        <p className="sm:hidden -mt-4 mb-2 text-center text-xs text-slate-500 dark:text-slate-400">Листайте тарифы вбок →</p>
+        <div className="m-scroll flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-stretch overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-4 px-4 pt-4 pb-4 md:mx-0 md:px-0 md:pt-0 md:pb-0">
           {PRICING_PLANS.map((plan) => {
             const price = isAnnual
               ? Math.round(plan.annualPrice / 12)
@@ -73,7 +74,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
             return (
               <div
                 key={plan.id}
-                className={`relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all ${
+                className={`relative shrink-0 w-[86%] sm:w-[60%] md:w-auto snap-center rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all ${
                   plan.highlighted
                     ? 'border-2 border-emerald-500 bg-white dark:bg-slate-900 shadow-2xl shadow-emerald-500/10 lg:-translate-y-2'
                     : 'border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 hover:border-slate-300 dark:hover:border-slate-700 shadow-lg'
@@ -81,7 +82,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
               >
                 {/* Popular Badge */}
                 {plan.badge && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md shadow-emerald-500/30">
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 rounded-full text-[11px] font-bold tracking-wide uppercase bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md shadow-emerald-500/30">
                     {plan.badge}
                   </div>
                 )}
@@ -155,7 +156,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
           Нужен индивидуальный набор модулей?{' '}
           <button
             onClick={() => handlePlanClick('Индивидуальный')}
-            className="text-emerald-600 dark:text-emerald-400 font-semibold underline underline-offset-4 cursor-pointer"
+            className="inline-block py-2 sm:py-0 text-emerald-600 dark:text-emerald-400 font-semibold underline underline-offset-4 cursor-pointer"
           >
             Соберём персональный тариф под ваши задачи
           </button>

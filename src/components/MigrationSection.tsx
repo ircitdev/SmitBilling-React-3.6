@@ -20,10 +20,10 @@ interface MigrationSectionProps {
 
 export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoModal }) => {
   return (
-    <section id="migrate" className="py-20 sm:py-28 relative bg-slate-50 dark:bg-slate-900/50">
+    <section id="migrate" className="py-14 sm:py-28 relative bg-slate-50 dark:bg-slate-900/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <ArrowRightLeft className="w-3.5 h-3.5" />
             <span>Миграция без боли</span>

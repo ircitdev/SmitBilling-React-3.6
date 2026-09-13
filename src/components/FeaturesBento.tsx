@@ -16,7 +16,7 @@ import { TelecomTermTooltip } from './TelecomTermTooltip';
 
 export const FeaturesBento: React.FC = () => {
   return (
-    <section id="features" className="relative py-20 z-10">
+    <section id="features" className="relative py-14 sm:py-20 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -33,7 +33,7 @@ export const FeaturesBento: React.FC = () => {
           </p>
           <div className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700/60">
             <HelpCircle className="w-3.5 h-3.5 text-emerald-500" />
-            <span>Наведите на любой подчеркнутый термин для просмотра спецификаций и назначения</span>
+            <span>Нажмите на подчёркнутый термин — откроется пояснение</span>
           </div>
         </div>
 

@@ -19,7 +19,7 @@ export const MobileAppShowcase: React.FC = () => {
   const [appScreen, setAppScreen] = useState<'home' | 'tariff' | 'pay' | 'chat'>('home');
 
   return (
-    <section id="mobile-app" className="relative py-20 sm:py-28 z-10">
+    <section id="mobile-app" className="relative py-14 sm:py-28 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left: Features & Story */}
@@ -110,7 +110,7 @@ export const MobileAppShowcase: React.FC = () => {
               <div className="flex items-center gap-2 mb-3">
                 <button
                   onClick={() => setViewMode('interactive')}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
+                  className={`px-3.5 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                     viewMode === 'interactive'
                       ? 'bg-emerald-500 text-white shadow-md'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
@@ -120,7 +120,7 @@ export const MobileAppShowcase: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setViewMode('mockup')}
-                  className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
+                  className={`inline-flex items-center gap-1.5 px-3.5 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                     viewMode === 'mockup'
                       ? 'bg-emerald-500 text-white shadow-md'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
@@ -139,7 +139,7 @@ export const MobileAppShowcase: React.FC = () => {
                   <div className="flex flex-wrap gap-2">
                     <button
                       onClick={() => setAppScreen('home')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
+                      className={`px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                         appScreen === 'home'
                           ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
@@ -149,7 +149,7 @@ export const MobileAppShowcase: React.FC = () => {
                     </button>
                     <button
                       onClick={() => setAppScreen('tariff')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
+                      className={`px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                         appScreen === 'tariff'
                           ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
@@ -159,7 +159,7 @@ export const MobileAppShowcase: React.FC = () => {
                     </button>
                     <button
                       onClick={() => setAppScreen('pay')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
+                      className={`px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                         appScreen === 'pay'
                           ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
@@ -169,7 +169,7 @@ export const MobileAppShowcase: React.FC = () => {
                     </button>
                     <button
                       onClick={() => setAppScreen('chat')}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
+                      className={`px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                         appScreen === 'chat'
                           ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'

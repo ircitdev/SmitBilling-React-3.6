@@ -29,10 +29,10 @@ export const WidgetsMarketplace: React.FC = () => {
     : WIDGETS_DATA.filter((w) => w.cat === selectedCat);
 
   return (
-    <section id="widgets" className="py-20 sm:py-28 relative">
+    <section id="widgets" className="py-14 sm:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <Boxes className="w-3.5 h-3.5" />
             <span>Маркетплейс расширений</span>
@@ -63,12 +63,12 @@ export const WidgetsMarketplace: React.FC = () => {
         </div>
 
         {/* Grid of Widget Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="m-scroll flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 sm:mx-0 sm:px-0 sm:pb-0">
           {filteredWidgets.map((widget) => (
             <div
               key={widget.id}
               onClick={() => setActiveWidget(widget)}
-              className="group rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col cursor-pointer"
+              className="group shrink-0 w-[85%] sm:w-auto snap-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col cursor-pointer"
             >
               {/* Widget Cover Image */}
               <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
@@ -115,17 +115,18 @@ export const WidgetsMarketplace: React.FC = () => {
       {/* Widget Detail Modal */}
       {activeWidget && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200"
           role="dialog"
           aria-modal="true"
         >
           <div className="fixed inset-0" onClick={() => setActiveWidget(null)} />
 
-          <div className="relative w-full max-w-2xl rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 sm:p-8 shadow-2xl overflow-y-auto max-h-[90vh] z-10 animate-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-2xl h-[100dvh] sm:h-auto rounded-none sm:rounded-3xl border-0 sm:border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-5 pt-3 pb-8 sm:p-8 shadow-2xl overflow-y-auto overscroll-contain max-h-[100dvh] sm:max-h-[90vh] z-10 animate-in zoom-in-95 duration-200">
             {/* Close Button */}
             <button
               onClick={() => setActiveWidget(null)}
-              className="absolute top-5 right-5 p-2 rounded-xl text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              aria-label="Закрыть"
+              className="sticky sm:absolute top-0 sm:top-5 sm:right-5 z-20 ml-auto mb-1 sm:m-0 flex w-11 h-11 sm:w-auto sm:h-auto items-center justify-center p-2 rounded-xl bg-white/95 dark:bg-slate-900/95 sm:bg-transparent text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>

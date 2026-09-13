@@ -353,18 +353,18 @@ export const DemoModal: React.FC<DemoModalProps> = ({
   return (
     <div
       id="demo-request-modal"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-slate-950/75 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-0 sm:p-6 overflow-y-auto overscroll-contain bg-slate-950/75 backdrop-blur-md animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
       aria-labelledby="demo-modal-title"
     >
       <div className="fixed inset-0" onClick={onClose} />
 
-      <div className="relative w-full max-w-lg my-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl p-6 sm:p-8 z-10 animate-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-lg min-h-[100dvh] sm:min-h-0 sm:my-8 rounded-none sm:rounded-3xl border-0 sm:border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl px-5 pt-3 pb-8 sm:p-8 z-10 animate-in zoom-in-95 duration-200">
         <button
           onClick={onClose}
           aria-label="Закрыть окно"
-          className="absolute top-5 right-5 w-8 h-8 rounded-xl border border-slate-200 dark:border-slate-700/60 flex items-center justify-center text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+          className="sticky sm:absolute top-3 sm:top-5 sm:right-5 z-20 ml-auto mb-1 sm:m-0 w-11 h-11 sm:w-8 sm:h-8 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white/95 dark:bg-slate-900/95 flex items-center justify-center text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>

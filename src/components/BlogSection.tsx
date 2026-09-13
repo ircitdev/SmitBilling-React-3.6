@@ -4,10 +4,10 @@ import { BLOG_ARTICLES } from '../data/landingData';
 
 export const BlogSection: React.FC = () => {
   return (
-    <section id="blog" className="py-20 sm:py-28 relative">
+    <section id="blog" className="py-14 sm:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <BookOpen className="w-3.5 h-3.5" />
             <span>База знаний и статьи</span>
@@ -21,12 +21,12 @@ export const BlogSection: React.FC = () => {
         </div>
 
         {/* 3 Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="m-scroll flex md:grid md:grid-cols-3 gap-4 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 md:mx-0 md:px-0 md:pb-0">
           {BLOG_ARTICLES.map((article) => (
             <a
               key={article.id}
               href={article.href}
-              className="group rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col cursor-pointer"
+              className="group shrink-0 w-[85%] sm:w-[60%] md:w-auto snap-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col cursor-pointer"
             >
               {/* Cover Image */}
               <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
@@ -42,7 +42,7 @@ export const BlogSection: React.FC = () => {
               </div>
 
               {/* Content */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
+              <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
                     <span className="flex items-center gap-1">

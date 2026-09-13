@@ -1,5 +1,59 @@
 @import "tailwindcss";
 
+/* Тёмная тема по классу .dark на <html>: его ставит переключатель в меню.
+   Без этого dark:-классы слушали только системную тему, и выбор «Тёмная /
+   Светлая» ничего не менял. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Пока открыта модалка сайта (у всех — fixed inset-0 z-50), круглая кнопка
+   AI-виджета не нужна: на телефоне она закрывала главную кнопку формы. */
+body:has(.fixed.inset-0.z-50) > #smit-ai-widget {
+  display: none !important;
+}
+
+/* Якоря не прячутся под фиксированной шапкой (64px) */
+html {
+  scroll-padding-top: 76px;
+}
+
+/* Горизонтальная лента на телефоне: чипы-фильтры, тарифы, статьи блога.
+   Полоса прокрутки скрыта, край ленты выходит за поля — видно, что можно листать. */
+.m-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.m-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  /* Шрифт полей ≥ 16px: иначе Safari на iPhone увеличивает страницу при вводе */
+  input:not([type="range"]):not([type="checkbox"]):not([type="radio"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Подписи в 10–11px на телефоне не читаются */
+  .text-\[10px\] {
+    font-size: 11.5px !important;
+  }
+  .text-\[11px\] {
+    font-size: 12px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @keyframes successScalePop {
   0% {
     transform: scale(0.4) rotate(-10deg);

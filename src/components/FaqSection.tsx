@@ -29,7 +29,7 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenAiDrawer, onOpenDe
   }, [searchQuery]);
 
   return (
-    <section id="faq" className="relative py-20 z-10">
+    <section id="faq" className="relative py-14 sm:py-20 z-10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">

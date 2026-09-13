@@ -152,7 +152,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
   };
 
   return (
-    <section id="calculator" className="relative py-20 z-10">
+    <section id="calculator" className="relative py-14 sm:py-20 z-10">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-12">
@@ -215,7 +215,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   key={num}
                   type="button"
                   onClick={() => setSubscribers(num)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer border ${
+                  className={`px-3 py-2.5 sm:px-2.5 sm:py-1 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer border ${
                     subscribers === num
                       ? 'bg-emerald-500 text-white border-emerald-500'
                       : 'bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
@@ -585,7 +585,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <button
                   type="button"
                   onClick={() => setChartView('competitive')}
-                  className={`inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  className={`inline-flex items-center px-3 py-3 sm:py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     chartView === 'competitive'
                       ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -597,7 +597,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <button
                   type="button"
                   onClick={() => setChartView('cumulative')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  className={`px-3 py-3 sm:py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     chartView === 'cumulative'
                       ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -608,7 +608,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <button
                   type="button"
                   onClick={() => setChartView('comparison')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                  className={`px-3 py-3 sm:py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     chartView === 'comparison'
                       ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'

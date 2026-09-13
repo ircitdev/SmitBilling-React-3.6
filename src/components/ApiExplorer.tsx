@@ -15,7 +15,7 @@ export const ApiExplorer: React.FC = () => {
   };
 
   return (
-    <section id="api" className="relative py-20 z-10">
+    <section id="api" className="relative py-14 sm:py-20 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -40,7 +40,7 @@ export const ApiExplorer: React.FC = () => {
               <button
                 key={idx}
                 onClick={() => setSelectedIdx(idx)}
-                className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                className={`shrink-0 flex items-center gap-2 px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                   selectedIdx === idx
                     ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
                     : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60'
@@ -78,7 +78,7 @@ export const ApiExplorer: React.FC = () => {
 
             <button
               onClick={handleCopy}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-500 transition-colors cursor-pointer self-start sm:self-auto"
+              className="inline-flex items-center gap-1.5 px-3 py-3 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-emerald-500 transition-colors cursor-pointer self-start sm:self-auto"
             >
               {copied ? (
                 <>

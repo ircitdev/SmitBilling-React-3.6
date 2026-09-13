@@ -18,7 +18,7 @@ interface MoneyVideoSectionProps {
 
 export const MoneyVideoSection: React.FC<MoneyVideoSectionProps> = ({ onOpenDemoModal }) => {
   return (
-    <section id="money" className="py-20 sm:py-28 relative overflow-hidden bg-slate-900 text-white">
+    <section id="money" className="py-14 sm:py-28 relative overflow-hidden bg-slate-900 text-white">
       {/* Glow Effects */}
       <div className="absolute top-1/4 -right-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 -left-40 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
