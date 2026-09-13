@@ -45,16 +45,31 @@
         } catch (e) {}
       })();
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
-      (function(m,e,t,r,i,k,a){
+      // Счётчик грузится после загрузки страницы, в простое браузера: его разбор
+      // занимал почти секунду главного потока на телефоне. Вызовы ym() до этого
+      // копятся в очереди и выполняются, когда скрипт загрузится.
+      (function(m,e,t,r,i){
         m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
         m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        function load(){
+          for (var j = 0; j < e.scripts.length; j++) {if (e.scripts[j].src === r) { return; }}
+          var k=e.createElement(t),a=e.getElementsByTagName(t)[0];k.async=1;k.src=r;a.parentNode.insertBefore(k,a);
+        }
+        function idle(){ if ('requestIdleCallback' in m) { m.requestIdleCallback(load, {timeout: 4000}); } else { setTimeout(load, 2000); } }
+        // и не раньше первой отрисовки: страница может загрузиться до неё
+        function later(){
+          var p = m.performance;
+          if (!p || !p.getEntriesByName || p.getEntriesByName('first-contentful-paint').length || !m.PerformanceObserver) { idle(); return; }
+          var started = false, go = function(){ if (!started) { started = true; idle(); } };
+          try {
+            var po = new PerformanceObserver(function(list){ if (list.getEntriesByName('first-contentful-paint').length) { po.disconnect(); go(); } });
+            po.observe({type: 'paint', buffered: true});
+          } catch (err) { go(); return; }
+          setTimeout(go, 3000);
+        }
+        if (e.readyState === 'complete') { later(); } else { m.addEventListener('load', later, {once: true}); }
       })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111523440', 'ym');
       ym(111523440, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
       window.ymGoal = function(g, p){ try { if (window.ym) ym(111523440, 'reachGoal', g, p || {}); } catch (e) {} };

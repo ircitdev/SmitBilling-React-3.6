@@ -11,6 +11,15 @@ export const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ isDark }) =>
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // На телефоне анимация частиц отнимает процессор у прокрутки, а при настройке
+    // «уменьшить движение» она и вовсе лишняя — фон остаётся пустым.
+    if (
+      window.matchMedia('(max-width: 767px)').matches ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
@@ -82,8 +91,16 @@ export const BackgroundCanvas: React.FC<BackgroundCanvasProps> = ({ isDark }) =>
 
     render();
 
+    // вкладка в фоне — не рисуем
+    const handleVisibility = () => {
+      cancelAnimationFrame(animationFrameId);
+      if (!document.hidden) animationFrameId = requestAnimationFrame(render);
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+
     return () => {
       window.removeEventListener('resize', handleResize);
+      document.removeEventListener('visibilitychange', handleVisibility);
       cancelAnimationFrame(animationFrameId);
     };
   }, [isDark]);

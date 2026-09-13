@@ -78,6 +78,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
         {/* Video Player */}
         <div className="relative aspect-video bg-black flex items-center justify-center">
           <video
+            preload="none"
             ref={videoRef}
             src={videoUrl}
             poster={posterUrl}

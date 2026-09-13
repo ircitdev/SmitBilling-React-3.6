@@ -20,7 +20,7 @@ export const FeaturesBento: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <Layers className="w-3.5 h-3.5" />
             <span>Возможности платформы</span>
           </div>
@@ -31,7 +31,7 @@ export const FeaturesBento: React.FC = () => {
             Откажитесь от зоопарка разрозненных скриптов и сторонних сервисов. Полный цикл работы
             оператора связи в единой экосистеме.
           </p>
-          <div className="inline-flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700/60">
+          <div className="inline-flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700/60">
             <HelpCircle className="w-3.5 h-3.5 text-emerald-500" />
             <span>Нажмите на подчёркнутый термин — откроется пояснение</span>
           </div>
@@ -43,7 +43,7 @@ export const FeaturesBento: React.FC = () => {
           <div className="lg:col-span-2 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-white via-slate-50 to-emerald-500/5 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/20 backdrop-blur-xl shadow-xl flex flex-col justify-between group hover:border-emerald-500/40 transition-all">
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/25">
+                <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/25">
                   <Network className="w-6 h-6" />
                 </div>
                 <div className="text-xs font-mono font-semibold px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-500">
@@ -128,7 +128,7 @@ export const FeaturesBento: React.FC = () => {
                 профили адаптеров под 6 ведущих производителей СОРМ-комплексов.
               </p>
             </div>
-            <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+            <div className="text-xs text-slate-600 dark:text-slate-400 font-medium">
               Норси-Транс · МФИ Софт · Сигнатек · VAS Experts
             </div>
           </div>
@@ -136,7 +136,7 @@ export const FeaturesBento: React.FC = () => {
           {/* Card 4: Payments & 54-FZ */}
           <div className="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 backdrop-blur-xl shadow-xl flex flex-col justify-between group hover:border-emerald-500/40 transition-all">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-500/25 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-700 dark:text-amber-400 flex items-center justify-center border border-amber-500/25 mb-4">
                 <CreditCard className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
@@ -151,7 +151,7 @@ export const FeaturesBento: React.FC = () => {
                 через АТОЛ Онлайн с отправкой чеков клиентам.
               </p>
             </div>
-            <div className="text-xs text-amber-600 dark:text-amber-400 font-medium">
+            <div className="text-xs text-amber-700 dark:text-amber-400 font-medium">
               Автовыписка счетов и актов юрлицам
             </div>
           </div>
@@ -201,7 +201,7 @@ export const FeaturesBento: React.FC = () => {
           {/* Card 7: Subscriber Apps */}
           <div className="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 backdrop-blur-xl shadow-xl flex flex-col justify-between group hover:border-emerald-500/40 transition-all">
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-600 dark:text-teal-400 flex items-center justify-center border border-teal-500/25 mb-4">
+              <div className="w-12 h-12 rounded-2xl bg-teal-500/15 text-teal-700 dark:text-teal-400 flex items-center justify-center border border-teal-500/25 mb-4">
                 <Smartphone className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
@@ -212,7 +212,7 @@ export const FeaturesBento: React.FC = () => {
                 обещанный платёж, обращения в поддержку и чат с AI-ассистентом.
               </p>
             </div>
-            <div className="text-xs text-teal-600 dark:text-teal-400 font-medium">
+            <div className="text-xs text-teal-700 dark:text-teal-400 font-medium">
               App Store & Google Play
             </div>
           </div>

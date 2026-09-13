@@ -102,6 +102,7 @@ export const MoneyVideoSection: React.FC<MoneyVideoSectionProps> = ({ onOpenDemo
             <div className="relative rounded-2xl sm:rounded-3xl border border-slate-700/80 bg-slate-950 p-2 sm:p-3 shadow-2xl overflow-hidden group">
               <div className="relative aspect-video rounded-xl sm:rounded-2xl overflow-hidden bg-black">
                 <video
+                  preload="none"
                   controls
                   playsInline
                   poster={MEDIA_URLS.moneyPoster}

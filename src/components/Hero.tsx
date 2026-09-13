@@ -37,7 +37,7 @@ export const Hero: React.FC<HeroProps> = ({
           {/* Left Column: Heading, Subheading & CTAs */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Version & Status Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 mb-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 mb-6">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -94,7 +94,7 @@ export const Hero: React.FC<HeroProps> = ({
             </div>
 
             {/* Quick Guarantees / Bullets */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                 <span>Перенос базы за 1 день</span>
@@ -122,11 +122,11 @@ export const Hero: React.FC<HeroProps> = ({
                   <span className="w-3 h-3 rounded-full bg-red-500/80" />
                   <span className="w-3 h-3 rounded-full bg-amber-500/80" />
                   <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                  <span className="text-xs font-mono text-slate-400 dark:text-slate-500 ml-2">
+                  <span className="text-xs font-mono text-slate-500 dark:text-slate-500 ml-2">
                     smit-core:8877/dashboard
                   </span>
                 </div>
-                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
                   <Activity className="w-3 h-3 animate-pulse" />
                   ONLINE
                 </span>
@@ -138,7 +138,7 @@ export const Hero: React.FC<HeroProps> = ({
                   onClick={() => setActiveTab('session')}
                   className={`py-1.5 rounded-md transition-colors cursor-pointer ${
                     activeTab === 'session'
-                      ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm font-semibold'
+                      ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 shadow-sm font-semibold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
                   }`}
                 >
@@ -148,7 +148,7 @@ export const Hero: React.FC<HeroProps> = ({
                   onClick={() => setActiveTab('payment')}
                   className={`py-1.5 rounded-md transition-colors cursor-pointer ${
                     activeTab === 'payment'
-                      ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm font-semibold'
+                      ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 shadow-sm font-semibold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
                   }`}
                 >
@@ -158,7 +158,7 @@ export const Hero: React.FC<HeroProps> = ({
                   onClick={() => setActiveTab('ai')}
                   className={`py-1.5 rounded-md transition-colors cursor-pointer ${
                     activeTab === 'ai'
-                      ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm font-semibold'
+                      ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 shadow-sm font-semibold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
                   }`}
                 >
@@ -168,7 +168,7 @@ export const Hero: React.FC<HeroProps> = ({
                   onClick={() => setActiveTab('video')}
                   className={`py-1.5 rounded-md transition-colors cursor-pointer flex items-center justify-center gap-1 ${
                     activeTab === 'video'
-                      ? 'bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-sm font-semibold'
+                      ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 shadow-sm font-semibold'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
                   }`}
                 >
@@ -186,13 +186,13 @@ export const Hero: React.FC<HeroProps> = ({
                       <div className="text-sm font-bold text-slate-800 dark:text-slate-100">
                         Иванов Иван Иванович
                       </div>
-                      <div className="text-xs font-mono text-emerald-600 dark:text-emerald-400">
+                      <div className="text-xs font-mono text-emerald-700 dark:text-emerald-400">
                         100.64.14.88 · PPPoE MikroTik-BNG
                       </div>
                     </div>
                     <div className="text-right">
                       <div className="text-xs text-slate-400">Баланс</div>
-                      <div className="text-base font-extrabold text-emerald-600 dark:text-emerald-400">
+                      <div className="text-base font-extrabold text-emerald-700 dark:text-emerald-400">
                         +1 250 ₽
                       </div>
                       <span className="inline-block text-[10px] font-semibold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded">
@@ -214,7 +214,7 @@ export const Hero: React.FC<HeroProps> = ({
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-1">
+                  <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 pt-1">
                     <span>Пример экрана: сессия абонента</span>
                     <span className="text-emerald-500 font-semibold">online</span>
                   </div>
@@ -253,7 +253,7 @@ export const Hero: React.FC<HeroProps> = ({
                     «Здравствуйте! Почему у меня интернет отключился?»
                   </div>
                   <div className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/25 text-xs text-slate-800 dark:text-slate-200 max-w-[90%] ml-auto">
-                    <div className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 mb-0.5">
+                    <div className="text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 mb-0.5">
                       AI-агент СмИТ
                     </div>
                     «Здравствуйте, Иван! На вашем договоре SM-5552 баланс 0 ₽. Списание тарифа

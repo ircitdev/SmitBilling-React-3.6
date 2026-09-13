@@ -8,7 +8,7 @@ export const BlogSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <BookOpen className="w-3.5 h-3.5" />
             <span>База знаний и статьи</span>
           </div>
@@ -44,7 +44,7 @@ export const BlogSection: React.FC = () => {
               {/* Content */}
               <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
+                  <div className="flex items-center gap-3 text-xs text-slate-600 dark:text-slate-400 mb-3">
                     <span className="flex items-center gap-1">
                       <Calendar className="w-3.5 h-3.5" />
                       {article.date}
@@ -68,13 +68,13 @@ export const BlogSection: React.FC = () => {
                 <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
                   <div className="flex flex-wrap gap-1.5">
                     {(article.tags || [article.tag]).slice(0, 2).map((tag) => (
-                      <span key={tag} className="text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
+                      <span key={tag} className="text-[11px] font-mono text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded">
                         #{tag}
                       </span>
                     ))}
                   </div>
 
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
                     <span>Читать</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>

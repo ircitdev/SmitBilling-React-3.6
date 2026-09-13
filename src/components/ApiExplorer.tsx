@@ -19,7 +19,7 @@ export const ApiExplorer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <Terminal className="w-3.5 h-3.5" />
             <span>Разработчикам и интеграторам</span>
           </div>
@@ -42,7 +42,7 @@ export const ApiExplorer: React.FC = () => {
                 onClick={() => setSelectedIdx(idx)}
                 className={`shrink-0 flex items-center gap-2 px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                   selectedIdx === idx
-                    ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                    ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
                     : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60'
                 }`}
               >
@@ -64,14 +64,14 @@ export const ApiExplorer: React.FC = () => {
           <div className="p-4 sm:p-6 border-b border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2 font-mono text-xs sm:text-sm">
-                <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-bold">
+                <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 font-bold">
                   {currentEndpoint.method}
                 </span>
                 <span className="text-slate-800 dark:text-slate-200 font-semibold break-all">
                   {currentEndpoint.path}
                 </span>
               </div>
-              <p className="text-xs text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-slate-600 dark:text-slate-400">
                 {currentEndpoint.description}
               </p>
             </div>
@@ -104,7 +104,7 @@ export const ApiExplorer: React.FC = () => {
           {/* Footer Swagger Link */}
           <div className="p-4 bg-slate-50 dark:bg-slate-950/40 border-t border-slate-100 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
             <span>Автоматическая документация OpenAPI 3.0 / Swagger UI доступна в админке</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+            <span className="text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-1">
               Token & OAuth 2.0 Auth <ExternalLink className="w-3.5 h-3.5" />
             </span>
           </div>

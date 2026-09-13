@@ -7,7 +7,7 @@ export const ArchitectureSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <Cpu className="w-3.5 h-3.5" />
             <span>Инженерный стек</span>
           </div>
@@ -26,7 +26,7 @@ export const ArchitectureSection: React.FC = () => {
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
               Логическая схема распределения потоков
             </h3>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
               Бесшовная маршрутизация между клиентами, сетевым оборудованием и базами данных
             </p>
           </div>
@@ -73,7 +73,7 @@ export const ArchitectureSection: React.FC = () => {
               <div className="text-sm font-bold text-emerald-800 dark:text-emerald-300">
                 Nginx Reverse Proxy & TLS Let's Encrypt
               </div>
-              <div className="text-xs text-slate-500 dark:text-slate-400">
+              <div className="text-xs text-slate-600 dark:text-slate-400">
                 Приём запросов и HTTPS-сертификаты Let's Encrypt
               </div>
             </div>
@@ -85,7 +85,7 @@ export const ArchitectureSection: React.FC = () => {
 
             {/* Layer 3: Docker Compose Application */}
             <div className="p-6 rounded-2xl border border-dashed border-emerald-500/30 bg-emerald-500/5 space-y-4">
-              <div className="flex items-center justify-between text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
+              <div className="flex items-center justify-between text-xs font-mono text-emerald-700 dark:text-emerald-400 font-semibold">
                 <span>DOCKER COMPOSE CONTAINER CLUSTER</span>
                 <span>PYTHON 3.11</span>
               </div>
@@ -95,7 +95,7 @@ export const ArchitectureSection: React.FC = () => {
                   <div className="font-bold text-sm text-slate-900 dark:text-white">
                     Django 4.2 + Gunicorn
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     REST API v2, логика биллинга, админка, ServiceDesk, CRM и интеграции
                   </div>
                 </div>
@@ -103,7 +103,7 @@ export const ArchitectureSection: React.FC = () => {
                   <div className="font-bold text-sm text-slate-900 dark:text-white">
                     FreeRADIUS 3.2.3 Daemon
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Асинхронный rlm_python3 обработчик авторизации и CoA-управления
                   </div>
                 </div>
@@ -111,7 +111,7 @@ export const ArchitectureSection: React.FC = () => {
                   <div className="font-bold text-sm text-slate-900 dark:text-white">
                     Celery + Beat Workers
                   </div>
-                  <div className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  <div className="text-xs text-slate-600 dark:text-slate-400 mt-1">
                     Фоновые начисления, авторазбор выписок, СОРМ-экспорт и рассылки
                   </div>
                 </div>

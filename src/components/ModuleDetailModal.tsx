@@ -68,6 +68,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
         {module.img && (
           <div className="relative h-44 sm:h-56 w-full overflow-hidden bg-slate-950 flex-shrink-0 border-b border-slate-800">
             <img
+              loading="lazy"
               src={module.img}
               alt={module.name}
               className="w-full h-full object-cover opacity-80"
@@ -87,7 +88,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
             <div className="absolute bottom-4 left-6 right-6 flex items-end justify-between">
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1">
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/90 text-white shadow-sm">
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/90 text-slate-950 shadow-sm">
                     {module.categoryName}
                   </span>
                   <span className="text-xs font-mono text-slate-300 bg-slate-800/80 px-2 py-0.5 rounded">
@@ -114,19 +115,19 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
         {!module.img && (
           <div className="p-6 sm:p-8 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex items-start justify-between gap-4 flex-shrink-0">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/25 flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 flex items-center justify-center flex-shrink-0">
                 <Layers className="w-6 h-6" />
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-1.5">
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
                     {module.categoryName}
                   </span>
                   <span className="text-xs font-mono text-slate-400 bg-slate-200/60 dark:bg-slate-800 px-2 py-0.5 rounded">
                     {module.version}
                   </span>
                   {module.isCore && (
-                    <span className="text-xs font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded bg-amber-500/10 text-amber-700 dark:text-amber-400">
                       Базовый модуль
                     </span>
                   )}
@@ -161,6 +162,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
               </div>
               <div className="relative aspect-video rounded-xl overflow-hidden bg-black">
                 <video
+                  preload="none"
                   controls
                   playsInline
                   poster={module.vposter || module.img}
@@ -198,6 +200,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
                     className="group relative rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden bg-slate-950 aspect-[16/10] cursor-pointer hover:border-emerald-500/50 transition-all shadow-sm hover:shadow-md"
                   >
                     <img
+                      loading="lazy"
                       src={shot.src}
                       alt={shot.cap}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
@@ -301,7 +304,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
 
         {/* Footer actions */}
         <div className="p-4 sm:p-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 flex flex-col sm:flex-row items-center justify-between gap-3 flex-shrink-0">
-          <div className="text-xs text-slate-500 dark:text-slate-400">
+          <div className="text-xs text-slate-600 dark:text-slate-400">
             Входит в пакет обновлений и технической поддержки
           </div>
           <button
@@ -339,6 +342,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
           </div>
           <div className="flex-1 flex items-center justify-center p-4">
             <img
+              loading="lazy"
               src={selectedShot.src}
               alt={selectedShot.cap}
               className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"

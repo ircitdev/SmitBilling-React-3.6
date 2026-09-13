@@ -24,7 +24,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <ArrowRightLeft className="w-3.5 h-3.5" />
             <span>Миграция без боли</span>
           </div>
@@ -60,7 +60,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+              <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-medium">
                 <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
                 <span>{sys.badge || 'Без разрыва сессий'}</span>
               </div>
@@ -72,7 +72,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
         <div className="rounded-3xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 via-teal-500/5 to-transparent p-6 sm:p-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
             <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center flex-shrink-0 text-sm">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center flex-shrink-0 text-sm">
                 1
               </div>
               <div>
@@ -86,7 +86,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
             </div>
 
             <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center flex-shrink-0 text-sm">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center flex-shrink-0 text-sm">
                 2
               </div>
               <div>
@@ -100,7 +100,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
             </div>
 
             <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-emerald-500 text-white font-bold flex items-center justify-center flex-shrink-0 text-sm">
+              <div className="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center flex-shrink-0 text-sm">
                 3
               </div>
               <div>
@@ -124,7 +124,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
 
             <button
               onClick={onOpenDemoModal}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-500/25 transition-all cursor-pointer flex-shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold bg-emerald-500 hover:bg-emerald-600 text-slate-950 shadow-md shadow-emerald-500/25 transition-all cursor-pointer flex-shrink-0"
             >
               <span>Обсудить план миграции</span>
               <ArrowRight className="w-4 h-4" />

@@ -44,7 +44,7 @@ export const HowItWorksSection: React.FC = () => {
     <section id="howitworks" className="relative py-14 sm:py-28 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <Rocket className="w-3.5 h-3.5" />
             <span>Как это работает</span>
           </div>
@@ -82,7 +82,7 @@ export const HowItWorksSection: React.FC = () => {
                   <div className="flex items-start gap-4">
                     <span
                       className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold flex-shrink-0 ${
-                        on ? 'bg-emerald-500 text-white' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                        on ? 'bg-emerald-500 text-slate-950' : 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-400'
                       }`}
                     >
                       {i + 1}

@@ -12,7 +12,7 @@ export const DemoSection: React.FC<DemoSectionProps> = ({ onOpenVideoModal }) =>
     <section id="demo" className="relative py-14 sm:py-28 z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <MonitorPlay className="w-3.5 h-3.5" />
             <span>Демонстрация</span>
           </div>
@@ -45,7 +45,7 @@ export const DemoSection: React.FC<DemoSectionProps> = ({ onOpenVideoModal }) =>
               />
               <span className="absolute inset-0 bg-slate-950/30 group-hover:bg-slate-950/20 transition-colors" />
               <span className="absolute inset-0 flex items-center justify-center">
-                <span className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-2xl shadow-emerald-500/40 group-hover:scale-110 transition-transform">
+                <span className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center shadow-2xl shadow-emerald-500/40 group-hover:scale-110 transition-transform">
                   <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-current ml-1" />
                 </span>
               </span>
@@ -74,12 +74,12 @@ export const DemoSection: React.FC<DemoSectionProps> = ({ onOpenVideoModal }) =>
                 download
                 className="group flex-1 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm hover:border-emerald-500/40 hover:shadow-xl transition-all flex flex-col"
               >
-                <span className="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+                <span className="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 flex items-center justify-center">
                   <FileText className="w-5 h-5" />
                 </span>
                 <h3 className="mt-4 text-lg font-bold text-slate-900 dark:text-white">{doc.title}</h3>
                 <p className="mt-1.5 text-sm text-slate-600 dark:text-slate-400 leading-relaxed flex-1">{doc.text}</p>
-                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-emerald-600 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
+                <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-emerald-700 dark:text-emerald-400 group-hover:translate-x-1 transition-transform">
                   Скачать PDF
                   <ArrowRight className="w-4 h-4" />
                 </span>

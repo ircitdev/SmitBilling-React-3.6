@@ -45,7 +45,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <Layers className="w-3.5 h-3.5" />
             <span>Каталог 24 модулей</span>
           </div>
@@ -81,7 +81,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
                 onClick={() => setSelectedCategory(cat.id)}
                 className={`shrink-0 px-3.5 py-3 sm:px-3 sm:py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
                   selectedCategory === cat.id
-                    ? 'bg-emerald-500 text-white shadow-sm'
+                    ? 'bg-emerald-500 text-slate-950 shadow-sm'
                     : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                 }`}
               >
@@ -148,7 +148,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
                 <div>
                   {!mod.img && (
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-[10px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                      <span className="text-[10px] font-semibold tracking-wide uppercase px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
                         {mod.categoryName}
                       </span>
                       <span className="text-xs font-mono text-slate-400">{mod.version}</span>
@@ -160,14 +160,14 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
                     <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-500 flex-shrink-0 ml-1" />
                   </h3>
 
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-1 sm:mt-2 line-clamp-2 sm:line-clamp-3">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed mt-1 sm:mt-2 line-clamp-2 sm:line-clamp-3">
                     {mod.shortDesc}
                   </p>
                 </div>
 
                 <div className="mt-2 pt-2 sm:mt-4 sm:pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2 text-[11px] text-slate-400">
                   <span>{mod.isCore ? 'Включён в ядро' : mod.plans[0]}</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-semibold group-hover:underline">
+                  <span className="text-emerald-700 dark:text-emerald-400 font-semibold group-hover:underline">
                     Подробнее →
                   </span>
                 </div>
@@ -190,7 +190,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
 
         {/* Empty State */}
         {filteredModules.length === 0 && (
-          <div className="text-center py-12 text-slate-500 dark:text-slate-400">
+          <div className="text-center py-12 text-slate-600 dark:text-slate-400">
             Ничего не найдено по запросу «{searchQuery}». Попробуйте изменить параметры поиска.
           </div>
         )}

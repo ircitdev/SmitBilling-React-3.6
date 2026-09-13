@@ -53,7 +53,7 @@ export const IntegrationsSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-4">
             <Cpu className="w-3.5 h-3.5" />
             <span>Экосистема и совместимость</span>
           </div>
@@ -85,7 +85,7 @@ export const IntegrationsSection: React.FC = () => {
               onClick={() => setActiveGroup('all')}
               className={`shrink-0 px-3.5 py-3 sm:py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                 activeGroup === 'all'
-                  ? 'bg-emerald-500 text-white shadow-sm'
+                  ? 'bg-emerald-500 text-slate-950 shadow-sm'
                   : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
               }`}
             >
@@ -99,7 +99,7 @@ export const IntegrationsSection: React.FC = () => {
                   onClick={() => setActiveGroup(gid)}
                   className={`shrink-0 px-3.5 py-3 sm:py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
                     activeGroup === gid
-                      ? 'bg-emerald-500 text-white shadow-sm'
+                      ? 'bg-emerald-500 text-slate-950 shadow-sm'
                       : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
                   }`}
                 >
@@ -127,7 +127,7 @@ export const IntegrationsSection: React.FC = () => {
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white">
                       {group.title}
                     </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                    <p className="text-xs text-slate-600 dark:text-slate-400">
                       {group.desc || group.description}
                     </p>
                   </div>
@@ -149,7 +149,7 @@ export const IntegrationsSection: React.FC = () => {
                           <span className="truncate">{itemName}</span>
                         </div>
                         {itemDesc && (
-                          <span className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 sm:line-clamp-1 sm:pl-5.5">
+                          <span className="text-[11px] text-slate-600 dark:text-slate-400 mt-1 line-clamp-2 sm:line-clamp-1 sm:pl-5.5">
                             {itemDesc}
                           </span>
                         )}

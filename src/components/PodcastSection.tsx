@@ -81,12 +81,13 @@ export const PodcastSection: React.FC = () => {
           <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
           {/* Hidden HTML5 Audio Element */}
-          <audio ref={audioRef} src={MEDIA_URLS.podcastAudio} preload="metadata" />
+          <audio ref={audioRef} src={MEDIA_URLS.podcastAudio} preload="none" />
 
           <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
             {/* Podcast Cover Artwork */}
             <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-2xl overflow-hidden shadow-xl flex-shrink-0 border border-slate-700/60 bg-slate-800 flex items-center justify-center group">
               <img
+                loading="lazy"
                 src="https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_1.jpg"
                 alt="Подкаст СмИТ Биллинг"
                 className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500"

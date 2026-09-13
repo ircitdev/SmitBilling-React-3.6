@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import {
   Calculator as CalcIcon,
   Check,
@@ -56,6 +56,30 @@ export const Calculator: React.FC<CalculatorProps> = ({
   const [churnRate, setChurnRate] = useState(4); // % annual churn rate
 
   const { plan, annualCost, costPerSubscriberPerMonth } = getRecommendedPlan(subscribers);
+
+  // График рисуется с анимацией и на телефоне занимал больше секунды сразу при загрузке
+  // страницы, хотя калькулятор далеко внизу. Строим его, когда блок подъезжает к экрану;
+  // место под него зарезервировано высотой контейнера.
+  const chartBoxRef = useRef<HTMLDivElement>(null);
+  const [chartVisible, setChartVisible] = useState(false);
+  useEffect(() => {
+    const box = chartBoxRef.current;
+    if (!box || !('IntersectionObserver' in window)) {
+      setChartVisible(true);
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setChartVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px 0px' }
+    );
+    observer.observe(box);
+    return () => observer.disconnect();
+  }, []);
 
   const handleChoosePlan = () => {
     if (typeof onSelectPlan === 'function') {
@@ -156,7 +180,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <CalcIcon className="w-3.5 h-3.5" />
             <span>Калькулятор окупаемости и 5-летней выгоды</span>
           </div>
@@ -179,7 +203,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 Активных абонентов в вашей сети:
               </label>
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl sm:text-4xl font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                <span className="text-2xl sm:text-4xl font-black text-emerald-700 dark:text-emerald-400 font-mono">
                   {subscribers.toLocaleString('ru-RU')}
                 </span>
                 <span className="text-sm font-medium text-slate-500">абонентов</span>
@@ -217,7 +241,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   onClick={() => setSubscribers(num)}
                   className={`px-3 py-2.5 sm:px-2.5 sm:py-1 rounded-lg text-xs font-mono font-medium transition-colors cursor-pointer border ${
                     subscribers === num
-                      ? 'bg-emerald-500 text-white border-emerald-500'
+                      ? 'bg-emerald-500 text-slate-950 border-emerald-500'
                       : 'bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                   }`}
                 >
@@ -242,8 +266,8 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <div
                   className={`p-2 rounded-xl shrink-0 transition-colors ${
                     forecastGrowthEnabled
-                      ? 'bg-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-                      : 'bg-slate-200/80 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                      ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-400'
+                      : 'bg-slate-200/80 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                   }`}
                 >
                   <SlidersHorizontal className="w-5 h-5" />
@@ -257,7 +281,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border transition-colors ${
                         forecastGrowthEnabled
                           ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border-emerald-500/30'
-                          : 'bg-slate-200/70 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-300 dark:border-slate-700'
+                          : 'bg-slate-200/70 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700'
                       }`}
                     >
                       {forecastGrowthEnabled
@@ -265,7 +289,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                         : 'Базовый расчёт (+8%/год)'}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                     {forecastGrowthEnabled
                       ? 'Настройте приток (Acquisition) и отток (Churn) абонентов для расчёта динамики окупаемости и ROI в реальном времени'
                       : 'Включите, чтобы смоделировать темпы притока и оттока абонентов и увидеть пересчёт ROI в реальном времени'}
@@ -309,7 +333,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   <div className="p-3.5 sm:p-4 rounded-xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="p-1 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                        <div className="p-1 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
                           <UserPlus className="w-4 h-4" />
                         </div>
                         <label
@@ -342,7 +366,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       <span>30% (экспансия)</span>
                     </div>
 
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-tight">
                       Органические заявки, реклама, расширение покрытия (FTTH/GPON).
                     </p>
                   </div>
@@ -384,7 +408,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       <span>15% (критич)</span>
                     </div>
 
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
+                    <p className="text-[11px] text-slate-600 dark:text-slate-400 leading-tight">
                       Переезды, сезонность, конкуренция.
                     </p>
                   </div>
@@ -400,7 +424,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       onClick={() => { setAcquisitionRate(10); setChurnRate(4); }}
                       className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer border ${
                         acquisitionRate === 10 && churnRate === 4
-                          ? 'bg-emerald-500 text-white border-emerald-500'
+                          ? 'bg-emerald-500 text-slate-950 border-emerald-500'
                           : 'bg-white/90 dark:bg-slate-900/90 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                       }`}
                     >
@@ -411,7 +435,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       onClick={() => { setAcquisitionRate(20); setChurnRate(5); }}
                       className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer border ${
                         acquisitionRate === 20 && churnRate === 5
-                          ? 'bg-emerald-500 text-white border-emerald-500'
+                          ? 'bg-emerald-500 text-slate-950 border-emerald-500'
                           : 'bg-white/90 dark:bg-slate-900/90 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                       }`}
                     >
@@ -422,7 +446,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       onClick={() => { setAcquisitionRate(6); setChurnRate(6); }}
                       className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors cursor-pointer border ${
                         acquisitionRate === 6 && churnRate === 6
-                          ? 'bg-emerald-500 text-white border-emerald-500'
+                          ? 'bg-emerald-500 text-slate-950 border-emerald-500'
                           : 'bg-white/90 dark:bg-slate-900/90 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700'
                       }`}
                     >
@@ -446,7 +470,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                     <span
                       className={`font-mono font-bold ${
                         netGrowthRate > 0
-                          ? 'text-emerald-600 dark:text-emerald-400'
+                          ? 'text-emerald-700 dark:text-emerald-400'
                           : netGrowthRate === 0
                           ? 'text-amber-500'
                           : 'text-rose-500'
@@ -491,27 +515,27 @@ export const Calculator: React.FC<CalculatorProps> = ({
             return (
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-                  <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-1">
+                  <div className="flex items-center gap-1.5 text-xs text-emerald-700 dark:text-emerald-400 font-medium mb-1">
                     <Coins className="w-3.5 h-3.5" />
                     <span>{isCompetitive ? 'Разница за 5 лет' : 'Экономия за 5 лет'}</span>
                   </div>
-                  <div className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">
+                  <div className="text-xl sm:text-2xl font-black text-emerald-700 dark:text-emerald-400 font-mono">
                     {formatCurrency(isCompetitive ? total5YearMarketSavings : total5YearSavings)}
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">
                     {isCompetitive ? 'против условной оплаты за абонента' : 'оценка по модели'}
                   </div>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-teal-500/10 border border-teal-500/20">
-                  <div className="flex items-center gap-1.5 text-xs text-teal-600 dark:text-teal-400 font-medium mb-1">
+                  <div className="flex items-center gap-1.5 text-xs text-teal-700 dark:text-teal-400 font-medium mb-1">
                     <TrendingUp className="w-3.5 h-3.5" />
                     <span>{isCompetitive ? 'В среднем в месяц' : 'В среднем в месяц'}</span>
                   </div>
-                  <div className="text-xl sm:text-2xl font-black text-teal-600 dark:text-teal-400 font-mono">
+                  <div className="text-xl sm:text-2xl font-black text-teal-700 dark:text-teal-400 font-mono">
                     {(isCompetitive ? avgMonthlyMarketSavings : avgMonthlySavings).toLocaleString('ru-RU')} ₽
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">
                     {isCompetitive ? 'сохраняется в IT-бюджете' : 'высвобождаемый бюджет'}
                   </div>
                 </div>
@@ -524,20 +548,20 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   <div className="text-xl sm:text-2xl font-black text-blue-600 dark:text-blue-400 font-mono">
                     {isCompetitive ? paybackMonthsVsMarket : paybackMonths} мес.
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">
                     {isCompetitive ? 'полный возврат лицензии' : 'полный возврат инвестиций'}
                   </div>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20">
-                  <div className="flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400 font-medium mb-1">
+                  <div className="flex items-center gap-1.5 text-xs text-amber-700 dark:text-amber-400 font-medium mb-1">
                     <Percent className="w-3.5 h-3.5" />
                     <span>5-летний ROI</span>
                   </div>
-                  <div className="text-xl sm:text-2xl font-black text-amber-600 dark:text-amber-400 font-mono">
+                  <div className="text-xl sm:text-2xl font-black text-amber-700 dark:text-amber-400 font-mono">
                     +{isCompetitive ? roiMarket5Year : roi5Year}%
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  <div className="text-[11px] text-slate-600 dark:text-slate-400 mt-0.5">
                     {isCompetitive ? 'преимущество перед аналогами' : 'рентабельность внедрения'}
                   </div>
                 </div>
@@ -559,11 +583,11 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       : 'Сравнение затрат: СмИТ Биллинг vs Ручной труд / старая система'}
                   </h3>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                   {forecastGrowthEnabled ? (
                     <span>
                       С учётом прогноза динамики: приток{' '}
-                      <strong className="text-emerald-600 dark:text-emerald-400">+{acquisitionRate}%</strong>, отток{' '}
+                      <strong className="text-emerald-700 dark:text-emerald-400">+{acquisitionRate}%</strong>, отток{' '}
                       <strong className="text-rose-500 dark:text-rose-400">-{churnRate}%</strong> (чистый темп:{' '}
                       <strong className="text-slate-800 dark:text-slate-200 font-mono">
                         {netGrowthRate >= 0 ? '+' : ''}{(netGrowthRate * 100).toFixed(1)}%/год
@@ -587,7 +611,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   onClick={() => setChartView('competitive')}
                   className={`inline-flex items-center px-3 py-3 sm:py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     chartView === 'competitive'
-                      ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                      ? 'bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 shadow-sm'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -599,7 +623,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   onClick={() => setChartView('cumulative')}
                   className={`px-3 py-3 sm:py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     chartView === 'cumulative'
-                      ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                      ? 'bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 shadow-sm'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -610,7 +634,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   onClick={() => setChartView('comparison')}
                   className={`px-3 py-3 sm:py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
                     chartView === 'comparison'
-                      ? 'bg-white dark:bg-slate-900 text-emerald-600 dark:text-emerald-400 shadow-sm'
+                      ? 'bg-white dark:bg-slate-900 text-emerald-700 dark:text-emerald-400 shadow-sm'
                       : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                   }`}
                 >
@@ -620,7 +644,8 @@ export const Calculator: React.FC<CalculatorProps> = ({
             </div>
 
             {/* Recharts Chart Area */}
-            <div className="w-full h-72 sm:h-80">
+            <div ref={chartBoxRef} className="w-full h-72 sm:h-80">
+              {chartVisible && (
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart
                   data={projectionData}
@@ -826,6 +851,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   )}
                 </ComposedChart>
               </ResponsiveContainer>
+              )}
             </div>
 
             {/* Contextual ROI Competitive Breakdown */}
@@ -862,7 +888,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
               {/* Plan Info */}
               <div className="md:col-span-7 space-y-3">
                 <div className="flex items-center gap-2.5">
-                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                  <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-700 dark:text-emerald-400">
                     Рекомендуемый тариф
                   </span>
                   <span className="text-xs text-slate-400 font-medium">
@@ -896,7 +922,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <div className="text-xs text-slate-400 uppercase tracking-wider font-semibold">
                   Стоимость лицензии:
                 </div>
-                <div className="text-3xl sm:text-4xl font-extrabold text-emerald-600 dark:text-emerald-400 font-mono my-1">
+                <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700 dark:text-emerald-400 font-mono my-1">
                   {annualCost.toLocaleString('ru-RU')}{' '}
                   <span className="text-lg font-normal text-slate-500">₽/год</span>
                 </div>
@@ -923,7 +949,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                     <button
                       type="button"
                       onClick={() => onOpenAiCase(subscribers)}
-                      className="w-full inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition-all cursor-pointer"
+                      className="w-full inline-flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 transition-all cursor-pointer"
                     >
                       <Bot className="w-3.5 h-3.5" />
                       <span>Бизнес-кейс для руководства</span>
@@ -935,7 +961,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
           </div>
 
           {/* Honest Pricing Note */}
-          <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 leading-relaxed text-center sm:text-left">
+          <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400 leading-relaxed text-center sm:text-left">
             <span className="font-semibold text-slate-700 dark:text-slate-300">Важное преимущество:</span>{' '}
             Стоимость лицензии СмИТ Биллинг фиксирована по составу модулей и <strong>не увеличивается</strong> при росте вашей абонентской базы. Чем больше у вас клиентов, тем выгоднее становится каждый подключённый абонент.
           </div>

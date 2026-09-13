@@ -23,7 +23,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 mb-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <Zap className="w-3.5 h-3.5" />
             <span>Прозрачные тарифы</span>
           </div>
@@ -64,7 +64,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
         </div>
 
         {/* Pricing Cards Grid */}
-        <p className="sm:hidden -mt-4 mb-2 text-center text-xs text-slate-500 dark:text-slate-400">Листайте тарифы вбок →</p>
+        <p className="sm:hidden -mt-4 mb-2 text-center text-xs text-slate-600 dark:text-slate-400">Листайте тарифы вбок →</p>
         <div className="m-scroll flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 items-stretch overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-4 px-4 pt-4 pb-4 md:mx-0 md:px-0 md:pt-0 md:pb-0">
           {PRICING_PLANS.map((plan) => {
             const price = isAnnual
@@ -91,7 +91,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
                   <div className="text-xl font-bold text-slate-900 dark:text-white mb-1">
                     {plan.name}
                   </div>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 min-h-[36px]">
+                  <p className="text-xs text-slate-600 dark:text-slate-400 min-h-[36px]">
                     {plan.description}
                   </p>
 
@@ -112,7 +112,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
                     </div>
                   </div>
 
-                  <div className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+                  <div className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
                     Включено {plan.modulesIncluded} модулей платформы
                   </div>
 
@@ -152,11 +152,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
         </div>
 
         {/* Custom Modules Note */}
-        <div className="text-center mt-12 text-sm text-slate-500 dark:text-slate-400">
+        <div className="text-center mt-12 text-sm text-slate-600 dark:text-slate-400">
           Нужен индивидуальный набор модулей?{' '}
           <button
             onClick={() => handlePlanClick('Индивидуальный')}
-            className="inline-block py-2 sm:py-0 text-emerald-600 dark:text-emerald-400 font-semibold underline underline-offset-4 cursor-pointer"
+            className="inline-block py-2 sm:py-0 text-emerald-700 dark:text-emerald-400 font-semibold underline underline-offset-4 cursor-pointer"
           >
             Соберём персональный тариф под ваши задачи
           </button>
@@ -165,7 +165,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
               href="/SMIT_Billing_KP.pdf"
               target="_blank"
               rel="noopener"
-              className="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline underline-offset-4"
+              className="text-emerald-700 dark:text-emerald-400 font-semibold hover:underline underline-offset-4"
             >
               Скачать коммерческое предложение (PDF, 4 страницы) →
             </a>

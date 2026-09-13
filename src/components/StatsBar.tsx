@@ -45,7 +45,7 @@ export const StatsBar: React.FC = () => {
                 className="p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800/70 bg-white/70 dark:bg-slate-800/40 backdrop-blur-sm transition-all hover:border-emerald-500/40 hover:-translate-y-1 hover:shadow-lg hover:shadow-emerald-500/5"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/15 to-teal-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/15 to-teal-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-700 dark:text-emerald-400">
                     <Icon className="w-5 h-5" />
                   </div>
                   {/* Sparkline visualization */}
@@ -66,7 +66,7 @@ export const StatsBar: React.FC = () => {
                 <div className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">
                   {stat.label}
                 </div>
-                <div className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                <div className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
                   {stat.sublabel}
                 </div>
               </div>

@@ -24,7 +24,7 @@ export const MobileAppShowcase: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left: Features & Story */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
               <Smartphone className="w-3.5 h-3.5" />
               <span>Личный кабинет и Мобильное приложение</span>
             </div>
@@ -48,7 +48,7 @@ export const MobileAppShowcase: React.FC = () => {
                   <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                     Меньше звонков в поддержку
                   </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     Абоненты сами смотрят остаток дней, детализацию начислений и меняют тариф.
                   </p>
                 </div>
@@ -62,7 +62,7 @@ export const MobileAppShowcase: React.FC = () => {
                   <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                     Push-уведомления вместо платных SMS
                   </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     Напоминания о низком балансе и уведомления о плановых работах — без оплаты за SMS.
                   </p>
                 </div>
@@ -76,7 +76,7 @@ export const MobileAppShowcase: React.FC = () => {
                   <h4 className="text-sm font-bold text-slate-900 dark:text-white">
                     Публикация в App Store и Google Play
                   </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-600 dark:text-slate-400">
                     Ваш логотип, ваши фирменные цвета, название вашей компании.
                   </p>
                 </div>
@@ -112,7 +112,7 @@ export const MobileAppShowcase: React.FC = () => {
                   onClick={() => setViewMode('interactive')}
                   className={`px-3.5 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                     viewMode === 'interactive'
-                      ? 'bg-emerald-500 text-white shadow-md'
+                      ? 'bg-emerald-500 text-slate-950 shadow-md'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
                   }`}
                 >
@@ -122,7 +122,7 @@ export const MobileAppShowcase: React.FC = () => {
                   onClick={() => setViewMode('mockup')}
                   className={`inline-flex items-center gap-1.5 px-3.5 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-all ${
                     viewMode === 'mockup'
-                      ? 'bg-emerald-500 text-white shadow-md'
+                      ? 'bg-emerald-500 text-slate-950 shadow-md'
                       : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
                   }`}
                 >
@@ -141,7 +141,7 @@ export const MobileAppShowcase: React.FC = () => {
                       onClick={() => setAppScreen('home')}
                       className={`px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                         appScreen === 'home'
-                          ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                          ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
                       }`}
                     >
@@ -151,7 +151,7 @@ export const MobileAppShowcase: React.FC = () => {
                       onClick={() => setAppScreen('tariff')}
                       className={`px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                         appScreen === 'tariff'
-                          ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                          ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
                       }`}
                     >
@@ -161,7 +161,7 @@ export const MobileAppShowcase: React.FC = () => {
                       onClick={() => setAppScreen('pay')}
                       className={`px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                         appScreen === 'pay'
-                          ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                          ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
                       }`}
                     >
@@ -171,7 +171,7 @@ export const MobileAppShowcase: React.FC = () => {
                       onClick={() => setAppScreen('chat')}
                       className={`px-3 py-3 sm:py-1.5 rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                         appScreen === 'chat'
-                          ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+                          ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20'
                           : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300'
                       }`}
                     >
@@ -189,6 +189,7 @@ export const MobileAppShowcase: React.FC = () => {
               /* Photo of Mobile Design Mockup */
               <div className="relative rounded-3xl overflow-hidden border border-slate-700/80 shadow-2xl group max-w-md">
                 <img
+                  loading="lazy"
                   src={MEDIA_URLS.appMockup}
                   alt="Дизайн макет мобильного приложения СмИТ"
                   className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
@@ -229,7 +230,7 @@ export const MobileAppShowcase: React.FC = () => {
                       </div>
 
                       <div className="grid grid-cols-2 gap-2 text-xs">
-                        <button className="p-3 rounded-xl bg-emerald-500 text-white font-semibold text-center hover:bg-emerald-600 transition-colors">
+                        <button className="p-3 rounded-xl bg-emerald-500 text-slate-950 font-semibold text-center hover:bg-emerald-600 transition-colors">
                           Оплатить СБП
                         </button>
                         <button className="p-3 rounded-xl bg-slate-800 text-slate-200 font-semibold text-center hover:bg-slate-700 transition-colors">
@@ -268,7 +269,7 @@ export const MobileAppShowcase: React.FC = () => {
                           <span>Гигабит 1000 Мбит</span>
                           <span className="text-emerald-400 font-bold">990 ₽</span>
                         </div>
-                        <button className="w-full py-1.5 rounded bg-emerald-500 text-white text-[11px] font-bold">
+                        <button className="w-full py-1.5 rounded bg-emerald-500 text-slate-950 text-[11px] font-bold">
                           Сменить тариф с 1 числа
                         </button>
                       </div>
@@ -284,7 +285,7 @@ export const MobileAppShowcase: React.FC = () => {
                         <div className="text-[10px] text-slate-400">Без комиссии через СБП</div>
                       </div>
                       <div className="space-y-1.5">
-                        <button className="w-full py-2.5 rounded-xl bg-emerald-500 text-white font-bold text-center">
+                        <button className="w-full py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-center">
                           Оплатить через СБП
                         </button>
                         <button className="w-full py-2.5 rounded-xl bg-slate-800 text-slate-300 font-medium text-center">
@@ -304,7 +305,7 @@ export const MobileAppShowcase: React.FC = () => {
                         Статичный IP подключается мгновенно! Стоимость — 150 ₽/мес. Подключить прямо сейчас к вашему договору?
                       </div>
                       <div className="flex gap-2 justify-end">
-                        <button className="px-2.5 py-1 rounded bg-emerald-500 text-white font-bold text-[10px]">
+                        <button className="px-2.5 py-1 rounded bg-emerald-500 text-slate-950 font-bold text-[10px]">
                           Да, подключить
                         </button>
                       </div>

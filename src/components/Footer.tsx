@@ -167,7 +167,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo, onOpenAi }) => {
         </div>
 
         {/* Нижняя строка */}
-        <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <div>© 2026 ООО «СмИТ». Все права защищены.</div>
           <nav aria-label="Правовая информация" className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
             {LEGAL_LINKS.map((l) => (
