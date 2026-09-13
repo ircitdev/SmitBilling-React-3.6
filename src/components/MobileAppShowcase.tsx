@@ -35,7 +35,7 @@ export const MobileAppShowcase: React.FC = () => {
 
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
               Современное брендированное приложение для iOS и Android. Абонент проверяет баланс,
-              оплачивает в 1 клик через СБП, берет обещанный платёж или общается с AI-поддержкой без
+              оплачивает картой, берёт обещанный платёж или общается с AI-поддержкой без
               перегрузки вашей телефонной линии.
             </p>
 
@@ -46,7 +46,7 @@ export const MobileAppShowcase: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-                    Снижение нагрузки на операторов до 40%
+                    Меньше звонков в поддержку
                   </h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
                     Абоненты сами смотрят остаток дней, детализацию начислений и меняют тариф.
@@ -63,7 +63,7 @@ export const MobileAppShowcase: React.FC = () => {
                     Push-уведомления вместо платных SMS
                   </h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Напоминания об окончании средств за 3 дня и уведомления о плановых работах бесплатно.
+                    Напоминания о низком балансе и уведомления о плановых работах — без оплаты за SMS.
                   </p>
                 </div>
               </div>
@@ -195,8 +195,8 @@ export const MobileAppShowcase: React.FC = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-6">
                   <div>
-                    <div className="text-white font-bold text-base">Брендированное PWA и нативное приложение</div>
-                    <div className="text-emerald-400 text-xs mt-1">Доступно для всех абонентов на тарифах Про и Enterprise</div>
+                    <div className="text-white font-bold text-base">Личный кабинет и мобильное приложение</div>
+                    <div className="text-emerald-400 text-xs mt-1">Входит во все тарифы, начиная со «Старт»</div>
                   </div>
                 </div>
               </div>

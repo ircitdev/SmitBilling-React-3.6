@@ -251,7 +251,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="text-sm font-bold text-slate-900 dark:text-white">
-                      Прогноз динамики рынка (Forecast Market Growth)
+                      Прогноз роста абонентской базы
                     </span>
                     <span
                       className={`text-[11px] font-semibold px-2 py-0.5 rounded-full border transition-colors ${
@@ -385,7 +385,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                     </div>
 
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
-                      Переезды, сезонность, конкуренция. СмИТ снижает отток на 1.5–2% через автоплатежи.
+                      Переезды, сезонность, конкуренция.
                     </p>
                   </div>
                 </div>
@@ -469,13 +469,13 @@ export const Calculator: React.FC<CalculatorProps> = ({
                     <span className="font-bold text-slate-900 dark:text-white">Экономический эффект фиксированной модели: </span>
                     {netGrowthRate > 0 ? (
                       <>
-                        При росте базы до <strong>{projectionData[4]?.subsCount.toLocaleString('ru-RU')} абонентов</strong> среднерыночные биллинги с поабонентской тарификацией (18–22 ₽/мес) увеличили бы ваши расходы на{' '}
+                        При росте базы до <strong>{projectionData[4]?.subsCount.toLocaleString('ru-RU')} абонентов</strong> биллинг с оплатой за абонента (условно 18–22 ₽/мес) увеличил бы расходы на{' '}
                         <strong>{Math.round(projectionData[4]?.industryAvgCost - projectionData[0]?.industryAvgCost).toLocaleString('ru-RU')} ₽/год</strong>. 
                         Лицензия СмИТ Биллинг остаётся фиксированной, сохраняя операционную маржу!
                       </>
                     ) : (
                       <>
-                        Даже при стабильной базе или высокой конкуренции отсутствие скрытых платежей за абонентские лицензии и обязательный SLA надёжно защищает IT-бюджет оператора.
+                        Цена лицензии не зависит от числа абонентов: рост базы не увеличивает расходы на биллинг.
                       </>
                     )}
                   </div>
@@ -493,13 +493,13 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
                   <div className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-1">
                     <Coins className="w-3.5 h-3.5" />
-                    <span>{isCompetitive ? 'Экономия vs Рынок' : 'Экономия за 5 лет'}</span>
+                    <span>{isCompetitive ? 'Разница за 5 лет' : 'Экономия за 5 лет'}</span>
                   </div>
                   <div className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400 font-mono">
                     {formatCurrency(isCompetitive ? total5YearMarketSavings : total5YearSavings)}
                   </div>
                   <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
-                    {isCompetitive ? 'против среднерыночных цен РФ' : 'чистый кумулятивный эффект'}
+                    {isCompetitive ? 'против условной оплаты за абонента' : 'оценка по модели'}
                   </div>
                 </div>
 
@@ -571,7 +571,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       ) • Прогноз базы к 5 году: <strong className="text-slate-900 dark:text-white font-mono">{projectionData[4]?.subsCount.toLocaleString('ru-RU')}</strong> аб.
                     </span>
                   ) : chartView === 'competitive' ? (
-                    'Наглядно доказывает возврат инвестиций (ROI): среднерыночные поабонентские сборы + платный SLA против прозрачного тарифа СмИТ'
+                    'Сравнение с условной моделью оплаты за абонента (18–22 ₽/мес плюс сопровождение) — оценка, а не цены конкретного вендора'
                   ) : chartView === 'cumulative' ? (
                     'Учитывает фиксированную лицензию СмИТ Биллинг и базовый рост сети на 8% ежегодно'
                   ) : (
@@ -592,7 +592,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                   }`}
                 >
                   <Scale className="w-3.5 h-3.5 mr-1" />
-                  Бенчмарк рынка (ROI)
+                  Сравнение с оплатой за абонента
                 </button>
                 <button
                   type="button"
@@ -685,7 +685,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                           {chartView === 'competitive' ? (
                             <>
                               <div className="flex justify-between text-slate-300">
-                                <span className="text-purple-300 font-medium">Среднерыночный биллинг:</span>
+                                <span className="text-purple-300 font-medium">Оплата за абонента:</span>
                                 <span className="font-mono font-bold text-white">
                                   {item.industryAvgCost.toLocaleString('ru-RU')} ₽
                                 </span>
@@ -765,7 +765,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                     <>
                       <Bar
                         dataKey="industryAvgCost"
-                        name="Среднерыночный биллинг (лицензия + SLA + поабонентские сборы) (₽)"
+                        name="Условная оплата за абонента (₽)"
                         fill="url(#industryBarGradient)"
                         radius={[6, 6, 0, 0]}
                         maxBarSize={34}
@@ -834,8 +834,8 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-purple-500/5 dark:bg-purple-500/10 border border-purple-500/20 text-slate-600 dark:text-slate-300">
                   <div className="w-2 h-2 rounded-full bg-purple-500 mt-1.5 shrink-0" />
                   <div>
-                    <span className="font-semibold text-slate-900 dark:text-white block mb-0.5">Рыночный бенчмарк:</span>
-                    Среднерыночные вендоры взимают 18–22 ₽/мес за абонента, обязательный SLA (15–20%) и платные надстройки СОРМ/онлайн-касс.
+                    <span className="font-semibold text-slate-900 dark:text-white block mb-0.5">Условие сравнения:</span>
+                    Модель с оплатой за абонента: 18–22 ₽/мес, сопровождение 15–20% и отдельные модули. Условный пример для расчёта.
                   </div>
                 </div>
                 <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 text-slate-600 dark:text-slate-300">
@@ -848,7 +848,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20 text-slate-600 dark:text-slate-300">
                   <div className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 shrink-0" />
                   <div>
-                    <span className="font-semibold text-slate-900 dark:text-white block mb-0.5">Доказанный ROI:</span>
+                    <span className="font-semibold text-slate-900 dark:text-white block mb-0.5">Оценка по модели:</span>
                     Чистая экономия {formatCurrency(total5YearMarketSavings)} за 5 лет с выходом на полную окупаемость за ~{paybackMonthsVsMarket} мес.
                   </div>
                 </div>

@@ -4,15 +4,15 @@ import { Users, Bot, Layers, Zap } from 'lucide-react';
 export const StatsBar: React.FC = () => {
   const stats = [
     {
-      value: '6 400+',
+      value: '6 300+',
       label: 'Абонентов на платформе',
-      sublabel: 'В реальной промышленной эксплуатации',
+      sublabel: 'Рабочая база оператора на СмИТ Биллинге',
       icon: Users,
       spark: [30, 45, 40, 58, 52, 74, 90],
     },
     {
       value: '73%',
-      label: 'Закрывает AI без оператора',
+      label: 'Обращений AI решает без оператора',
       sublabel: 'Диагностика, баланс, обещанный платёж',
       icon: Bot,
       spark: [50, 42, 60, 54, 70, 64, 84],
@@ -20,7 +20,7 @@ export const StatsBar: React.FC = () => {
     {
       value: '24',
       label: 'Модуля в каталоге',
-      sublabel: 'Включаются в один клик без доработок',
+      sublabel: 'Ядро включено, остальное — по тарифу',
       icon: Layers,
       spark: [70, 80, 72, 85, 78, 90, 82],
     },

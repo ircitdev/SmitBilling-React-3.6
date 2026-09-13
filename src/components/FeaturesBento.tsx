@@ -56,13 +56,13 @@ export const FeaturesBento: React.FC = () => {
                 Сетевой доступ и RADIUS-авторизация
               </h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-6">
-                Асинхронный Python-движок с задержкой отклика 0.03 мс.{' '}
+                FreeRADIUS с обработчиками на Python.{' '}
                 <TelecomTermTooltip termKey="pppoe">PPPoE</TelecomTermTooltip>,{' '}
                 <TelecomTermTooltip termKey="ipoe">IPoE (DHCP Option 82)</TelecomTermTooltip>,
-                динамическое управление пулами адресов, шейпинг скорости прямо из тарифа, мгновенная
-                блокировка должников через{' '}
-                <TelecomTermTooltip termKey="coapod">CoA/PoD</TelecomTermTooltip> и совместимость с
-                MikroTik, Cisco, Huawei и Juniper.
+                выдача адресов из пулов, шейпер по тарифу, блокировка
+                должников через{' '}
+                <TelecomTermTooltip termKey="coapod">CoA/PoD</TelecomTermTooltip> на оборудовании
+                доступа (NAS).
               </p>
             </div>
 
@@ -108,7 +108,7 @@ export const FeaturesBento: React.FC = () => {
               </p>
             </div>
             <div className="text-xs font-mono text-cyan-600 dark:text-cyan-400 p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-              73% обращений закрываются автоматически без оператора
+              Около 73% обращений решаются без оператора
             </div>
           </div>
 
@@ -208,8 +208,8 @@ export const FeaturesBento: React.FC = () => {
                 Личный кабинет и Приложение
               </h3>
               <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
-                Нативные мобильные приложения iOS и Android в App Store и Google Play. Оплата в 1
-                клик, смена тарифа, проверка скорости, push-уведомления и чат поддержки.
+                Приложения для iOS и Android и личный кабинет: баланс и платежи, тариф и услуги,
+                обещанный платёж, обращения в поддержку и чат с AI-ассистентом.
               </p>
             </div>
             <div className="text-xs text-teal-600 dark:text-teal-400 font-medium">

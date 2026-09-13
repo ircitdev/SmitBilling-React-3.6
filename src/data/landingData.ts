@@ -207,19 +207,19 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: 'faq-migration',
     question: 'Как происходит переход с других биллингов (Mikbill, Carbon, UTM5, LANBilling)?',
-    answer: 'Мы осуществляем бесшовную миграцию «под ключ». Сначала разворачивается тестовая копия системы, куда через ETL-конвертер переносятся абоненты, договоры, тарифные планы, лицевые счета и история оплат. Проводится построчная сверка балансов с вашим бухгалтером. Окончательное переключение RADIUS происходит в согласованное ночное окно без единой секунды простоя для абонентов.',
+    answer: 'Сначала забираем выгрузку и разворачиваем копию рядом — ваша система продолжает работать. Переносим клиентов, договоры, тарифы, лицевые счета и историю операций, затем сверяем балансы и начисления с оригиналом построчно. Переключение — повторный импорт свежих данных и перевод RADIUS ночью, без простоя для абонентов.',
     category: 'Внедрение',
   },
   {
     id: 'faq-sorm',
     question: 'Как реализована поддержка требований СОРМ-3 по приказу №573?',
-    answer: 'Модуль СОРМ формирует все 13 регламентированных отчётов в точном соответствии с приказом Минцифры №573 (HEX-форматы IP-адресов, масок, даты с таймзонами, разделители `;`). В систему встроены готовые профили выгрузок под 6 ведущих производителей СОРМ-комплексов (Норси-Транс, МФИ Софт, Сигнатек и др.) с автоматической отправкой по расписанию на FTP-сервер комплекса.',
+    answer: 'Модуль СОРМ формирует все 13 регламентированных отчётов в точном соответствии с приказом Минцифры №573 (HEX-форматы IP-адресов, масок, даты с таймзонами, разделители `;`). В систему встроены готовые профили форматов под 6 комплексов СОРМ (Норси-Транс, МФИ Софт, Сигнатек, VAS Experts и др.) с автоматической отправкой по расписанию на FTP-сервер комплекса.',
     category: 'Законодательство',
   },
   {
     id: 'faq-server-req',
     question: 'Какие аппаратные требования предъявляются к серверу?',
-    answer: 'Благодаря оптимизированному стеку (Python 3.11, Django 4.2 LTS, PostgreSQL 17, Redis 7) система крайне экономична к ресурсам. Для сети до 3 000 абонентов достаточно сервера с 4 ядрами CPU (от 2.5 ГГц), 8 ГБ оперативной памяти и быстрым NVMe SSD объёмом от 100 ГБ. Для сетей свыше 10 000 абонентов рекомендуется 8 ядер и 16 ГБ RAM.',
+    answer: 'Нужен сервер с Docker (Linux). Минимум — 2 ядра, 4 ГБ оперативной памяти и 40 ГБ SSD; рекомендуется 4+ ядра, 8+ ГБ и 100+ ГБ SSD/NVMe. Точнее подберём под размер вашей сети и набор модулей.',
     category: 'Архитектура',
   },
   {
@@ -237,7 +237,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   {
     id: 'faq-updates',
     question: 'Как выходят обновления и входит ли поддержка в лицензию?',
-    answer: 'Все обновления ядра, модулей и адаптеров СОРМ входят в стоимость лицензии. Обновление производится одной командой `docker compose pull && docker compose up -d` за 1-2 минуты без повреждения базы данных (миграции применяются автоматически). Техническая поддержка доступна в Telegram, по телефону и через ServiceDesk.',
+    answer: 'Все обновления ядра, модулей и адаптеров СОРМ входят в стоимость лицензии. Обновления приходят через сервер лицензий, миграции базы применяются автоматически. Техническая поддержка доступна в Telegram, по телефону и через ServiceDesk.',
     category: 'Лицензирование',
   },
 ];
@@ -297,7 +297,7 @@ export const GALLERY_SHOTS: import('../types').ScreenshotItem[] = [
   },
   {
     src: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/billing_v1847/abonent_card.png',
-    label: 'Карточка абонента с 13 специализированными вкладками',
+    label: 'Карточка абонента со всеми вкладками',
     cat: 'admin',
   },
   {
@@ -406,122 +406,134 @@ export const BLOG_ARTICLES: import('../types').BlogArticle[] = [
   },
 ];
 
+// Виджеты — из каталога сервера лицензий: название, описание, возможности, версия.
 export const WIDGETS_DATA: import('../types').WidgetItem[] = [
   {
-    id: 'salesbot-summary',
-    name: 'Salesbot: Итоги работы',
-    cat: 'crm',
-    catName: 'CRM · Продажи',
-    version: '1.2.0',
-    icon: 'Bot',
-    desc: 'Сводный отчёт по конверсии чат-бота: сколько лидов квалифицировано и передано в отдел продаж.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/salesbot-summary-cover_877a7868.jpg',
-    developer: 'СмИТ Лабс',
-    features: [
-      'Анализ эффективности шагов воронки Salesbot',
-      'График времени первого ответа абоненту',
-      'Оценка конверсии в завершённые договоры',
+    "id": "salesbot-summary",
+    "name": "Salesbot",
+    "cat": "crm",
+    "catName": "CRM · Продажи",
+    "version": "1.1.0",
+    "icon": "Bot",
+    "desc": "Обращения и заявки ботов за период: сколько диалогов, сколько дошло до сделки и какие боты работают.",
+    "fullDesc": "Что происходит с чат-ботами: сколько диалогов за период, какая доля дошла до заявки, разбивка по ботам и каналам. Показывает, окупается ли бот и не обрывается ли сценарий на каком-то шаге.",
+    "image": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/salesbot-summary-cover_877a7868.jpg",
+    "developer": "СмИТ",
+    "features": [
+      "Диалоги за период и доля дошедших до заявки",
+      "Разбивка по ботам и каналам (Telegram, VK, MAX, сайт)",
+      "Последние обращения с переходом в диалог",
+      "Учитывает выбранную организацию"
     ],
-    how: [
-      'Подключается к модулю CRM за 1 клик.',
-      'Каждую ночь агрегирует события и строит наглядный отчет.',
+    "how": [
+      "Виджет считает сессии ботов и заявки, созданные по их итогам.",
+      "Сами боты собираются визуальным конструктором: шаги, кнопки, ветвления, передача человеку — и публикуются отдельно от черновика."
     ],
-    shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/salesbot-summary-cover_877a7868.jpg',
-    ],
+    "shots": [
+      "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/salesbot-summary-cover_877a7868.jpg"
+    ]
   },
   {
-    id: 'deal-nearby',
-    name: 'Сделка рядом',
-    cat: 'crm',
-    catName: 'CRM · Продажи',
-    version: '2.0.1',
-    icon: 'MapPin',
-    desc: 'Автоматический поиск соседей и ближайших подключённых домов для проведения допродаж и акций.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/deal-nearby_60e2a812.webp',
-    developer: 'СмИТ Лабс',
-    features: [
-      'Поиск в радиусе 100-500 метров от существующего абонента',
-      'Проверка наличия свободных портов в ближайшем ящике',
-      'Готовые скрипты для промо-менеджеров',
+    "id": "deal-nearby",
+    "name": "Рядом с адресом",
+    "cat": "crm",
+    "catName": "CRM · Продажи",
+    "version": "1.2.0",
+    "icon": "MapPin",
+    "desc": "Аргумент для продажи: подключённые абоненты в доме сделки и в радиусе 300 м, другие сделки в этом доме.",
+    "fullDesc": "Аргумент для продажи и планирования монтажа: в карточке сделки показывает, кто уже подключён в этом доме и в радиусе 300 метров, и какие ещё сделки есть по этому адресу. Видно, что сеть рядом — и что монтажник может закрыть несколько адресов за один выезд.",
+    "image": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/deal-nearby_60e2a812.webp",
+    "developer": "СмИТ",
+    "features": [
+      "Подключённые клиенты в доме сделки и в радиусе 300 метров",
+      "Другие сделки по этому же адресу",
+      "Расстояние до ближайшего подключения",
+      "Ссылки на клиента и сделку"
     ],
-    how: [
-      'Использует координаты из модуля «Карта сети (GIS)».',
-      'Формирует список потенциальных адресов прямо в карточке наряда.',
+    "how": [
+      "Адрес сделки сопоставляется со справочником адресов и координатами.",
+      "Виджет ищет рядом подключённых клиентов и активные сделки, показывает их списком с расстоянием."
     ],
-    shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/deal-nearby_60e2a812.webp',
-    ],
+    "shots": [
+      "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/deal-nearby_60e2a812.webp"
+    ]
   },
   {
-    id: 'funnel-summary',
-    name: 'Сводка по воронке',
-    cat: 'analytics',
-    catName: 'Аналитика',
-    version: '1.4.0',
-    icon: 'BarChart2',
-    desc: 'Детализированная аналитика прохождения лидов от первого звонка до подписания акта инсталляции.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/funnel-summary_c4f9a10b.webp',
-    developer: 'СмИТ Лабс',
-    features: [
-      'Расчёт стоимости привлечения абонента (CAC)',
-      'Анализ причин отказов на этапах согласования и монтажа',
-      'Сравнение эффективности менеджеров отдела подключений',
+    "id": "funnel-summary",
+    "name": "Сводка воронки",
+    "cat": "crm",
+    "catName": "CRM · Продажи",
+    "version": "1.0.0",
+    "icon": "BarChart2",
+    "desc": "Счётчики сделок по стадиям воронки — прямо на дашборде CRM.",
+    "fullDesc": "Короткая сводка воронки на дашборде CRM: сколько сделок на каждой стадии, на какую сумму и какая конверсия до выигранной. Позволяет увидеть затор — стадию, где сделки копятся и не двигаются.",
+    "image": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/funnel-summary_c4f9a10b.webp",
+    "developer": "СмИТ",
+    "features": [
+      "Сделки по стадиям выбранной воронки: количество и сумма",
+      "Конверсия от первой стадии до выигранной",
+      "Переход в канбан с фильтром по стадии",
+      "Учитывает выбранную в шапке организацию"
     ],
-    how: [
-      'Мониторит переходы сделок по стадиям канбана.',
-      'Выводит понятные дашборды для руководителя.',
+    "how": [
+      "Виджет считает сделки по стадиям текущей воронки и показывает столбиками с цифрами.",
+      "Клик по стадии открывает канбан, уже отфильтрованный по ней."
     ],
-    shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/funnel-summary_c4f9a10b.webp',
-    ],
+    "shots": [
+      "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/funnel-summary_c4f9a10b.webp"
+    ]
   },
   {
-    id: 'lead-sources',
-    name: 'Источники лидов',
-    cat: 'analytics',
-    catName: 'Аналитика',
-    version: '1.1.0',
-    icon: 'PieChart',
-    desc: 'UTM-анализ входящих заявок с сайта, рекламы, промо-стоек и рекомендаций «Приведи друга».',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/lead-sources-stats_ad5cb384.webp',
-    developer: 'СмИТ Лабс',
-    features: [
-      'Сквозная аналитика UTM-меток до факта оплаты абонплаты',
-      'Сравнение окупаемости каналов привлечения (ROMI)',
-      'Интеграция с Яндекс.Метрикой и Roistat',
+    "id": "lead-sources",
+    "name": "Лиды по источникам",
+    "cat": "analytics",
+    "catName": "Аналитика",
+    "version": "1.1.0",
+    "icon": "PieChart",
+    "desc": "Лиды за 7/30 дней и конверсия по источникам; при мультиорганизации — чипы организаций и org-изоляция.",
+    "fullDesc": "Откуда приходят заявки: формы сайта, звонки, мессенджеры, боты, рекламные кампании — за 7 и 30 дней, с конверсией каждого канала. Помогает решить, куда добавить бюджет, а какой канал не окупается.",
+    "image": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/lead-sources-stats_ad5cb384.webp",
+    "developer": "СмИТ",
+    "features": [
+      "Заявки по источникам за 7 и 30 дней",
+      "Конверсия источника в выигранные сделки",
+      "Чипы организаций при мультиорганизационном режиме",
+      "Переход к списку заявок источника"
     ],
-    how: [
-      'Фиксирует исходную метку при отправке формы на сайте.',
-      'Связывает лид с договором в биллинге.',
+    "how": [
+      "Каждая заявка помечается источником при приёме — форма, звонок, мессенджер, бот.",
+      "Виджет группирует заявки по источникам и считает, сколько из них дошло до сделки."
     ],
-    shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/lead-sources-stats_ad5cb384.webp',
-    ],
+    "shots": [
+      "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/lead-sources-stats_ad5cb384.webp"
+    ]
   },
   {
-    id: 'campaign-perf',
-    name: 'Эффективность акций',
-    cat: 'crm',
-    catName: 'CRM · Продажи',
-    version: '1.0.4',
-    icon: 'TrendingUp',
-    desc: 'Контроль маркетинговых кампаний: срок окупаемости акционных тарифов и процент удержания абонентов.',
-    image: 'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/campaign-performance-cover_c212814f.jpg',
-    developer: 'СмИТ Лабс',
-    features: [
-      'Отслеживание когорт абонентов, подключившихся по спецпредложениям',
-      'Оценка оттока после окончания промо-периода',
-      'Рекомендации по корректировке тарифной сетки',
+    "id": "campaign-perf",
+    "name": "Рекламные кампании",
+    "cat": "crm",
+    "catName": "CRM · Продажи",
+    "version": "1.0.1",
+    "icon": "TrendingUp",
+    "desc": "Топ кампаний за 30 дней: заявки, сделки, выручка и окупаемость. Если подключён рекламный кабинет Яндекс.Директа — рядом расход, и стоимость заявки считается по факту, а не по вбитому бюджету.",
+    "fullDesc": "Показывает на дашборде CRM, что принесла реклама за 30 дней: сколько заявок и сделок дала каждая кампания, какая выручка и окупились ли вложения. Итоговая строка складывает бюджет и выручку по всем кампаниям, чтобы видеть общую картину, а не только лидеров.",
+    "image": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/campaign-performance-cover_c212814f.jpg",
+    "developer": "СмИТ",
+    "features": [
+      "Заявки, сделки и выручка по каждой кампании за 30 дней",
+      "Окупаемость вложений: считается только там, где были лиды",
+      "Итоговая строка: суммарный бюджет и выручка",
+      "Переход к кампании и к её заявкам"
     ],
-    how: [
-      'Формирует когортный анализ за 3, 6 и 12 месяцев.',
-      'Рассчитывает чистый LTV по каждой запущенной акции.',
+    "how": [
+      "Кампания помечает заявки UTM-метками или QR-кодом.",
+      "Виджет собирает по ним сделки и выручку, сопоставляет с бюджетом и показывает отдачу.",
+      "Черновики без лидов не портят картину — у них отдача не считается."
     ],
-    shots: [
-      'https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/campaign-performance-cover_c212814f.jpg',
-    ],
-  },
+    "shots": [
+      "https://storage.googleapis.com/uspeshnyy-projects/smit/license/widgets/covers/campaign-performance-cover_c212814f.jpg"
+    ]
+  }
 ];
 
 export const INTEGRATION_GROUPS: import('../types').IntegrationGroup[] = [
@@ -529,12 +541,11 @@ export const INTEGRATION_GROUPS: import('../types').IntegrationGroup[] = [
     title: 'Деньги и кассы',
     description: 'Платёжные шлюзы, интернет-эквайринг, СБП и фискализация по 54-ФЗ',
     items: [
-      { name: 'ЮKassa', description: 'Карты, СБП, Mir Pay, автоплатежи', iconType: 'credit-card' },
-      { name: 'Wallet One', description: 'Единая касса, терминалы и переводы', iconType: 'wallet' },
-      { name: 'Сбербанк', description: 'Прямой реестровый шлюз и СберID', iconType: 'building' },
-      { name: 'Альфа-Банк', description: 'Клиент-Банк API и разбор выписок', iconType: 'landmark' },
+      { name: 'ЮKassa', description: 'Онлайн-оплата в кабинете и приложении', iconType: 'credit-card' },
+      { name: 'Wallet One', description: 'Приём платежей и уведомления об оплате', iconType: 'wallet' },
+      { name: 'Сбербанк', description: 'Выписки и реестры платежей из почты', iconType: 'building' },
+      { name: 'Выписки 1С', description: 'Разбор выписок любого банка в формате 1С', iconType: 'landmark' },
       { name: 'АТОЛ Онлайн', description: 'Облачная фискализация чеков по 54-ФЗ', iconType: 'receipt' },
-      { name: 'QIWI / Элекснет', description: 'Приём платежей в уличных терминалах', iconType: 'cpu' },
     ],
   },
   {
@@ -543,10 +554,10 @@ export const INTEGRATION_GROUPS: import('../types').IntegrationGroup[] = [
     items: [
       { name: 'Telegram Bot API', description: 'Интерактивный бот, уведомления, привязка договора', iconType: 'send' },
       { name: 'ВКонтакте', description: 'Чат сообщества и виджет авторизации', iconType: 'message-circle' },
-      { name: 'MAX', description: 'Корпоративный мессенджер и уведомления', iconType: 'messages-square' },
+      { name: 'MAX', description: 'Мессенджер: чат поддержки и боты', iconType: 'messages-square' },
       { name: 'SMS Aero', description: 'Доставка SMS с кодами авторизации и напоминаниями', iconType: 'phone' },
       { name: 'Firebase FCM', description: 'Нативные push-сообщения на iOS и Android', iconType: 'bell' },
-      { name: 'SMTP / DKIM / DMARC', description: 'Гарантированная доставка счетов и актов на email', iconType: 'mail' },
+      { name: 'SMTP / DKIM / DMARC', description: 'Почта со своего домена: счета, акты, уведомления', iconType: 'mail' },
     ],
   },
   {
@@ -554,22 +565,21 @@ export const INTEGRATION_GROUPS: import('../types').IntegrationGroup[] = [
     description: 'Сетевое оборудование, BNG-серверы, телефония и IPTV-платформы',
     items: [
       { name: 'FreeRADIUS 3.2', description: 'PPPoE, IPoE, CoA/PoD и пулы IP-адресов', iconType: 'network' },
-      { name: 'MikroTik RouterOS', description: 'API, RADIUS, очереди Simple Queue / PCQ', iconType: 'router' },
-      { name: 'Asterisk / FreePBX', description: 'Click-to-call, запись звонков и IVR-меню', iconType: 'phone-call' },
+      { name: 'MikroTik RouterOS', description: 'RADIUS, CoA и настройка по SSH', iconType: 'router' },
+      { name: 'Asterisk', description: 'Своя АТС: звонки из карточки и запись разговоров', iconType: 'phone-call' },
       { name: 'Novofon / Mango Office', description: 'Облачные АТС и виртуальные телефонные номера', iconType: 'radio' },
       { name: 'TVIP Media', description: 'Интерактивное телевидение, приставки и архив ТВ', iconType: 'tv' },
-      { name: 'Смотрёшка', description: 'Более 300 каналов и онлайн-кинотеатры', iconType: 'monitor' },
+      { name: 'Смотрёшка', description: 'Аккаунты и пакеты ТВ из услуги биллинга', iconType: 'monitor' },
     ],
   },
   {
     title: 'Данные и инфраструктура',
     description: 'Искусственный интеллект, геоданные, картография и облачные хранилища',
     items: [
-      { name: 'Gemini / Claude / OpenAI', description: 'Нейросетевые модели для AI-ассистента', iconType: 'sparkles' },
-      { name: 'DeepSeek / Grok', description: 'Локальные и облачные LLM для технической базы знаний', iconType: 'brain' },
+      { name: 'AI-модели', description: 'Несколько провайдеров с автоматическим резервом', iconType: 'sparkles' },
       { name: 'DaData.ru', description: 'ФИАС/КЛАДР стандартизация адресов и реквизитов', iconType: 'database' },
       { name: 'OpenStreetMap / Яндекс / 2ГИС', description: 'Тайловые подложки для геоинформационной карты ВОЛС', iconType: 'map' },
-      { name: 'Google Cloud Storage / S3', description: 'Надёжное хранилище бэкапов и видеоархивов', iconType: 'hard-drive' },
+      { name: 'Google Cloud Storage', description: 'Файлы, документы и резервные копии', iconType: 'hard-drive' },
       { name: 'Cloudflare', description: 'Защита внешних веб-сервисов и SSL-терминация', iconType: 'shield' },
     ],
   },
@@ -578,22 +588,22 @@ export const INTEGRATION_GROUPS: import('../types').IntegrationGroup[] = [
 export const MIGRATION_SYSTEMS = [
   {
     name: 'Carbon Billing 4',
-    description: 'Полный перенос договоров, тарифов, сальдо и связок логин/пароль/IP без разрыва сессий.',
-    badge: '100% совместимость',
+    description: 'Структуру его базы система унаследовала — перенос идёт напрямую, без промежуточных выгрузок.',
+    badge: 'Перенос напрямую',
   },
   {
     name: 'Mikbill',
-    description: 'Импорт абонентской базы, истории платежей, связок с MikroTik и гео-точек подключения.',
-    badge: 'Быстрый импорт',
+    description: 'Обычный путь оператора, которому стало тесно в PHP + MySQL: клиенты, тарифы и платежи переносятся целиком.',
+    badge: 'Клиенты и платежи',
   },
   {
     name: 'UTM5 / LANBilling',
-    description: 'Конвертация сложных тарифных сеток, юрлиц, документов и архивов начислений.',
+    description: 'Переносим справочники, абонентов и финансовую историю; RADIUS переключается на новый сервер в отдельное окно.',
     badge: 'Сверка балансов',
   },
   {
     name: 'Самописные БД и 1С',
-    description: 'Индивидуальный скрипт ETL-экстракции из MySQL, MSSQL или файлов Excel/CSV.',
-    badge: 'Любая база',
+    description: 'Разбираем вашу схему и пишем импорт под неё — так уже переносили базы из Expert Billing.',
+    badge: 'Импорт под схему',
   },
 ];

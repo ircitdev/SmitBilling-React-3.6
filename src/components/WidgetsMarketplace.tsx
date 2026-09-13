@@ -38,10 +38,10 @@ export const WidgetsMarketplace: React.FC = () => {
             <span>Маркетплейс расширений</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            Готовые виджеты для amoCRM и панели биллинга
+            Виджеты для CRM и панели биллинга
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-            Расширяйте функционал под ваши бизнес-процессы в один клик: автосделки по геолокации, сводки чат-ботов, аналитика воронок и Telegram-рассылки.
+            Ставятся из каталога в карточку сделки или на дашборд CRM: соседи по адресу, итоги чат-ботов, воронка, источники заявок и отдача рекламы.
           </p>
         </div>
 

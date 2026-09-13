@@ -65,10 +65,10 @@ export const MoneyVideoSection: React.FC<MoneyVideoSectionProps> = ({ onOpenDemo
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white mb-0.5">
-                    Авторазбор по ИНН и назначению (98%)
+                    Авторазбор по ИНН и назначению
                   </h4>
                   <p className="text-xs text-slate-300">
-                    Умный алгоритм сопоставляет плательщика с договором, разносит суммы по лицевым счетам и отправляет чек в ОФД.
+                    Плательщик сопоставляется с клиентом по ИНН, договору и назначению; деньги зачисляются на баланс, юрлицу выписываются счёт и акт.
                   </p>
                 </div>
               </div>
@@ -82,7 +82,7 @@ export const MoneyVideoSection: React.FC<MoneyVideoSectionProps> = ({ onOpenDemo
                     Ручная модерация спорных платежей
                   </h4>
                   <p className="text-xs text-slate-300">
-                    Нераспознанные платежи попадают в специальный карантин: привяжите договор вручную за 2 секунды.
+                    Нераспознанные и сомнительные платежи ждут в очереди: оператор находит клиента и привязывает платёж вручную.
                   </p>
                 </div>
               </div>
@@ -116,15 +116,15 @@ export const MoneyVideoSection: React.FC<MoneyVideoSectionProps> = ({ onOpenDemo
               <div className="grid grid-cols-3 gap-2 mt-3 pt-2 border-t border-slate-800 text-center">
                 <div className="p-2">
                   <div className="text-emerald-400 font-extrabold text-base sm:text-lg">4 мин</div>
-                  <div className="text-[11px] text-slate-400">время разбора 500 платежей</div>
+                  <div className="text-[11px] text-slate-400">весь путь платежа в ролике</div>
                 </div>
                 <div className="p-2 border-x border-slate-800">
-                  <div className="text-emerald-400 font-extrabold text-base sm:text-lg">100%</div>
-                  <div className="text-[11px] text-slate-400">сходимость с банком</div>
+                  <div className="text-emerald-400 font-extrabold text-base sm:text-lg">1С</div>
+                  <div className="text-[11px] text-slate-400">выписки из почты банка</div>
                 </div>
                 <div className="p-2">
                   <div className="text-emerald-400 font-extrabold text-base sm:text-lg">54-ФЗ</div>
-                  <div className="text-[11px] text-slate-400">чеки в ОФД АТОЛ</div>
+                  <div className="text-[11px] text-slate-400">чеки своей кассой АТОЛ</div>
                 </div>
               </div>
             </div>

@@ -1,759 +1,1661 @@
 import { BillingModule } from '../types';
 
+// Содержание модулей — из каталога сервера лицензий (license.billing.smit34.ru):
+// название, описания, возможности, версия, тарифы и история версий ведутся там.
+// Здесь только оформление витрины: категория, иконка, обложка, скриншоты.
 export const BILLING_MODULES: BillingModule[] = [
   {
-    id: 'core',
-    code: 'core',
-    name: 'Биллинг-ядро',
-    version: 'v2.2.1',
-    category: 'core',
-    categoryName: 'Ядро системы',
-    isCore: true,
-    shortDesc: 'Абоненты, договоры, тарифы, начисления и платежи — фундамент телеком-платформы',
-    fullDesc: 'Ядро биллинга: ведение абонентской базы в виде структурированного дерева с разграничением прав, карточка абонента с 13 специализированными вкладками (услуги, адреса, точки подключения, оборудование, сообщения, логи), глобальный умный поиск с фильтрами, пакетные начисления абонентской платы и разовых услуг, обещанный платёж и автоматическая блокировка при отрицательном балансе.',
-    features: [
-      'Карточка абонента с 13 вкладками: договор, статус, услуги, скидки, баланс, аудит',
-      'Ежемесячная тарификация: preflight-проверки, симуляция расчётов, монитор очередей',
-      'Платежи, обещанный платёж с лимитами и автоматическая блокировка за долги',
-      'Приём онлайн-оплат: ЮKassa, Wallet One, СБП, единый защищённый Webhook',
-      'Массовые групповые операции по выбранным сегментам абонентов',
-      'Реестр ответственных настроек из 53 позиций с фиксацией в журнале аудита',
+    "id": "core",
+    "code": "core",
+    "name": "Биллинг-ядро",
+    "version": "v2.2.1",
+    "category": "core",
+    "categoryName": "Ядро системы",
+    "isCore": true,
+    "shortDesc": "Клиенты, тарифы, начисления и платежи — то, ради чего ставят биллинг",
+    "fullDesc": "Ядро биллинга: клиенты, договоры, тарифы, услуги, лицевые счета и деньги. Дерево клиентов с папками и правами на них, карточка клиента со всеми вкладками (услуги, точки подключения, оборудование, сообщения, история), глобальный поиск с фильтрами и массовыми операциями, ежемесячное начисление абонплаты и разовых услуг, обещанный платёж, автоблокировка при минусе. Всё остальное в системе опирается на эти сущности.",
+    "features": [
+      "Карточка клиента: договор, услуги, баланс, история",
+      "Ежемесячные начисления и перерасчёты",
+      "Платежи, обещанный платёж, блокировки за долг",
+      "Приём онлайн-оплат: ЮKassa, Wallet One, единый webhook",
+      "Массовые операции по списку клиентов",
+      "Поиск внутри раздела: одна строка на все разделы настроек",
+      "Панель сохранения: подтверждение ответственных правок и запись в аудит",
+      "Реестр ответственных настроек — 53 позиции"
     ],
-    howItWorks: [
-      'Начисления производятся по расписанию через Celery-воркеры: абонплата, периодические опции и скидки консолидируются в единую проводку.',
-      'При падении баланса ниже порога триггерится CoA-пакет на NAS с переводом абонента в режим финансовой блокировки или заглушки.',
-      'Пополнение мгновенно через Webhook возвращает доступ без перезагрузки клиентского роутера.',
+    "howItWorks": [
+      "Начисления считаются по расписанию: тарифная плата, разовые услуги и скидки складываются в одну операцию по каждому клиенту.",
+      "Баланс ниже нуля включает блокировку — до платежа или обещанного платежа."
     ],
-    plans: ['Все тарифы'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/core.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_1.jpg", cap: "Дашборд: деньги, подключения, задачи дня" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_2.jpg", cap: "Список абонентов: фильтры, статусы, массовые действия" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_3.jpg", cap: "Финансовые операции: начисления и платежи одной лентой" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_7138b3e4.jpg", cap: "Дашборд биллинга" }
+    "plans": [
+      "Все тарифы"
     ],
-    icon: 'Layers',
-    stats: 'Базовый модуль',
-    history: [
-      { version: '2.2.1', date: '04.09.2026', isCurrent: true, changelog: 'Оптимизация журналов аудита, единый реестр критических настроек.' },
-      { version: '2.2.0', date: '15.08.2026', isCurrent: false, changelog: 'Глобальный поиск Ctrl+K, предпросмотр изменений тарифов.' }
+    "icon": "Layers",
+    "stats": "Базовый модуль",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/core.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/payment-systems-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/payment-systems-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/dashboard.html#dashboard",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_1.jpg",
+        "cap": "Дашборд: деньги, подключения, задачи дня"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_2.jpg",
+        "cap": "Список абонентов: фильтры, статусы, массовые действия"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_3.jpg",
+        "cap": "Финансовые операции: начисления и платежи одной лентой"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/core_7138b3e4.jpg",
+        "cap": "Дашборд биллинга"
+      }
+    ],
+    "history": [
+      {
+        "version": "2.2.1",
+        "date": "04.09.2026",
+        "isCurrent": true,
+        "changelog": "Скриншоты в документации приведены к одному виду: снимок и подпись — один блок с рамкой, ширина не больше колонки текста. Раньше картинки растягивались во всю ширину и наезжали на оглавление страницы."
+      },
+      {
+        "version": "2.2.0",
+        "date": "04.09.2026",
+        "isCurrent": false,
+        "changelog": "Поиск внутри раздела стал общим компонентом и появился в одиннадцати разделах: строка стоит в линию с полосой вкладок, подсказка ведёт к нужной вкладке и подсвечивает поле, Ctrl+K из любого места страницы. Для разделов, где вкладки грузятся по одной, список полей собирается из самих форм — вести его руками не нужно. Панель сохранения тоже общая: перед правкой настройки, которая влияет на деньги, доступ клиентов или массовые рассылки, она показывает, что именно изменится, и пишет это в аудит. Доступность: подписи связаны с полями, один заголовок первого уровня на странице, контраст активной вкладки приведён к норме; ссылки, открывающиеся в новой вкладке, предупреждают об этом."
+      },
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "Единый MoneyField (×10^10), каскад цен, обещанный платёж, кастомные отчёты."
+      },
+      {
+        "version": "2.0.0",
+        "date": "12.05.2026",
+        "isCurrent": false,
+        "changelog": "Единые компоненты интерфейса в списках и карточках, доступ к разделам по ролям, фильтр тарифов по организации, переработанная карточка финансовой операции."
+      }
     ]
   },
   {
-    id: 'radius',
-    code: 'radius',
-    name: 'Интернет-доступ (RADIUS)',
-    version: 'v2.0.0',
-    category: 'network',
-    categoryName: 'Сеть и доступ',
-    isCore: true,
-    shortDesc: 'FreeRADIUS 3.2: PPPoE, IPoE, выдача IP из пулов, шейпер скорости и CoA-разрыв сессий',
-    fullDesc: 'Высокопроизводительный сетевой контур на базе FreeRADIUS 3.2.3 с асинхронными обработчиками на Python (rlm_python3). Авторизация абонентов, выдача IPv4/IPv6 из динамических и статических пулов, шейпинг скорости по профилям тарифов, отправка CoA/PoD при смене статуса и мониторинг доступности NAS в реальном времени.',
-    features: [
-      'Поддержка PPPoE, IPoE (DHCP Option 82), VoIP и IPTV авторизации',
-      'Асинхронный учёт сессий (отклик 0.03 мс, производительность до 50k сессий)',
-      'Интеграция с MikroTik, Cisco, Huawei, Juniper, Linux BNG',
-      'Автоматическое управление пулами адресов и защита от коллизий IP',
-      'Поддержка BlastRADIUS защиты (Message-Authenticator)',
+    "id": "radius",
+    "code": "radius",
+    "name": "Интернет-доступ (RADIUS)",
+    "version": "v2.0.0",
+    "category": "network",
+    "categoryName": "Сеть и доступ",
+    "isCore": true,
+    "shortDesc": "Доступ в интернет: авторизация на оборудовании, выдача адресов, разрыв сессии",
+    "fullDesc": "Сетевой контур: FreeRADIUS с обработчиками на Python, авторизация клиентов, учёт сессий, выдача IP из пулов, шейпер по тарифу и разрыв сессии по CoA. Здесь же мониторинг NAS: состояние, история простоев, алерты и журнал авторизаций, по которому видно, почему конкретный клиент не подключился.",
+    "features": [
+      "Авторизация клиента и выдача IP из пула",
+      "Учёт сессий и трафика",
+      "Разрыв сессии по долгу и по команде оператора",
+      "Состояние оборудования: кто в сети и что упало"
     ],
-    howItWorks: [
-      'NAS при запросе подключения отправляет Access-Request на порт 1812.',
-      'Python-диспетчер мгновенно валидирует логин, пароль, MAC и статус баланса в PostgreSQL/Redis.',
-      'В Access-Accept передаются атрибуты скорости Mikrotik-Rate-Limit или Framed-IP-Address.',
+    "howItWorks": [
+      "Оборудование спрашивает биллинг, пускать ли клиента, и получает адрес и параметры тарифа.",
+      "Блокировка снимает сессию, не дожидаясь её окончания."
     ],
-    plans: ['Все тарифы'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/radius.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_1.jpg", cap: "Список оборудования доступа" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_2.jpg", cap: "Состояние: кто в сети, что не отвечает" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_65119394.jpg", cap: "Оборудование и NAS" }
+    "plans": [
+      "Все тарифы"
     ],
-    icon: 'Network',
-    stats: 'FreeRADIUS 3.2',
+    "icon": "Network",
+    "stats": "FreeRADIUS 3.2",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/radius.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/equipment.html",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_1.jpg",
+        "cap": "Список оборудования доступа"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_2.jpg",
+        "cap": "Состояние: кто в сети, что не отвечает"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/radius_65119394.jpg",
+        "cap": "Оборудование и NAS"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "Единый rlm_python3-диспетчер, USERS_RADIUSAUTH, автовыдача IP из пула."
+      },
+      {
+        "version": "2.0.0",
+        "date": "11.06.2026",
+        "isCurrent": true,
+        "changelog": "Учёт сессий переведён на асинхронную запись (отклик 50 мс → 0,03 мс), закрыт BlastRADIUS, добавлена защита от выдачи занятого IP."
+      },
+      {
+        "version": "1.0.0",
+        "date": "01.03.2026",
+        "isCurrent": false,
+        "changelog": "— FreeRADIUS 3.2 + python-диспетчер: Интернет / VoIP / IPTV — Авторизация по логину, IP из пула, атрибуты NAS и тарифа — Учёт сессий (Start/Update/Stop), онлайн-статистика"
+      },
+      {
+        "version": "2.1.0",
+        "date": "30.06.2026",
+        "isCurrent": false,
+        "changelog": "— Message-Authenticator в Access-Accept (BlastRADIUS, CVE-2024-3596) — Мониторинг NAS: дашборд UP/DOWN, sparkline 24ч, SLA-пороги, CSV-экспорт — Автогенерация clients.conf из справочника NAS"
+      }
+    ]
   },
   {
-    id: 'reports',
-    code: 'reports',
-    name: 'Отчёты и аналитика',
-    version: 'v2.0.0',
-    category: 'core',
-    categoryName: 'Аналитика',
-    isCore: true,
-    shortDesc: 'Финансовые графики, динамика ARPU/LTV, журнал PayLog и встроенный конструктор SQL-отчётов',
-    fullDesc: 'Информационно-аналитический модуль для руководителя и бухгалтерии: готовый дашборд ключевых показателей оператора, журнал финансовых проводок PayLog с миллионной ёмкостью, 29 готовых типовых SQL-отчётов для связистов с возможностью добавления пользовательских запросов и экспортом в XLSX/CSV.',
-    features: [
-      'Дашборд директора: выручка, начисления, дебиторская задолженность, отток',
-      'Финансовый журнал PayLog с фильтрацией по кассам, юрлицам и назначениям',
-      'Конструктор кастомных SQL-отчётов с подсветкой синтаксиса и защитой от инъекций',
-      'Выгрузка в XLSX, CSV и DBF для бухгалтерских систем',
+    "id": "reports",
+    "code": "reports",
+    "name": "Отчёты и аналитика",
+    "version": "v2.0.0",
+    "category": "core",
+    "categoryName": "Аналитика",
+    "isCore": true,
+    "shortDesc": "Отчёты по деньгам, подключениям и работе сотрудников",
+    "fullDesc": "Отчётность: дашборд с финансовой динамикой, библиотека SQL-отчётов с параметрами и выгрузкой, журнал платежей и аудит действий сотрудников. Отчёты пишутся прямо в интерфейсе — с подсветкой SQL, подсказками по параметрам и AI-помощником, который собирает запрос по описанию задачи.",
+    "features": [
+      "Панель руководителя: выручка, долги, динамика",
+      "Журнал платежей и начислений",
+      "Свои отчёты на SQL с выгрузкой",
+      "Экспорт в CSV и XLSX"
     ],
-    howItWorks: [
-      'Метрики рассчитываются по материализованным представлениям в PostgreSQL 17.',
-      'Сложные аналитические выборки кэшируются в Redis для моментальной отдачи графиков.',
+    "howItWorks": [
+      "Отчёты считаются по данным биллинга без выгрузки в сторонние системы.",
+      "Свой отчёт добавляется запросом и появляется в общем списке с фильтрами и выгрузкой."
     ],
-    plans: ['Все тарифы'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/reports.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/reports-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/reports-training-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_1.jpg", cap: "Панель руководителя" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_2.jpg", cap: "Журнал платежей за период" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_ca1f2fb5.jpg", cap: "Дашборд отчётов" }
+    "plans": [
+      "Все тарифы"
     ],
-    icon: 'BarChart3',
-    stats: '29 готовых отчётов',
+    "icon": "BarChart3",
+    "stats": "29 готовых отчётов",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/reports.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/reports-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/reports-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/reports.html",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_1.jpg",
+        "cap": "Панель руководителя"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_2.jpg",
+        "cap": "Журнал платежей за период"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/reports_ca1f2fb5.jpg",
+        "cap": "Дашборд отчётов"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "Автофикс SQL Carbon4→PostgreSQL, PK-aware сортировка, тёмная тема гридов."
+      },
+      {
+        "version": "2.0.0",
+        "date": "20.05.2026",
+        "isCurrent": true,
+        "changelog": "Библиотека отчётов переработана: безопасная подстановка параметров, единый редактор кода, мульти-орг и обложки отчётов."
+      },
+      {
+        "version": "1.0.0",
+        "date": "01.03.2026",
+        "isCurrent": false,
+        "changelog": "— Дашборд руководителя: финансовая динамика, KPI, топ должников — Библиотека SQL-отчётов (29 шт.) с экспортом CSV/XLSX/DBF — Журнал платежей и аудит операций"
+      },
+      {
+        "version": "2.1.0",
+        "date": "19.06.2026",
+        "isCurrent": false,
+        "changelog": "— Дашборд AI-сессий: диалоги, эскалации, обратная связь — Виджет СОРМ-выгрузок и заявки на карте прямо на дашборде"
+      }
+    ]
   },
   {
-    id: 'netmap',
-    code: 'netmap',
-    name: 'Карта сети (GIS)',
-    version: 'v1.9.0',
-    category: 'network',
-    categoryName: 'Сеть и доступ',
-    isCore: true,
-    shortDesc: 'Интерактивная карта ВОЛС: узлы, муфты, опоры ЛЭП, зоны покрытия и заявки на карте',
-    fullDesc: 'Геоинформационная система оператора связи прямо в браузере: узлы агрегации, оптические муфты, трассы кабелей с ёмкостью волокон, опоры электросетей с привязкой договоров подвеса, точки подключения абонентов и аварийные заявки с цветовой индикацией.',
-    features: [
-      '8 слоёв объектов с моментальным включением и счётчиками',
-      'Импорт трасс и узлов из KML / Google Earth в один клик',
-      'Поиск по узлам, волокнам, адресам и номерам договоров',
-      'Отображение открытых тикетов техподдержки прямо на карте локации',
-      'Проверка технической возможности подключения при вводе адреса',
+    "id": "netmap",
+    "code": "netmap",
+    "name": "Карта сети",
+    "version": "v1.9.0",
+    "category": "network",
+    "categoryName": "Сеть и доступ",
+    "isCore": true,
+    "shortDesc": "Сеть на карте: узлы, трассы, зоны, подстанции и опоры электросетей, точки подключения и заявки Поддержки с панелью переписки",
+    "fullDesc": "Схема сети провайдера на одном полотне: узлы и боксы, кабельные трассы с ёмкостью волокна и схемой сварок, зоны покрытия, оборудование из учёта, точки подключения клиентов и открытые заявки Поддержки. Карта наполняется выгрузкой инженера из Google Earth — то, что нарисовано в поле, попадает в биллинг без ручного перебивания. Отдельными слоями легли объекты электросетей: трансформаторные подстанции с поопорными схемами и опоры, за которые провайдер платит по договору, — видно, за что идут деньги и где подвес не оформлен. Помогает планировать подключение (что рядом, куда тянуть), разбирать аварии (чей участок и сколько клиентов за ним) и держать дежурную смену в курсе: заявки видно на карте, ответ клиенту уходит оттуда же.",
+    "features": [
+      "Восемь слоёв со счётчиком объектов прямо в кнопке",
+      "Поиск по узлам, трассам, адресам, ФИО и номеру договора",
+      "Ссылка на объект: карта откроется у коллеги на нужной булавке",
+      "Карточка объекта: описание, статус «используем / не используем», волокна",
+      "Подстанции и договорные опоры электросетей с приложенными схемами",
+      "Заявки Поддержки: срезы «Ожидают / Мои / Не назначены / Закрыты»",
+      "Мониторинг NAS прямо на карте: что не отвечает сейчас",
+      "Зоны покрытия для проверки адреса в форме заявки",
+      "Измерение расстояний, режим редактора, работа с телефона"
     ],
-    howItWorks: [
-      'Объекты рендерятся на векторных тайлах OpenStreetMap / Яндекс / 2ГИС.',
-      'При клике на муфту отображается схема разварки волокон и список абонентов, запитанных от неё.',
+    "howItWorks": [
+      "Объекты сети наносятся на карту вручную или приходят выгрузкой из Google Earth, связываются с оборудованием и адресами биллинга.",
+      "Точки подключения и заявки подтягиваются из своих разделов — отдельного учёта нет, поэтому расходиться данным не с чем.",
+      "Каждый слой отдаётся в рамках организаций сотрудника.",
+      "Зоны покрытия использует форма заявки: адрес сразу отвечает, есть ли там подключение."
     ],
-    plans: ['Все тарифы'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/netmap.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_netmap_training_2026-09-11.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_netmap_training_2026-09-11-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/netmap_1.jpg", cap: "Карта сети: оборудование, зоны, мониторинг" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/netmap_dc70e7ff.jpg", cap: "Карта сети: узлы и трассы" }
+    "plans": [
+      "Все тарифы"
     ],
-    icon: 'MapPin',
-    stats: 'KML/GIS импорт',
+    "icon": "MapPin",
+    "stats": "KML/GIS импорт",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/netmap.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_netmap_training_2026-09-11.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_netmap_training_2026-09-11-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/nas-equipment.html#netmap",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/netmap_1.jpg",
+        "cap": "Карта сети: оборудование, зоны, мониторинг"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/netmap_dc70e7ff.jpg",
+        "cap": "Карта сети: узлы и трассы"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.9.0",
+        "date": "04.09.2026",
+        "isCurrent": true,
+        "changelog": "Панель заявки на карте: — снимки из переписки открываются просмотрщиком прямо в панели и листаются стрелками, клавишами и по счётчику «N из M»; раньше клик уводил на отдельную вкладку с голой картинкой; — у файловых вложений виден значок своего формата (PDF, таблица, документ, архив) вместо скрепки на всём; — прошлые обращения клиента открываются в этой же панели, в шапке появляется стрелка возврата к предыдущей заявке. Срезы заявок: подсказка о том, что на карте видны только заявки с заполненным адресом клиента. Заголовок раздела: убрана вторая, дублирующая i-иконка справки."
+      },
+      {
+        "version": "1.8.0",
+        "date": "29.08.2026",
+        "isCurrent": false,
+        "changelog": "Счётчики объектов переехали в кнопки слоёв — отдельная строка статистики убрана. Инструменты карты (редактор, линейка, «вся сеть», обновление) — в правом верхнем углу самой карты. Полосы фильтров под тулбаром: технологии зон и срезы заявок «Ожидают / Мои / Не назначены / Закрыты»; каждая появляется со своим слоем. Точки подключения и оборудование теперь скоупятся по организации — раньше их видел сотрудник любой компании. Поиск занимает свободную ширину тулбара, справка открывается из заголовка раздела."
+      },
+      {
+        "version": "1.7.0",
+        "date": "24.08.2026",
+        "isCurrent": false,
+        "changelog": "Зоны покрытия для проверки адреса, мониторинг оборудования на карте, импорт зон."
+      },
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "GIS без PostGIS, слои OSM/2ГИС/Яндекс, заявки на карте."
+      }
+    ]
   },
   {
-    id: 'lk_base',
-    code: 'lk_base',
-    name: 'Личный кабинет и App',
-    version: 'v2.1.1',
-    category: 'platform',
-    categoryName: 'Абонентский интерфейс',
-    isCore: false,
-    shortDesc: 'Адаптивный веб-кабинет и нативные мобильные приложения iOS / Android для абонентов',
-    fullDesc: 'Современный интерфейс самообслуживания абонентов: проверка баланса, мгновенная оплата картой или СБП, смена тарифа, заказ доп. услуг, активация обещанного платежа, push-уведомления об окончании средств и онлайн-чат поддержки с AI-помощником.',
-    features: [
-      'Мобильные приложения в App Store и Google Play под вашим брендингом',
-      'Оплата через ЮKassa, СБП и рекуррентные автоплатежи',
-      'Обещанный платёж и добровольная заморозка договора',
-      'Встроенный чат поддержки и проверка скорости',
-      'Гибкая кастомизация: фирменные цвета, логотипы и динамические фоны',
+    "id": "lk_base",
+    "code": "lk_base",
+    "name": "ЛК и мобильные приложения",
+    "version": "v2.1.1",
+    "category": "platform",
+    "categoryName": "Абонентский интерфейс",
+    "isCore": false,
+    "shortDesc": "Личный кабинет и мобильные приложения клиента",
+    "fullDesc": "Личный кабинет клиента и мобильное приложение: баланс и платежи, тариф и услуги, обещанный платёж, обращения в поддержку, чат с AI-ассистентом. Оформление настраивается под провайдера — от логотипа и цвета до фона входа и правил самообслуживания.",
+    "features": [
+      "Баланс, тариф и услуги в кабинете",
+      "Оплата картой и обещанный платёж",
+      "Обращения в поддержку и чат",
+      "Приложения для Android и iOS",
+      "Поиск по настройкам кабинета — общий компонент",
+      "Журнал правок читается словами, а не именами ключей",
+      "Текст баннера с форматированием (жирный, курсив, цитата)"
     ],
-    howItWorks: [
-      'Приложения разработаны на Flutter с быстрым откликом и оффлайн-кэшированием.',
-      'Связь с биллингом происходит через безопасный JWT REST API v2.',
+    "howItWorks": [
+      "Кабинет и приложения работают с тем же биллингом: смена тарифа, платёж и заявка сразу отражаются в карточке клиента.",
+      "Вход — по договору или номеру телефона."
     ],
-    plans: ['Старт', 'Видеонаблюдение', 'Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/lk_base.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/lk-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/lk-training-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/lk_1.jpg", cap: "Настройки кабинета и мобильных приложений" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/lk_base_d12978d6.jpg", cap: "Настройки личного кабинета" }
+    "plans": [
+      "Старт",
+      "Pro",
+      "Бизнес",
+      "Enterprise",
+      "Видеонаблюдение"
     ],
-    icon: 'Smartphone',
-    stats: 'iOS & Android',
+    "icon": "Smartphone",
+    "stats": "iOS & Android",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/lk_base.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/lk-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/lk-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/lk.html",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/lk_1.jpg",
+        "cap": "Настройки кабинета и мобильных приложений"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/lk_base_d12978d6.jpg",
+        "cap": "Настройки личного кабинета"
+      }
+    ],
+    "history": [
+      {
+        "version": "2.1.1",
+        "date": "04.09.2026",
+        "isCurrent": true,
+        "changelog": "Справка раздела приведена в порядок. Ссылка «Справка» на каждой вкладке вела в никуда: разделов, на которые она указывала, в документации не существовало, и страница просто открывалась сверху. Теперь у каждой вкладки — «Обзор», «Брендинг», «Функции», «Способы входа», «AI-чат», «Безопасность», «Мобильное» — своё описание со скриншотом, а ссылка ведёт ровно туда. Добавлены схемы: из чего состоит раздел и куда уходят настройки, как клиент входит в кабинет и что происходит при проверке версии приложения. Значок справки в шапке раздела ведёт на описание самого раздела, а не на общую страницу сервисов; на телефоне он теперь тоже ведёт на подраздел."
+      },
+      {
+        "version": "2.1.0",
+        "date": "04.09.2026",
+        "isCurrent": false,
+        "changelog": "Раздел «ЛК и мобильные» переведён на общие компоненты: строка поиска, полосы вкладок, панель сохранения — те же, что в остальных разделах. Журнал последних изменений читается словами: «Смена тарифа из ЛК: вкл → выкл» вместо имени ключа и нуля. Поставщики и модели нейросетей в разделе больше не называются — везде просто «AI». Текст баннера редактируется с форматированием (жирный, курсив, цитата); разметка чистится до тех тегов, которые кабинет показывает. Телефон: карточки получили отступы и читаются раздельно, значок подсказки уменьшен, а сама подсказка открывается с первого касания."
+      },
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "Flutter-приложение, OAuth-вход, AI-чат, push-уведомления."
+      },
+      {
+        "version": "2.0.0",
+        "date": "18.06.2026",
+        "isCurrent": false,
+        "changelog": "Настройки кабинета вынесены в интерфейс, добавлены галерея фонов входа и вход по звонку, обновлены разделы тарифов и оплаты."
+      }
+    ]
   },
   {
-    id: 'sorm',
-    code: 'sorm',
-    name: 'СОРМ-3 (Приказ №573)',
-    version: 'v2.1.0',
-    category: 'gov',
-    categoryName: 'Госрегулирование',
-    isCore: false,
-    shortDesc: '13 нормативных отчётов по приказу Минцифры №573 и готовые профили под 6 вендоров',
-    fullDesc: 'Модуль обеспечения требований СОРМ-3: автоматическая генерация 13 обязательных справочников (абоненты, IP-пулы, платежи, договоры, услуги, шлюзы) в строгом HEX-формате. Встроенные профили выгрузок под ведущие комплексы (Норси-Транс, МФИ Софт, Сигнатек, VAS Experts и др.) с расписанием отправки на FTP.',
-    features: [
-      '13 отчётов по приказу №573 Минцифры в строго стандартизированном формате',
-      'Профили адаптеров под 6 ключевых производителей СОРМ-комплексов',
-      'Автоматическая передача по защищённому FTP/SFTP по утверждённому графику',
-      'Встроенный чек-лист предпроверки корректности паспортных данных и адресов',
+    "id": "sorm",
+    "code": "sorm",
+    "name": "СОРМ",
+    "version": "v2.1.0",
+    "category": "gov",
+    "categoryName": "Госрегулирование",
+    "isCore": false,
+    "shortDesc": "Выгрузки для СОРМ: справочники и события в формате оператора",
+    "fullDesc": "Выгрузки СОРМ-3 по требованию регулятора: справочники клиентов, услуг, платежей, адресов и сетевых реквизитов в форматах приёмного оборудования. Форматы разных вендоров поставляются паками и обновляются с сервера лицензий — без правки кода на стороне провайдера.",
+    "features": [
+      "Отчёты по требованиям, включая справочники клиентов",
+      "Форматы разных производителей комплекса",
+      "Выгрузка по расписанию на FTP",
+      "Проверка полноты данных перед сдачей"
     ],
-    howItWorks: [
-      'Celery-воркер собирает свежие дельты изменений за отчётный интервал.',
-      'Генерируются файлы с разделителями `;`, контрольными суммами и отправляются на сервер СОРМ.',
+    "howItWorks": [
+      "Формат задаётся пакетом производителя — это данные, а не отдельная версия модуля.",
+      "Выгрузка собирается по расписанию и складывается туда, где её забирает комплекс."
     ],
-    plans: ['Старт', 'Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/sorm.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/sorm-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/sorm-training-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/sorm_1.jpg", cap: "Настройки СОРМ и отчёты" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/sorm_495a3260.jpg", cap: "Настройки СОРМ и выгрузки" }
+    "plans": [
+      "Старт",
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'ShieldCheck',
-    stats: 'Приказ №573',
+    "icon": "ShieldCheck",
+    "stats": "Приказ №573",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/sorm.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/sorm-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/sorm-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/sorm.html",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/sorm_1.jpg",
+        "cap": "Настройки СОРМ и отчёты"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/sorm_495a3260.jpg",
+        "cap": "Настройки СОРМ и выгрузки"
+      }
+    ],
+    "history": [
+      {
+        "version": "2.1.0",
+        "date": "24.08.2026",
+        "isCurrent": true,
+        "changelog": "Пакеты производителей комплекса как данные каталога, обновление формата без правки кода."
+      },
+      {
+        "version": "2.0.0",
+        "date": "19.08.2026",
+        "isCurrent": false,
+        "changelog": "Вендор-паки форматов с обновлением из каталога, автообновление модулей и виджетов, вкладка «Вендоры» в настройках СОРМ."
+      },
+      {
+        "version": "1.6.0",
+        "date": "21.07.2026",
+        "isCurrent": false,
+        "changelog": "Мульти-организация (Sorm.organization, фильтр данных по юрлицу; орг обязательна). AI-помощник по SQL отчётов (Claude через RU-bypass). Редактор SQL: CodeMirror с подсветкой, кнопки «Формат» и «на весь экран». Поле «Описание» отчёта. Массовые действия по отчётам (периодичность/запуск). Drill-down пропусков в CSV из проверки готовности. FTP-пароль скрыт. Фикс рассинхрона периодичности. Единая рамка-заголовок конфига + кнопка «назад». Зелёные шапки модалок, полноэкранные панели на мобильном, тёмная тема, a11y."
+      },
+      {
+        "version": "1.5.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "13 отчётов СОРМ-3, PostgreSQL hex-функции, prepare_reports_view."
+      }
+    ]
   },
   {
-    id: 'captive',
-    code: 'captive',
-    name: 'Captive Portal',
-    version: 'v1.6.0',
-    category: 'network',
-    categoryName: 'Сеть и доступ',
-    isCore: false,
-    shortDesc: 'Портал авторизации для гостевого Wi-Fi (152-ФЗ) и страница-заглушка для должников',
-    fullDesc: 'Двухрежимный портал авторизации: режим Walled Garden для абонентов с задолженностью (перенаправление на страницу оплаты без доступа в остальной интернет, кроме банков и госуслуг) и режим публичного Wi-Fi с авторизацией гостей по SMS / звонку в соответствии с законодательством РФ.',
-    features: [
-      'Заглушка для должников: доступен вход в ЛК, банки и Госуслуги',
-      'Гостевая Wi-Fi идентификация по звонку или SMS (152-ФЗ, постановление №758/801)',
-      'Кастомизация страницы в фирменном стиле оператора или заведения',
-      'Поддержка MikroTik Hotspot, CoovaChilli и Cisco ISG',
+    "id": "captive",
+    "code": "captive",
+    "name": "Captive Portal",
+    "version": "v1.6.0",
+    "category": "network",
+    "categoryName": "Сеть и доступ",
+    "isCore": false,
+    "shortDesc": "Страница-заглушка для должников и гостевой Wi-Fi",
+    "fullDesc": "Портал для тех, кому нельзя в интернет напрямую: должники попадают на страницу пополнения, гости — на страницу входа. Клиент не пропадает из сети насовсем, а видит понятную причину и способ вернуться.",
+    "features": [
+      "Должник видит страницу «пополните баланс», а не пустой экран",
+      "Доступ к кабинету, банкам и госуслугам сохраняется",
+      "Гостевые точки с авторизацией по номеру",
+      "Своё оформление страницы под бренд"
     ],
-    howItWorks: [
-      'При неоплате биллинг отправляет RADIUS CoA команду на смену профиля на роутере.',
-      'Трафик перехватывается правилом DNAT и перенаправляется на web-портал с кнопкой оплаты.',
+    "howItWorks": [
+      "Клиент с долгом не отрезается полностью: сессия переводится в ограниченный режим, где открыт кабинет и оплата.",
+      "После платежа доступ возвращается автоматически."
     ],
-    plans: ['Старт', 'Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/captive.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/captive-portal-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/captive-portal-training-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/captive_1.jpg", cap: "Настройки портала и гостевых точек" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/captive_c0cecc0e.jpg", cap: "Captive Portal" }
+    "plans": [
+      "Старт",
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'Radio',
-    stats: '152-ФЗ Wi-Fi',
+    "icon": "Radio",
+    "stats": "152-ФЗ Wi-Fi",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/captive.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/captive-portal-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/captive-portal-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/settings-services.html#captive-portal",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/captive_1.jpg",
+        "cap": "Настройки портала и гостевых точек"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/captive_c0cecc0e.jpg",
+        "cap": "Captive Portal"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": true,
+        "changelog": "Walled-garden, платный Wi-Fi, ACL, брендинг портала."
+      },
+      {
+        "version": "1.1.0",
+        "date": "01.07.2026",
+        "isCurrent": false,
+        "changelog": "— Платный гостевой Wi-Fi: тарифы доступа, оплата картой/СБП — SMS-согласие 152-ФЗ, автоочистка гостевых сессий"
+      },
+      {
+        "version": "1.0.0",
+        "date": "20.04.2026",
+        "isCurrent": false,
+        "changelog": "— Финансовая блокировка: walled-garden, страница-заглушка, CoA"
+      }
+    ]
   },
   {
-    id: 'bank',
-    code: 'bank',
-    name: 'Банковские выписки',
-    version: 'v1.8.0',
-    category: 'finance',
-    categoryName: 'Финансы',
-    isCore: false,
-    shortDesc: 'Автоматический приём выписок из почты, разбор 1C/Сбер/Альфа и зачисление на баланс',
-    fullDesc: 'Умная автоматизация обработки банковского безнала: модуль слушает почтовый ящик, принимает файлы выписок формата 1C-Enterprise от Сбербанка, Альфа-Банка, Т-Банка и других, сопоставляет платежи по ИНН, лицевому счёту и назначению платежа, разделяет реестры приёмщиков и зачисляет средства с генерацией счетов и актов.',
-    features: [
-      'Автоматический приём выписок из защищённого почтового ящика',
-      'Распознавание плательщика по 4 алгоритмам (ИНН, договор, ФИО, назначение)',
-      'Отделение сводных реестров агрегаторов от прямых оплат абонентов',
-      'Автовыписка счетов и актов для юридических лиц с разделением по организациям',
-      'Очередь ручной модерации для спорных или нераспознанных платежей',
+    "id": "bank",
+    "code": "bank",
+    "name": "Банковские выписки",
+    "version": "v1.8.0",
+    "category": "finance",
+    "categoryName": "Финансы",
+    "isCore": false,
+    "shortDesc": "Приём банковских выписок из почты, разбор операций, сопоставление с клиентами и зачисление на баланс. Сводные перечисления приёмщиков платежей отделяются от абонентских, сомнительные сопоставления проверяются вручную. Для юрлиц выписываются счёт и акт от нужной организации. Единый интерфейс во всех разделах, адаптирован под телефон: списки-карточки и сворачиваемые фильтры.",
+    "fullDesc": "Приём банковских выписок из почты, разбор операций, сопоставление с клиентами и зачисление на баланс. Сводные перечисления приёмщиков платежей отделяются от абонентских, сомнительные сопоставления проверяются вручную. Для юрлиц выписываются счёт и акт от нужной организации.",
+    "features": [
+      "Приём выписок из почтового ящика по расписанию",
+      "Разбор форматов Сбербанка и АльфаБанка",
+      "Сопоставление с клиентом по ИНН, лицевому счёту, назначению и ФИО",
+      "Ручная привязка с поиском и подсказками, реквизиты из ФНС по ИНН",
+      "Отделение сводных перечислений приёмщиков платежей от абонентских",
+      "Пометка сомнительных сопоставлений и защита массового зачисления",
+      "Определение организации по расчётному счёту получателя",
+      "Счёт и акт для юрлица от нужной организации, своя серия номеров",
+      "Вкладка «Банк» в карточке клиента с его платежами и документами",
+      "Журнал аудита на каждое изменение"
     ],
-    howItWorks: [
-      'Выписка из банка поступает на служебный e-mail, парсится в фоновом режиме.',
-      'Платежи с совпадением 100% проводятся мгновенно, сложные случаи ждут одного клика оператора.',
+    "howItWorks": [
+      "Письмо банка попадает в почтовый ящик модуля, приёмник забирает его по расписанию Парсер раскладывает вложение на операции, по счёту получателя определяется юрлицо Сводные перечисления приёмщиков платежей помечаются и выводятся отдельно Остальные операции сопоставляются с клиентами четырьмя способами Оператор проверяет очередь: привязывает нераспознанные, зачисляет готовые После зачисления юрлицу выписываются счёт и акт от нужной организации"
     ],
-    plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/bank.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/bank-statements-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/bank-statements-training-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bank_1.jpg", cap: "Настройки приёма и разбора выписок" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bank_97871ca0.jpg", cap: "Настройки приёма выписок" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bankq_6fa9cead.jpg", cap: "Очередь модерации платежей" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'CreditCard',
-    stats: 'Автозачисление',
+    "icon": "CreditCard",
+    "stats": "Автозачисление",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/bank.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/bank-statements-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/bank-statements-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/settings.html#bank-statements",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bank_1.jpg",
+        "cap": "Настройки приёма и разбора выписок"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bank_97871ca0.jpg",
+        "cap": "Настройки приёма выписок"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/bankq_6fa9cead.jpg",
+        "cap": "Очередь модерации платежей"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.8.0",
+        "date": "29.08.2026",
+        "isCurrent": true,
+        "changelog": "UX-полировка и мобильная адаптация. Все страницы (Настройки, Банки и парсеры, Очередь модерации, Журнал импортов) переведены на единый набор компонентов интерфейса: настраиваемые таблицы с сохранением колонок в профиле сотрудника, единые диалоги подтверждения, полосы статусов, выбор периода и бейджи организаций. На телефоне списки превращаются в карточки, а фильтры сворачиваются в кнопку «Фильтры»; кнопки и карточки статистики раскрываются на всю ширину. Контраст тёмной темы приведён к стандарту доступности. Превью документов (счёт/акт) отдаётся из облака по подписанной ссылке. Забор писем при включённом боевом режиме фискализации требует явного подтверждения — чтобы пробитие чеков в ОФД было осознанным; действие фиксируется в аудите."
+      },
+      {
+        "version": "1.7.0",
+        "date": "25.08.2026",
+        "isCurrent": false,
+        "changelog": "Разбор очереди, организации и сводные реестры. • Ручная привязка платежа к клиенту заработала: поиск идёт по ФИО, договору, телефону, e-mail, ИНН и номеру клиента. Если ИНН плательщика в базе нет, реквизиты подтягиваются из ФНС с кнопкой поиска по названию. • Форма привязки раскрывается прямо под платежом — соседние строки остаются на виду. На телефоне выезжает панель. • Организация платежа определяется по расчётному счёту и видна в очереди и журнале. Счета и акты выписываются от того юрлица, на чей счёт пришли деньги; у каждого своя серия номеров документов. • Сводные перечисления приёмщиков платежей (Сбербанк, «Единая касса») больше не засоряют очередь: они распознаются по ИНН и признаку реестра в назначении и уходят в отдельную вкладку. Список приёмщиков — настройка. • Сомнительные сопоставления помечаются и не попадают в массовое зачисление: совпадение по похожести ФИО, один ИНН у разных клиентов, расхождение ФИО. • В очереди появились поиск, период, постраничный вывод и суммовой итог. • В карточке клиента — вкладка «Банк»: его платежи из выписок и выписанные счета с актами. • Аудит пишется на каждое изменение, включая выключатель автозачисления."
+      },
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "IMAP-приём, парсеры, очередь модерации, автонастройка ящика."
+      },
+      {
+        "version": "1.0.0",
+        "date": "19.05.2026",
+        "isCurrent": false,
+        "changelog": "— Импорт выписок Сбербанк/Альфа-Банк (1C-формат) — Сопоставление платежей с абонентами: договор, ИНН, ФИО"
+      }
+    ]
   },
   {
-    id: 'fiscal',
-    code: 'fiscal',
-    name: 'Фискализация 54-ФЗ',
-    version: 'v1.7.0',
-    category: 'gov',
-    categoryName: 'Госрегулирование',
-    isCore: false,
-    shortDesc: 'Онлайн-кассы по 54-ФЗ: интеграция с АТОЛ Онлайн, чеки в ОФД и на e-mail клиента',
-    fullDesc: 'Автоматическая фискализация платежей в соответствии с 54-ФЗ. Чек пробивается облачной или физической кассой (АТОЛ Онлайн, Orange Data), отправляется в ОФД, а электронная копия — абоненту по SMS или e-mail. Поддерживается раздельная фискализация для нескольких юрлиц в режиме мультиорганизации.',
-    features: [
-      'Интеграция с АТОЛ Онлайн и ведущими облачными сервисами касс',
-      'Умная очередь чеков с автоматическим повтором при сбоях связи',
-      'Настройка ставок НДС, признаков расчёта (услуга связи, аренда оборудования)',
-      'Поддержка отдельных касс для разных юрлиц в одном биллинге',
+    "id": "fiscal",
+    "code": "fiscal",
+    "name": "Фискализация 54-ФЗ",
+    "version": "v1.7.0",
+    "category": "gov",
+    "categoryName": "Госрегулирование",
+    "isCore": false,
+    "shortDesc": "Кассовые чеки в ОФД по 54-ФЗ: своя касса на каждую организацию, выбор платежей и очередь чеков",
+    "fullDesc": "Автоматическая фискализация по 54-ФЗ. Чек бьётся собственной кассой организации (по её ИНН), реквизиты продавца — из брендинга компании. Фискализируется только свой безнал из банковских выписок: агрегаторы (ЮKassa, Wallet One) пробивают чек своей кассой сами. Боевой режим и источники настраиваются как глобально, так и по каждой кассе организации. Очередь чеков показывает состояние отправки, позволяет отправить или снять операцию, шлёт сводку в Telegram.",
+    "features": [
+      "Своя касса на организацию (per-org ИНН/СНО/НДС)",
+      "Боевой режим и источники глобально или по кассе",
+      "Чек-лист готовности гейтит включение",
+      "Очередь чеков: статусы, фильтры, отправка, удаление, отчёт в Telegram",
+      "Электронный чек клиенту на e-mail/SMS, ссылка в ЛК и приложении",
+      "Авто-повтор и Telegram-алерт на застрявшие чеки"
     ],
-    howItWorks: [
-      'При успешной транзакции (банк или терминал) формируется фискальный пакет тегов 54-ФЗ.',
-      'Касса подписывает чек фискальным накопителем и возвращает ссылку на чек ОФД.',
+    "howItWorks": [
+      "Приём оплаты (банк-выписка) → движок проверяет источник и собирает состав чека 54-ФЗ → очередь отправляет в АТОЛ/ОФД → чек клиенту.",
+      "Старые чеки задним числом автоматика не досылает — это решение бухгалтерии."
     ],
-    plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/fiscal.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_fiscal_training_2026-08-26.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_fiscal_training_2026-08-26-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/fiscal_1.jpg", cap: "Настройки фискализации" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/fiscal_e7358711.jpg", cap: "Фискализация (АТОЛ)" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'Receipt',
-    stats: 'АТОЛ / 54-ФЗ',
+    "icon": "Receipt",
+    "stats": "АТОЛ / 54-ФЗ",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/fiscal.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_fiscal_training_2026-08-26.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_fiscal_training_2026-08-26-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/settings.html#fiscal",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/fiscal_1.jpg",
+        "cap": "Настройки фискализации"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/fiscal_e7358711.jpg",
+        "cap": "Фискализация (АТОЛ)"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.7.0",
+        "date": "29.08.2026",
+        "isCurrent": true,
+        "changelog": "Per-org фискализация: боевой режим и источники на каждой кассе организации (наследование глобальных по умолчанию). Реквизиты продавца (ИНН/НДС) правятся в карточке организации на вкладке «Реквизиты». Очередь чеков переведена на единые компоненты: бесконечная загрузка, меню действий строки, боковая карточка клиента, мобильные карточки, единый выбор дат. Аудит всех действий, включая проверку связи с ОФД."
+      },
+      {
+        "version": "1.6.0",
+        "date": "26.08.2026",
+        "isCurrent": false,
+        "changelog": "Чек только по своему безналу, чек-лист включения и очередь чеков. • Настройка «какие платежи фискализируем»: по умолчанию только банковские выписки. ЮKassa и Wallet One пробивают чек своей кассой — второй чек с нашей стороны означал бы два чека на один платёж и двойную выручку в ФНС. • Боевой режим включается через чек-лист готовности: касса поддерживаемого типа, реквизиты доступа, проверенная связь с ОФД, совпадение ИНН. Пока условия не выполнены, включить нельзя — и сервер проверяет то же самое. • Очередь чеков — отдельная страница в Отчётах: состояния (ждут отправки, ждут ОФД, с ошибкой, пробиты), источник платежа, поиск, период и отправка по одной операции или пачкой. • Мультиорг: касса привязана к организации, чек бьётся по её ИНН; список касс, компании и счётчики скоупятся по доступным сотруднику организациям. • Права: настройки и отправка чеков закрыты правом «Настройки · Финансы»; включение боевого режима и правки касс пишутся в аудит. • Карточка кассы: место расчётов (тег 1187 — адрес сайта для интернет- расчётов), пароль наружу не отдаётся, ставка НДС из реквизитов компании. Список касс — карточки с полями на мобильном и настройка колонок. • Обучающий ролик по модулю."
+      },
+      {
+        "version": "1.5.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "АТОЛ Онлайн, настройки кассы/СНО/НДС, автофискализация."
+      },
+      {
+        "version": "1.1.0",
+        "date": "04.07.2026",
+        "isCurrent": false,
+        "changelog": "— Фискализация на стороне ЮKassa: чек 54-ФЗ в каждом онлайн-платеже — Контакт покупателя email → телефон, настройка ставки НДС — Покрытие ЛК и мобильного приложения"
+      }
+    ]
   },
   {
-    id: 'document',
-    code: 'document',
-    name: 'Документооборот (PDF)',
-    version: 'v1.0.0',
-    category: 'finance',
-    categoryName: 'Финансы',
-    isCore: false,
-    shortDesc: 'Единая генерация договоров, счетов, актов, смет и согласий 152-ФЗ с печатями и подписями',
-    fullDesc: 'Универсальный генератор и реестр документов оператора: шаблоны договоров на подключение, доп. соглашений, актов приёма-передачи, счетов на оплату и согласие на обработку персданных. Подстановка реквизитов абонента, динамических цен тарифа, факсимиле подписи и печати организации.',
-    features: [
-      'HTML/CSS шаблоны с визуальными плейсхолдерами и предпросмотром',
-      'Впечатывание подписи директора и факсимиле печати компании',
-      'Непрерывная автоматическая нумерация с разделением по годам и организациям',
-      'Экспорт в векторный PDF для печати или отправки клиенту в ЛК',
+    "id": "document",
+    "code": "document",
+    "name": "Документ",
+    "version": "v1.0.0",
+    "category": "finance",
+    "categoryName": "Финансы",
+    "isCore": false,
+    "shortDesc": "Единый документооборот: шаблоны с плейсхолдерами, реквизиты организации, печати и подписи, реестр выпущенных PDF (договоры, счета, акты, КП, согласия 152-ФЗ, кадровые документы). Мульти-орг.",
+    "fullDesc": "Единая точка генерации любого PDF для провайдера. Модуль объединяет четыре прежде разрозненных генератора (видеонаблюдение/ЧОП, банковские выписки, SLA, CRM) в один раздел с общим реестром и общими шаблонами по категориям. Реестр — журнал всех выпущенных документов по клиентам, сделкам и сотрудникам с поиском, фильтрами (статус, категория, организация), массовыми действиями и просмотром PDF. Шаблоны правятся визуально (HTML с плейсхолдерами), шапка с реквизитами организации, логотип и подписи добавляются единым движком (WeasyPrint). Нумерация непрерывна по паре «организация + год»; ошибочный документ аннулируют, а не удаляют — PDF и номер остаются в реестре.",
+    "features": [
+      "Единый реестр выпущенных PDF: поиск, фильтры по статусу/категории/организации, сохранённые виды",
+      "Шаблоны по категориям с плейсхолдерами и предпросмотром на демо-данных",
+      "Реквизиты, печати и подписи по организации-исполнителю",
+      "Непрерывная нумерация по паре «организация + год»",
+      "Аннулирование без удаления — PDF и номер сохраняются",
+      "Массовые действия (подписать / аннулировать) с подтверждением и аудитом",
+      "Панель клиента с блоком «Документы» и просмотром PDF поверх страницы",
+      "AI-помощник по разделу и по составлению текстов шаблонов",
+      "Мульти-орг: документы и шаблоны заскоуплены по организации"
     ],
-    howItWorks: [
-      'Движок WeasyPrint компилирует HTML-шаблон с контекстом абонента в PDF.',
-      'Документ сохраняется в хранилище и доступен для скачивания абонентом в личном кабинете.',
+    "howItWorks": [
+      "Заполните реквизиты и печать организации Отредактируйте шаблоны нужных категорий (HTML с плейсхолдерами) Выпустите документ из шаблона в карточке клиента или сделки Подпишите, отправьте клиенту или аннулируйте — всё остаётся в реестре"
     ],
-    plans: ['Старт', 'Видеонаблюдение', 'Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/document.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/document_1.jpg", cap: "Документы и шаблоны" }
+    "plans": [
+      "Старт",
+      "Pro",
+      "Бизнес",
+      "Enterprise",
+      "Видеонаблюдение"
     ],
-    icon: 'FileText',
-    stats: 'WeasyPrint PDF',
+    "icon": "FileText",
+    "stats": "WeasyPrint PDF",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/document.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_documents_training_2026-09-10.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_documents_training_2026-09-10-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/extras.html#documents",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/document_1.jpg",
+        "cap": "Документы и шаблоны"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.0.0",
+        "date": "10.09.2026",
+        "isCurrent": true,
+        "changelog": "Первая версия в реестре лицензий. Единый документооборот: объединены четыре генератора PDF (видео/ЧОП, банк, SLA, CRM). Реестр и шаблоны переведены на единые компоненты SmitUI — панель фильтров с группами и OrgBadge, бейджи, массовые действия, боковые панели, подтверждения. Управление категориями шаблонов, мульти-орг, обучающий ролик и знакомство при первом входе."
+      }
+    ]
   },
   {
-    id: 'helpdesk',
-    code: 'helpdesk',
-    name: 'Поддержка и ServiceDesk',
-    version: 'v2.3.0',
-    category: 'comms',
-    categoryName: 'Связь и поддержка',
-    isCore: false,
-    shortDesc: 'Омниканальные тикеты из почты, Telegram, VK, ЛК и виджетов в едином окне оператора',
-    fullDesc: 'Полнофункциональный ServiceDesk для технической поддержки оператора связи: приём заявок со всех каналов в одну очередь, статусы выполнения, контроль SLA с таймерами, назначение ответственных, встроенная карточка абонента рядом с чатом и база знаний для операторов.',
-    features: [
-      'Единая лента тикетов из Email, Telegram, ВКонтакте и мобильного приложения',
-      'Виджет мини-биллинга прямо в окне тикета (баланс, тариф, статус сессии)',
-      'Контроль SLA: цветовые индикаторы просрочки первого ответа и решения',
-      'База знаний с быстрыми ответами (макросами) и вложениями файлов',
+    "id": "helpdesk",
+    "code": "helpdesk",
+    "name": "Поддержка",
+    "version": "v2.3.0",
+    "category": "comms",
+    "categoryName": "Связь и поддержка",
+    "isCore": false,
+    "shortDesc": "Обращения клиентов: почта, мессенджеры и звонки в одном окне",
+    "fullDesc": "Поддержка клиентов: обращения из почты, VK, Telegram, MAX и голосовой почты в одном списке, с назначением, приоритетами, SLA и базой знаний. Тикет связан с карточкой клиента — оператор видит баланс, тариф и сессии, не переключая экраны.",
+    "features": [
+      "Входящие из почты, VK, Telegram и виджета",
+      "Карточка обращения с историей клиента",
+      "Назначение, теги, SLA и напоминания",
+      "База знаний и готовые ответы"
     ],
-    howItWorks: [
-      'Входящее сообщение идентифицирует абонента по номеру телефона или e-mail.',
-      'Оператор видит всю историю обращений и может прямо из тикета активировать обещанный платёж.',
+    "howItWorks": [
+      "Письмо или сообщение превращается в обращение и связывается с клиентом.",
+      "Ответ уходит тем же каналом, а история остаётся в карточке клиента."
     ],
-    plans: ['Видеонаблюдение', 'Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/helpdesk.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_1.jpg", cap: "Входящие обращения" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_2.jpg", cap: "Дашборд поддержки" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_2661b5e5.jpg", cap: "Поддержка: тикеты" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise",
+      "Видеонаблюдение"
     ],
-    icon: 'Headphones',
-    stats: 'Омниканальность',
+    "icon": "Headphones",
+    "stats": "Омниканальность",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/helpdesk.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/support-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/support-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/helpdesk.html",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_1.jpg",
+        "cap": "Входящие обращения"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_2.jpg",
+        "cap": "Дашборд поддержки"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/helpdesk_2661b5e5.jpg",
+        "cap": "Поддержка: тикеты"
+      }
+    ],
+    "history": [
+      {
+        "version": "2.4.0",
+        "date": "11.09.2026",
+        "isCurrent": true,
+        "changelog": "Форма нового обращения переведена на единый конструктор: поиск клиента, категория обращения с иконками и цветом, маска и проверка телефона и e-mail, поля и селекты одной высоты. Во «Входящих» очередь задач размещена в одну строку, панель инструментов компактнее. В переписке внутренние ссылки на другие обращения открываются кнопкой «Перейти к тикету»."
+      },
+      {
+        "version": "2.3.0",
+        "date": "24.08.2026",
+        "isCurrent": false,
+        "changelog": "Виджеты в карточке обращения, каналы приёма в каталоге, фильтры входящих и единое оформление раздела."
+      },
+      {
+        "version": "2.2.0",
+        "date": "19.08.2026",
+        "isCurrent": false,
+        "changelog": "Панель тикета переведена на единый компонент боковой панели, добавлены фильтры и виды списка, метрики очереди и SLA на дашборде."
+      },
+      {
+        "version": "2.1.0",
+        "date": "12.08.2026",
+        "isCurrent": false,
+        "changelog": "Дашборд Поддержки: единый селектор диапазона дат (по умолч. 30 дней, запоминается), дельты потока, медианное время первого ответа и решения, SLA-карточка «в срок ≤N ч», тепловая карта «часы × дни», время ответа/решения по операторам, блок «Последние тикеты» (только открытые, бейджи канала/статуса/приоритета). Инбокс: пик-панель тикета по клику, аватар + инлайн-переназначение ответственного, тумблер плотности, акцент «нужен ответ», массовые действия только для su и старшего менеджера, таблица без горизонтального скролла."
+      }
+    ]
   },
   {
-    id: 'crm',
-    code: 'crm',
-    name: 'CRM и Воронки продаж',
-    version: 'v3.4.0',
-    category: 'crm',
-    categoryName: 'Продажи',
-    isCore: false,
-    shortDesc: 'Канбан-воронки подключения, Salesbot-сценарии, наряды монтажникам и учёт рекламы',
-    fullDesc: 'Специализированная CRM для телеком-операторов: визуальные канбан-доски этапов подключения (Заявка -> Проверка ТМ -> Наряд монтажнику -> Подписан договор -> Оплачено), конструктор диалоговых ботов Salesbot, календарь выездов инженеров и сквозная аналитика UTM-меток рекламы.',
-    features: [
-      'Канбан-воронка лидов со строгими правилами перехода между этапами',
-      'Salesbot: визуальный конструктор чат-ботов с интерактивными кнопками',
-      'Электронные наряды на монтаж с геопривязкой и прикреплением фотоотчётов',
-      'Сквозная аналитика рекламных кампаний Яндекс.Директ и уличных баннеров',
+    "id": "crm",
+    "code": "crm",
+    "name": "CRM / Продажи",
+    "version": "v3.4.0",
+    "category": "crm",
+    "categoryName": "Продажи",
+    "isCore": false,
+    "shortDesc": "Продажи: воронка сделок, задачи, источники заявок и боты",
+    "fullDesc": "CRM провайдера: воронки сделок, задачи, календарь, наряды на монтаж, источники лидов, рекламные кампании и боты-сценарии. Заявка проходит путь от звонка или формы до подключённого клиента, не выпадая из системы.",
+    "features": [
+      "Воронки со своими стадиями и правилами",
+      "Карточка сделки: заметки, задачи, звонки, тикеты",
+      "Источники заявок: сайт, боты, звонки, импорт",
+      "Наряды монтажникам и календарь работ"
     ],
-    howItWorks: [
-      'Заявка с сайта или по телефону попадает на этап «Новый лид».',
-      'При назначении даты монтажа автоматически создаётся наряд в календаре монтажника.',
+    "howItWorks": [
+      "Заявка из любого источника создаёт сделку в нужной воронке.",
+      "Сделка ведётся до подключения и превращается в клиента, не теряя историю переписки и звонков."
     ],
-    plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/crm.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/crm-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/crm-training-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_1.jpg", cap: "Воронка сделок" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_2.jpg", cap: "Дашборд продаж" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_26b39028.jpg", cap: "CRM-дашборд и воронка" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'TrendingUp',
-    stats: 'Salesbot + Канбан',
+    "icon": "TrendingUp",
+    "stats": "Salesbot + Канбан",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/crm.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/crm-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/crm-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/crm.html",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_1.jpg",
+        "cap": "Воронка сделок"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_2.jpg",
+        "cap": "Дашборд продаж"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/crm_26b39028.jpg",
+        "cap": "CRM-дашборд и воронка"
+      }
+    ],
+    "history": [
+      {
+        "version": "3.4.0",
+        "date": "04.09.2026",
+        "isCurrent": true,
+        "changelog": "Рекламный кабинет Яндекс.Директа подключает сама организация: у каждого юрлица он свой, и чужие расходы не видит никто. Кампании теперь знают не только сколько заявок принесла реклама, но и сколько она стоила — показы, клики и расход рядом с заявками и сделками. Секрет приложения остаётся на сервере лицензий, в биллинг он не попадает. Документация: разобран Salesbot на живом сценарии «Приём заявок» — весь путь от приветствия до сделки, с ветками «нет интернета» в рабочее и нерабочее время; описано, чем шаги отличаются друг от друга и почему бот отвечает раньше AI-ассистента. Справка раздела вела на страницу Поддержки — теперь на описание CRM."
+      },
+      {
+        "version": "3.3.0",
+        "date": "24.08.2026",
+        "isCurrent": false,
+        "changelog": "Карточка сделки в виде панели, наряды монтажникам, воронки с гейтами и причинами отказа, источники заявок и рецепты."
+      },
+      {
+        "version": "3.2.0",
+        "date": "19.08.2026",
+        "isCurrent": false,
+        "changelog": "Воронки разведены по организациям, наряды на монтаж объединены с календарём, редактор ботов получил черновики и историю версий, по ответам бота собирается PDF-отчёт."
+      },
+      {
+        "version": "3.1.0",
+        "date": "12.08.2026",
+        "isCurrent": false,
+        "changelog": "Воронки разведены по организациям, диаграммы и выбор периода в рекламных кампаниях, источники лидов на организацию, виджет «Организации: сводка»."
+      }
+    ]
   },
   {
-    id: 'ai',
-    code: 'ai',
-    name: 'AI-ассистент (7 каналов)',
-    version: 'v3.3.0',
-    category: 'platform',
-    categoryName: 'Искусственный интеллект',
-    isCore: false,
-    shortDesc: 'Интеллектуальный агент с доступом к данным биллинга, отвечающий в чатах, голосе и телефонии',
-    fullDesc: 'Нейросетевой AI-ассистент первого уровня поддержки: обрабатывает до 73% типовых вопросов без участия живых операторов. Подключён к API биллинга: умеет проверять баланс абонента, сообщать причины блокировки, рассказывать о тарифах, оформлять заявки на вызов мастера и бесшовно переводить диалог на человека.',
-    features: [
-      'Работа на 7 каналах: ЛК, мобильное приложение, виджет сайта, Telegram, VK, Email и телефон',
-      'Мульти-провайдерная архитектура (Claude, GPT, Gemini, YandexGPT, Grok) с fallback',
-      'Инструменты: проверка баланса, диагностика сессии, создание тикета, заказ тарифа',
-      'Внутренний AI-копилот в админке для подсказок операторам и генерации ответов',
+    "id": "ai",
+    "code": "ai",
+    "name": "AI-ассистент",
+    "version": "v3.3.0",
+    "category": "platform",
+    "categoryName": "Искусственный интеллект",
+    "isCore": false,
+    "shortDesc": "AI-ассистент: отвечает клиентам, помогает сотрудникам в разделах панели, оформляет заявки",
+    "fullDesc": "AI-контур системы: ассистент в кабинете, мобильном приложении, поддержке, на сайте и в голосе. Работает через выбранного поставщика (Claude, ChatGPT, Gemini и другие), знает базу знаний провайдера и умеет вызывать инструменты — посмотреть баланс, оформить заявку, передать разговор человеку. Отдельная часть модуля — помощник в разделах панели: плавающая кнопка на рабочих страницах, которая разбирает данные открытого списка или карточки. Он только читает: объясняет, что происходит на экране, предлагает вопросы под конкретный раздел, хранит последние запросы по странице (видно, что уже выясняли коллеги) и пишет черновики писем. Списания, блокировки и отправку клиенту делает сотрудник.",
+    "features": [
+      "Ответы клиенту в чате, мессенджерах и по телефону",
+      "Помощник в разделах панели: разбор данных страницы и подсказка следующего шага",
+      "История запросов по странице и пересылка ответа коллеге",
+      "Проверка личности и работа с данными клиента",
+      "Оформление заявки и передача человеку",
+      "Запасные поставщики модели: работа не встаёт из-за одного провайдера",
+      "Учёт расхода и качества ответов"
     ],
-    howItWorks: [
-      'Запрос абонента парсится моделью с Function Calling для получения баланса из биллинга.',
-      'Если вопрос сложный или абонент просит оператора, диалог мгновенно маршрутизируется дежурному.',
+    "howItWorks": [
+      "Ассистент отвечает по базе знаний и данным биллинга, а когда вопрос выходит за рамки — передаёт обращение оператору с историей диалога.",
+      "Помощник в панели получает те же данные, что видит сотрудник на странице, и отвечает только по ним.",
+      "Запрос идёт по цепочке поставщиков: если основной недоступен, ответ приходит от следующего, а расход пишется в общий журнал."
     ],
-    plans: ['Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/ai.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/ai-agent-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/ai-agent-training-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_1.jpg", cap: "Настройки AI-агента" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_2.jpg", cap: "Дашборд AI-чата: обращения и расход" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_a2f0a41e.jpg", cap: "AI-хаб" }
+    "plans": [
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'Bot',
-    stats: '73% автозакрытия',
+    "icon": "Bot",
+    "stats": "Около 73% без оператора",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/ai.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/ai-agent-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/ai-agent-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/extras.html#ai-agent",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_1.jpg",
+        "cap": "Настройки AI-агента"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_2.jpg",
+        "cap": "Дашборд AI-чата: обращения и расход"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/ai_a2f0a41e.jpg",
+        "cap": "AI-хаб"
+      }
+    ],
+    "history": [
+      {
+        "version": "3.3.0",
+        "date": "10.09.2026",
+        "isCurrent": true,
+        "changelog": "Помощник разделов — отдельный блок в каталоге виджетов — Карточка «AI-ассистент разделов» в каталоге виджетов: помощника можно выключить на всех страницах, не трогая остальной модуль. — Помощник доступен, только пока включён модуль «AI-ассистент»: выключение модуля закрывает и эндпоинты, и сам виджет на страницах. — История запросов по странице: последние 5 разборов с автором и временем, ответ раскрывается на месте, можно переслать коллеге. — Уточняющие вопросы к ответу и кнопка «Начать заново» — разговор ведётся с контекстом или обрывается по желанию сотрудника. — Резервные провайдеры: Claude, затем Gemini, затем OpenAI. Если у основного кончились средства или он недоступен, раздел получает ответ от следующего. Порядок меняется настройкой AI_ASSIST_ORDER. — Расход токенов пишется по всем провайдерам (у каждого свои имена счётчиков), в журнал попадает модель, которая реально ответила."
+      },
+      {
+        "version": "3.2.0",
+        "date": "24.08.2026",
+        "isCurrent": false,
+        "changelog": "Организация в диалогах и звонках, отбор базы знаний под вопрос, честный учёт токенов и причина передачи человеку."
+      },
+      {
+        "version": "3.1.0",
+        "date": "19.08.2026",
+        "isCurrent": false,
+        "changelog": "Промпт собирается по релевантности базы знаний (расход токенов снижен вдвое), исправлен двойной учёт токенов, диалоги и звонки привязываются к организации, эскалации разделены по причине."
+      },
+      {
+        "version": "3.0.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "AIDA: мульти-провайдер, голос, виджет, база знаний."
+      }
+    ]
   },
   {
-    id: 'multiorg',
-    code: 'multiorg',
-    name: 'Мультиорганизация',
-    version: 'v3.5.0',
-    category: 'platform',
-    categoryName: 'Архитектура',
-    isCore: false,
-    shortDesc: 'Ведение нескольких юридических лиц в одном экземпляре: изоляция данных, касс и доменов',
-    fullDesc: 'Архитектурное разделение для холдингов и групп компаний: ведение независимых провайдеров, ЧОП и сервисных компаний на едином сервере. У каждого юрлица свои абоненты, договоры, реквизиты, кассы ЮKassa, почтовые шлюзы и Telegram-группы, при этом общая сеть и единая панель управления.',
-    features: [
-      'Полная изоляция абонентов, договоров и финансовых проводок по организациям',
-      'Индивидуальные реквизиты, расчетные счета, кассы и ставки НДС',
-      'Быстрый фильтр в шапке панели с отображением метрик выбранного юрлица',
-      'Разграничение прав доступа сотрудников строго по назначенным компаниям',
+    "id": "multiorg",
+    "code": "multiorg",
+    "name": "Мультиорганизация",
+    "version": "v3.5.0",
+    "category": "platform",
+    "categoryName": "Архитектура",
+    "isCore": false,
+    "shortDesc": "Несколько компаний в одном биллинге: свои клиенты, реквизиты, касса, почта и Telegram у каждой",
+    "fullDesc": "Одна установка обслуживает несколько юридических лиц. У каждой компании свои клиенты, реквизиты для счетов и актов, касса приёма платежей, почтовый отправитель и Telegram-группа для уведомлений. Выбор компании в шапке работает как фильтр отображения — списки, дерево клиентов и отчёты показывают только её данные. Права при этом не меняются: что сотруднику доступно, определяют назначенные ему организации, а не текущий выбор в селекторе. Раздел «Организации» собирает всё управление в одном окне. Строка компании отвечает на вопрос «как она живёт»: клиенты, оборот и долг за месяц, обращения, сотрудники и готовность настроек. Отсюда же можно перейти в данные этой компании и перенести клиентов в другую, если юрлицо закрывается.",
+    "features": [
+      "Свои клиенты, счета и документы у каждой компании",
+      "Реквизиты, печать и подпись — отдельные для каждого юрлица",
+      "Своя касса YooKassa/Wallet One и расчётный счёт приёма оплат",
+      "Строка компании показывает клиентов, оборот, долг и обращения за месяц",
+      "Переходы в данные организации прямо из списка",
+      "Перенос клиентов между компаниями с записью в аудит",
+      "Отдельный почтовый отправитель и Telegram-группа уведомлений",
+      "Брендинг: цвета, логотип, favicon, фоны входа в личный кабинет",
+      "Изоляция персонала: сотрудник видит только назначенные ему компании",
+      "Автонастройка почты компании: ящик, DNS-записи и SMTP одной кнопкой",
+      "Общие справочники видны всем компаниям — состав виден прямо в разделе",
+      "Таблица компаний с настройкой колонок; на телефоне — карточками"
     ],
-    howItWorks: [
-      'Каждая запись базы маркируется organization_id с автоматической фильтрацией на уровне ORM.',
-      'Переключение в шапке меняет контекст отображения без повторной авторизации.',
+    "howItWorks": [
+      "Заведите компании в разделе «Настройки → Организации» и укажите каждой реквизиты, кассу и почту.",
+      "Клиента привязывает к компании поле организации в его карточке — от него организацию наследуют финоперации и документы.",
+      "Записи без организации видны всем компаниям: так устроены общие справочники.",
+      "Сотрудникам назначаются доступные компании; селектор в шапке переключает отображение в пределах этих прав.",
+      "Значок «Реквизиты» в списке показывает не «что-то заполнено», а «счёт собрать можно» — по тем же полям, что и страница печатных форм."
     ],
-    plans: ['Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/multiorg.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/org-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/org-training-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/multiorg_1.jpg", cap: "Организации и их настройки" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/multiorg_7e956db3.jpg", cap: "Организации" }
+    "plans": [
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'Building2',
-    stats: 'Multi-Tenant',
+    "icon": "Building2",
+    "stats": "Multi-Tenant",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/multiorg.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/org-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/org-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/extras.html#multi-org",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/multiorg_1.jpg",
+        "cap": "Организации и их настройки"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/multiorg_7e956db3.jpg",
+        "cap": "Организации"
+      }
+    ],
+    "history": [
+      {
+        "version": "3.5.0",
+        "date": "10.09.2026",
+        "isCurrent": true,
+        "changelog": "Раздел «Организации»: от списка настроек к картине по компаниям — Строка компании показывает, как она живёт: клиенты (активные из всех), оборот и долг за 30 дней, обращения и сотрудники. — Значок «Реквизиты» отвечает на вопрос «можно ли выписать счёт»: считается по тем же девяти полям, что и страница печатных форм, и называет недостающие. — Переходы в данные организации прямо из строки: клиенты, должники, обращения, операции, документы, склад, сеть, сотрудники — уже с фильтром по компании. — Перенос клиентов между организациями: раньше компанию с клиентами нельзя было ни выключить, ни освободить. История операций и документов остаётся за прежней. — Блок «Общее для всех организаций»: видно, какие справочники видит каждая компания и сколько в них записей. — Карточка организации: название правимой компании в шапке, шесть вкладок в одну строку, подсказки у секций, проверка полей и список изменений перед сохранением. — Счётчик клиентов больше не считает папки и удалённых — по нему принимается решение о выключении компании. — На телефоне: карточки вместо колонок, деньги и обращения парами, меню действий выезжает снизу."
+      },
+      {
+        "version": "3.4.0",
+        "date": "29.08.2026",
+        "isCurrent": false,
+        "changelog": "Касса компании — на странице платёжных систем. • Реквизиты приёма оплат каждой компании настраиваются в разделе «Платёжные системы»: полоса в шапке переключает между общими настройками и кассой конкретной компании. Раньше касса правилась только в карточке организации, а раздел платежей о ней умалчивал. • В общем режиме показывается предупреждение со ссылками на компании со своей кассой — видно, на кого правки общих ключей не подействуют. • Тумблер «Использовать свою кассу» возвращает клиентов компании на общие настройки без удаления реквизитов. • Сотрудник видит и правит только кассы доступных ему компаний."
+      },
+      {
+        "version": "3.3.0",
+        "date": "29.08.2026",
+        "isCurrent": false,
+        "changelog": "Раздел «Организации» переведён на единые компоненты интерфейса: таблица на телефоне показывается карточками с подписями полей, состав колонок настраивается и запоминается в профиле. Название компании выводится фирменным бейджем — иконка и акцентный цвет берутся из брендинга. Переключение компании объясняет отказ вместо молчаливого возврата: «организация вам не назначена», «отключена», «не найдена». Переключения и отказы пишутся в аудит. Подтверждение деактивации перечисляет последствия; неудачные проверки почты и Telegram тоже попадают в журнал. Кнопка «Управление лицензией» в шапке раздела; заливки кнопок затемнены до нормы контраста."
+      },
+      {
+        "version": "3.2.0",
+        "date": "24.08.2026",
+        "isCurrent": false,
+        "changelog": "Организация в данных CRM и поддержки, доступ сотрудника только к своим компаниям, сводки по всем организациям."
+      }
+    ]
   },
   {
-    id: 'stock',
-    code: 'stock',
-    name: 'Склад и ТМЦ',
-    version: 'v2.2.0',
-    category: 'operations',
-    categoryName: 'Эксплуатация',
-    isCore: false,
-    shortDesc: 'Учёт роутеров, кабеля и расходников, подотчёт монтажников, штрихкоды и инвентаризация',
-    fullDesc: 'Специализированный складской модуль для провайдеров: партионный и серийный учёт оптических роутеров, приставок, SFP-модулей и кабеля. Выдача материалов инженеру под наряд монтажа, списание установленного оборудования на лицевой счёт абонента (в аренду или продажу) и сканирование штрихкодов с камеры смартфона.',
-    features: [
-      'Серийный учёт терминалов (ONT/ONU/роутеры) со статусом «на складе / у монтажника / у клиента»',
-      'Привязка списания материалов к наряду в CRM при подключении абонента',
-      'Мобильный сканер штрихкодов и QR-кодов прямо через браузер монтажника',
-      'Инвентаризация с автоматическим актом расхождений и пересчётом остатков',
+    "id": "stock",
+    "code": "stock",
+    "name": "Склад (ТМЦ и оборудование)",
+    "version": "v2.2.0",
+    "category": "operations",
+    "categoryName": "Эксплуатация",
+    "isCore": false,
+    "shortDesc": "Склад: приход, выдача монтажникам, установка у клиента и инвентаризация",
+    "fullDesc": "Склад материалов и оборудования: приход, подотчёт монтажников, установка клиенту, возврат и брак. Отвечает на три вопроса, которые обычно живут в таблицах: что есть на складе, что на руках у людей и что стоит у клиентов. С версии 2.1 отвечает и на четвёртый — совпадает ли учёт с реальностью: инвентаризация с актом расхождений, резерв под наряд, перемещение между складами, справочник поставщиков и работа сканером без связи.",
+    "features": [
+      "Приход по накладной и серийные номера",
+      "Выдача сотруднику под отчёт",
+      "Установка оборудования клиенту из наряда",
+      "Инвентаризация и движения по складам"
     ],
-    howItWorks: [
-      'Монтажник сканирует роутер при установке — серийник привязывается к оборудованию абонента.',
-      'Бухгалтер видит фактическое списание и остаток метража кабеля в бухтах.',
+    "howItWorks": [
+      "Вещь всегда числится за кем-то одним: складом, сотрудником или клиентом.",
+      "Установка из наряда списывает оборудование и привязывает его к клиенту."
     ],
-    plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/stock.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20-poster.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_1.jpg", cap: "Остатки по складам" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_2.jpg", cap: "Номенклатура и серийные номера" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_dashboard_20891168.png", cap: "Остатки склада" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_receipt_6ce624df.png", cap: "Приход и этикетки" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_issue_profileselect_9c7148ae.png", cap: "Выдача в подотчёт" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_montazh_materials_modal_b7606783.png", cap: "Материалы наряда" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_abonent_equipment_tab_be9b7747.png", cap: "Оборудование абонента" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_analytics_9d1bf473.png", cap: "Аналитика склада" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'Package',
-    stats: 'Штрихкод & Серийники',
+    "icon": "Package",
+    "stats": "Штрихкод & Серийники",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/stock.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/stock.html",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_1.jpg",
+        "cap": "Остатки по складам"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_2.jpg",
+        "cap": "Номенклатура и серийные номера"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_dashboard_20891168.png",
+        "cap": "Остатки склада"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_receipt_6ce624df.png",
+        "cap": "Приход и этикетки"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_issue_profileselect_9c7148ae.png",
+        "cap": "Выдача в подотчёт"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_montazh_materials_modal_b7606783.png",
+        "cap": "Материалы наряда"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_abonent_equipment_tab_be9b7747.png",
+        "cap": "Оборудование абонента"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/stock_stock_analytics_9d1bf473.png",
+        "cap": "Аналитика склада"
+      }
+    ],
+    "history": [
+      {
+        "version": "2.2.0",
+        "date": "24.08.2026",
+        "isCurrent": true,
+        "changelog": "Установка оборудования из наряда, роли кладовщика и держателя, инвентаризация и аналитика движений."
+      },
+      {
+        "version": "2.1.0",
+        "date": "20.08.2026",
+        "isCurrent": false,
+        "changelog": "Инвентаризация, резерв под наряд, перемещение между складами, поставщики и работа без связи. Инвентаризация. Лист пересчёта хранит снимок учётного остатка на момент открытия, факт вносится по позициям, серийники отмечаются сканером. Расхождение оформляется отдельным актом — движениями «Корректировка» со ссылкой на него, а не правкой прихода: видно, что расхождение было, когда и на сколько. Ненайденная единица получает статус «Недостача» (это не «Брак»: брак лежит на складе и его видно). Защита от «провёл, не считая»: без единого скана серийники не трогаются, при неполном пересчёте подтверждение называет цифры. Резерв под наряд. Бронь — обещание, а не движение: вещь на складе, но занята. «Свободно» = остаток минус активные резервы; выдать больше свободного нельзя, кроме выдачи по самому резерву — она его и закрывает. Серийная единица бронируется поимённо, чужой наряд её не заберёт. Бронь ставится прямо из наряда монтажника. Перемещение между складами. Одно движение «Перемещение», а не списание с приходом: переезд коробки не выглядит как потеря в одном месте и находка в другом. Не даст переместить забронированное и — отдельно — между складами разных организаций: это передача между юрлицами, а не складская проводка. Поставщики. Справочник вместо строки в поле «№ документа»: у каждого реквизиты и история — сколько поставок, на какую сумму, когда последняя. Приход ссылается на поставщика, сумма считается как цена × количество. Мобильный скан. Режим «сканировать подряд» — камера не закрывается после каждой этикетки, повтор кода в течение трёх секунд не считается новым. Действие без связи не пропадает: встаёт в очередь в браузере и уходит само, когда сеть вернулась; очередь переживает перезагрузку. История последних сканов остаётся на экране."
+      },
+      {
+        "version": "2.0.0",
+        "date": "19.08.2026",
+        "isCurrent": false,
+        "changelog": "Организация появилась у единиц и движений, склад принадлежит компании, запрещена установка клиенту чужой организации; добавлены карточка позиции и карточка единицы, деньги и дефицит в остатках, судьбы выданного и выгрузки CSV."
+      },
+      {
+        "version": "1.3.0",
+        "date": "04.08.2026",
+        "isCurrent": false,
+        "changelog": "- Монтаж-скоуп выдачи (build 1846): монтажник ставит и демонтирует оборудование ТОЛЬКО клиентам со своим нарядом в CRM (сделка: он инженер + дата монтажа). Настройка STOCK_INSTALL_REQUIRE_MONTAGE; кладовщик/суперюзер/менеджеры — без ограничений. - Штрихкод с кириллицей (build 1845): автооткат на QR-код (сканируется телефоном) — Code128 кодирует только латиницу/цифры, на кириллице давал пустую картинку. Чинит и печать этикеток. - Попап штрихкода в Номенклатуре (build 1844): при наведении на иконку показывается сканируемая картинка кода, а не только текст."
+      }
+    ]
   },
   {
-    id: 'video',
-    code: 'video',
-    name: 'Видеонаблюдение (VSaaS)',
-    version: 'v1.6.0',
-    category: 'media',
-    categoryName: 'Медиа и услуги',
-    isCore: false,
-    shortDesc: 'Облачное видеонаблюдение как услуга: тарифы на архив, стриминг HLS и просмотр в ЛК',
-    fullDesc: 'Готовый сервис облачного видеонаблюдения для монетизации абонентской базы: подключение IP-камер по RTSP/ONVIF, запись в архив (от 3 до 30 дней), просмотр живого видео и архива в веб-кабинете и мобильном приложении, регулярное списание абонплаты за камеру вместе с интернетом.',
-    features: [
-      'Стриминг HLS и WebRTC с минимальной задержкой через медиасервер MediaMTX/go2rtc',
-      'Тарифные планы с разной глубиной архива (3, 7, 14, 30 дней) и качеством',
-      'Просмотр мультикамерной сетки в ЛК и приложении абонента',
-      'Автоматическая блокировка видеопотоков при отсутствии оплаты услуги',
+    "id": "video",
+    "code": "video",
+    "name": "Видеонаблюдение",
+    "version": "v1.6.0",
+    "category": "media",
+    "categoryName": "Медиа и услуги",
+    "isCore": false,
+    "shortDesc": "Видеонаблюдение как услуга: камеры, тарифы, архив и продажи",
+    "fullDesc": "Видеонаблюдение как услуга «под ключ»: от заявки до ежемесячной абонплаты. Объект, проект с воронкой стадий, камеры и оборудование, документы (смета, договор, акт, согласие на обработку данных) и подписки, которые списываются вместе с остальными услугами.",
+    "features": [
+      "Камеры и объекты клиента",
+      "Тарифы на глубину архива",
+      "Проекты и заявки на монтаж",
+      "Просмотр и архив в кабинете клиента"
     ],
-    howItWorks: [
-      'Камера шлёт RTSP поток на шлюз. Медиасервер транскодирует и пишет чанки в хранилище.',
-      'Абонент в приложении смотрит таймлайн с возможностью экспорта фрагментов.',
+    "howItWorks": [
+      "Камера привязывается к объекту и услуге клиента: оплата и доступ к архиву управляются биллингом, а не отдельной панелью."
     ],
-    plans: ['Видеонаблюдение', 'Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/video.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_1.jpg", cap: "Дашборд видеонаблюдения" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_2.jpg", cap: "Объекты и камеры клиентов" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_c954085e.jpg", cap: "Видеонаблюдение" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise",
+      "Видеонаблюдение"
     ],
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/video-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/video-training-poster.jpg',
-    icon: 'Video',
-    stats: 'HLS / WebRTC',
+    "icon": "Video",
+    "stats": "Камеры и архив",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/video.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/video-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/video-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/extras.html#video-surveillance",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_1.jpg",
+        "cap": "Дашборд видеонаблюдения"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_2.jpg",
+        "cap": "Объекты и камеры клиентов"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/video_c954085e.jpg",
+        "cap": "Видеонаблюдение"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": true,
+        "changelog": "VSaaS-архив (MediaMTX), HLS, recurring, домофон+ЧОП."
+      },
+      {
+        "version": "1.2.0",
+        "date": "18.06.2026",
+        "isCurrent": false,
+        "changelog": "— Просмотр потоков: go2rtc, HLS/MP4, мультикамерные сетки — Видеоархив MediaMTX, контроль зомби-транскодов — Теги проектов, интеграция с воронкой CRM"
+      },
+      {
+        "version": "1.0.0",
+        "date": "01.06.2026",
+        "isCurrent": false,
+        "changelog": "— Продажа видеонаблюдения «под ключ»: объекты, проекты, камеры — Договоры PDF, подписки, зачисления"
+      }
+    ]
   },
   {
-    id: 'iptv',
-    code: 'iptv',
-    name: 'IPTV и Телевидение',
-    version: 'v1.7.0',
-    category: 'media',
-    categoryName: 'Медиа и услуги',
-    isCore: false,
-    shortDesc: 'Прямая интеграция с ТВ-платформами TVIP Media и «Смотрёшка» по API провайдера',
-    fullDesc: 'Модуль монетизации интерактивного телевидения: прямая синхронизация с платформами TVIP Media и «Смотрёшка» (LFStream). Создание аккаунтов клиентов, автоматическая активация пакетов телеканалов при подключении услуги в биллинге и синхронное отключение при финансовой блокировке.',
-    features: [
-      'Прямой REST API обмен с ТВ-провайдерами без ручного заведения учёток',
-      'Каталог пакетов каналов с автоматической сверкой актуальных идентификаторов',
-      'Витрина выбора пакетов и подписок в личном кабинете абонента',
-      'Синхронизация состояний блокировки: оплатил — ТВ включилось моментально',
+    "id": "iptv",
+    "code": "iptv",
+    "name": "IPTV",
+    "version": "v1.7.0",
+    "category": "media",
+    "categoryName": "Медиа и услуги",
+    "isCore": false,
+    "shortDesc": "Телевидение: пакеты, подключение клиентов и синхронизация с платформой провайдера напрямую по API",
+    "fullDesc": "Подключение телевидения клиенту без ручной работы в кабинете провайдера. Услуга биллинга связывается с пакетом платформы, и дальше всё происходит само: оплатил — подписка включилась, ушёл в минус или отказался — снялась. Поддерживаются TVIP Media и «Смотрёшка» (LFStream); со «Смотрёшкой» биллинг работает напрямую по API провайдера.",
+    "features": [
+      "Услуга биллинга ↔ пакет провайдера: подписка включается сама",
+      "Аккаунт клиенту заводится при первом подключении",
+      "Снятие подписки при долге и возврат после оплаты",
+      "Каталог пакетов провайдера с числом каналов",
+      "Сверка кодов пакетов и подбор замены по составу каналов",
+      "Журнал обращений к платформе и дашборд состояния",
+      "Витрина «Интерактивное ТВ» в кабинете клиента"
     ],
-    howItWorks: [
-      'При выборе тарифа с ТВ биллинг вызывает API оператора TVIP/Смотрёшка.',
-      'Генерируются учётные данные для входа на приставке или Smart TV.',
+    "howItWorks": [
+      "Включаете провайдера и указываете доступ на странице настроек IPTV Связываете услуги биллинга с пакетами провайдера Клиент подключает ТВ-услугу — аккаунт и подписка создаются сами Дальше подписка следует за оплатой: долг — снимается, оплата — возвращается"
     ],
-    plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/iptv.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_1.jpg", cap: "Дашборд IPTV" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_2.jpg", cap: "Пакеты каналов" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_b2cca36b.jpg", cap: "IPTV-дашборд" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_iptv_training_2026-09-10.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_iptv_training_2026-09-10-poster.jpg',
-    icon: 'Tv',
-    stats: 'TVIP / Смотрёшка',
+    "icon": "Tv",
+    "stats": "TVIP / Смотрёшка",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/iptv.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_iptv_training_2026-09-10.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_iptv_training_2026-09-10-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/equipment.html#iptv",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_1.jpg",
+        "cap": "Дашборд IPTV"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_2.jpg",
+        "cap": "Пакеты каналов"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/iptv_b2cca36b.jpg",
+        "cap": "IPTV-дашборд"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.7.0",
+        "date": "04.09.2026",
+        "isCurrent": true,
+        "changelog": "Смотрёшка работает через прямой API провайдера, а не через панель оператора: — подписки включаются и снимаются одним запросом, без разбора чужой вёрстки; — каталог показывает пакеты, а не их каналы вперемешку с пакетами: у каждого видно, сколько каналов внутри; — список аккаунтов читается целиком (раньше поиск не уходил дальше первой сотни); — команда сверки приводит коды пакетов к тем, что понимает API, и подбирает замену тем, у кого кода у провайдера нет — по составу каналов; — на странице настроек видно, какие адреса нужно открыть у провайдера, и чем запасной путь через панель отличается от прямого API."
+      },
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "TVIP+LFStream, маппинг услуг, дашборд здоровья IPTV."
+      },
+      {
+        "version": "1.1.0",
+        "date": "11.06.2026",
+        "isCurrent": false,
+        "changelog": "— Дашборд здоровья синхронизации, журнал API-вызовов — Блокировка при отрицательном балансе, массовая пересинхронизация"
+      },
+      {
+        "version": "1.0.0",
+        "date": "25.04.2026",
+        "isCurrent": false,
+        "changelog": "— Интеграция TVIP Media и LFStream «Смотрёшка»: пакеты, аккаунты — Маппинг услуг биллинга на пакеты операторов"
+      }
+    ]
   },
   {
-    id: 'telephony',
-    code: 'telephony',
-    name: 'IP-телефония и АТС',
-    version: 'v1.6.0',
-    category: 'comms',
-    categoryName: 'Связь и поддержка',
-    isCore: false,
-    shortDesc: 'Встроенная телефония на базе Asterisk, Mango и Novofon: звонки из карточки и запись',
-    fullDesc: 'Телефония для оператора связи и его абонентов: управление пулом городских номеров, SIP-транками, маршрутизацией очередей, интеграция со звонковыми платформами (Asterisk, Mango Office, Novofon), click-to-call из карточки абонента, запись разговоров и расшифровка в текст.',
-    features: [
-      'Click-to-call: звонок оператора в один клик из карточки абонента или сделки',
-      'Всплывающая карточка клиента при входящем звонке на номер техподдержки',
-      'Хранение аудиозаписей разговоров с привязкой к тикету обращения',
-      'Аналитика нагрузки по линиям, пропущенным вызовам и длительности диалогов',
+    "id": "telephony",
+    "code": "telephony",
+    "name": "IP-телефония",
+    "version": "v1.6.0",
+    "category": "comms",
+    "categoryName": "Связь и поддержка",
+    "isCore": false,
+    "shortDesc": "Телефония: звонки из карточки, запись разговоров и статистика",
+    "fullDesc": "Телефония провайдера: номера, SIP-аккаунты, тарифы на звонки и учёт разговоров. Оператор связи подключается драйвером — Mango, Novofon через собственный Asterisk и другие, — интерфейс при этом не меняется.",
+    "features": [
+      "Звонок из карточки клиента и сделки",
+      "Запись разговора рядом с обращением",
+      "Определение клиента по номеру",
+      "Отчёты по линиям и сотрудникам"
     ],
-    howItWorks: [
-      'События звонков принимаются через AMI / Webhook от АТС.',
-      'Аудиозапись автоматически скачивается и прикрепляется к ленте истории клиента.',
+    "howItWorks": [
+      "Звонок связывается с клиентом по номеру: запись и итог разговора остаются в его истории, а не в отдельной панели АТС."
     ],
-    plans: ['Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/telephony.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/telephony_1.jpg", cap: "Настройки телефонии и линий" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/telephony_b3641007.jpg", cap: "IP-телефония" }
+    "plans": [
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'PhoneCall',
-    stats: 'Asterisk / Mango',
+    "icon": "PhoneCall",
+    "stats": "Asterisk / Mango",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/telephony.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/extras.html#autodial-telephony",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/telephony_1.jpg",
+        "cap": "Настройки телефонии и линий"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/telephony_b3641007.jpg",
+        "cap": "IP-телефония"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.6.0",
+        "date": "19.08.2026",
+        "isCurrent": true,
+        "changelog": "Операторы вынесены в подключаемые драйверы, добавлена маршрутизация линий по организациям и автонастройка почтового ящика."
+      },
+      {
+        "version": "1.5.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "Номера, SIP, тарифы связи, CDR-биллинг."
+      },
+      {
+        "version": "1.0.0",
+        "date": "13.06.2026",
+        "isCurrent": false,
+        "changelog": "— Телефонные номера, SIP-учётки, тарифные планы (абонплата + минуты) — CDR-звонки, интеграция Mango Office — Голосовая почта: письмо → тикет Поддержки или лид CRM"
+      }
+    ]
   },
   {
-    id: 'autodial',
-    code: 'autodial',
-    name: 'Голосовой автообзвон',
-    version: 'v1.6.0',
-    category: 'comms',
-    categoryName: 'Связь и поддержка',
-    isCore: false,
-    shortDesc: 'Автоматический обзвон роботом должников, опросы качества и аварийные оповещения',
-    fullDesc: 'Модуль автоматических исходящих кампаний: информирование должников об отключении за 3 дня до списания, приглашение продлить обещанный платёж, экстренное голосовое оповещение сектора об аварии на магистрали и проведение опросов удовлетворённости NPS с распознаванием ответов.',
-    features: [
-      'Генерация речи с естественными интонациями через Яндекс SpeechKit / SaluteSpeech',
-      'Умные сценарии с ветвлением по нажатию клавиш DTMF или голосовым ответам',
-      'Соблюдение временных зон и законодательных ограничений времени звонков',
-      'Подробный журнал дозвона: снял трубку, прослушал до конца, нажал 1',
+    "id": "autodial",
+    "code": "autodial",
+    "name": "Автообзвон",
+    "version": "v1.6.0",
+    "category": "comms",
+    "categoryName": "Связь и поддержка",
+    "isCore": false,
+    "shortDesc": "Автообзвон: напоминания о долге, опросы и приглашения",
+    "fullDesc": "Робот-обзвон: напоминания о задолженности и обещанном платеже, опросы после монтажа, информирование об аварии. Снимает с операторов рутинные звонки и делает это в разрешённое время.",
+    "features": [
+      "Сценарии обзвона с ветвлением",
+      "Списки по фильтру клиентов",
+      "Итоги: дозвонились, что ответили",
+      "Стоп-лист и ограничения по времени"
     ],
-    howItWorks: [
-      'Сегмент должников загружается в кампанию. Робот совершает вызовы по свободным линиям.',
-      'При успешном контакте результат и реакция абонента фиксируются в биллинге.',
+    "howItWorks": [
+      "Робот звонит по списку, говорит сценарий и записывает ответ.",
+      "Результат виден в карточке клиента и в отчёте кампании."
     ],
-    plans: ['Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/autodial.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/autodial_1.jpg", cap: "Сценарии и кампании автообзвона" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/autodial_74323bb8.jpg", cap: "Автообзвон" }
+    "plans": [
+      "Enterprise"
     ],
-    icon: 'PhoneForwarded',
-    stats: 'SpeechKit TTS',
+    "icon": "PhoneForwarded",
+    "stats": "Голосовые кампании",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/autodial.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/extras.html#autodial-telephony",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/autodial_1.jpg",
+        "cap": "Сценарии и кампании автообзвона"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/autodial_74323bb8.jpg",
+        "cap": "Автообзвон"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.6.0",
+        "date": "09.07.2026",
+        "isCurrent": true,
+        "changelog": "Novofon/Asterisk + Яндекс TTS, сценарии, 152-ФЗ."
+      },
+      {
+        "version": "1.0.0",
+        "date": "14.06.2026",
+        "isCurrent": false,
+        "changelog": "— Исходящий обзвон роботом: напоминания об оплате, обещанный платёж — Провайдеры Zvonok / Asterisk / Yandex TTS с fallback — Сценарии со 152-ФЗ-согласием, NPS-опросы"
+      }
+    ]
   },
   {
-    id: 'voice',
-    code: 'voice',
-    name: 'Голосовая почта',
-    version: 'v1.1.0',
-    category: 'comms',
-    categoryName: 'Связь и поддержка',
-    isCore: false,
-    shortDesc: 'Приём голосовых сообщений в нерабочее время, распознавание речи и создание тикетов',
-    fullDesc: 'Умный автоответчик для ночных и пиковых часов: запись обращения абонента на автоответчик, мгновенная транскрибация речи в текст с выделением сути проблемы и автоматическое создание тикета в ServiceDesk с прикреплённым аудиофайлом.',
-    features: [
-      'Приём обращений 24/7 без ночной смены дежурных операторов',
-      'Автоматическое преобразование аудиозаписи в структурированный текст тикета',
-      'Идентификация звонящего по номеру договора или телефона',
+    "id": "voice",
+    "code": "voice",
+    "name": "Голосовая связь",
+    "version": "v1.1.0",
+    "category": "comms",
+    "categoryName": "Связь и поддержка",
+    "isCore": false,
+    "shortDesc": "Голосовая почта: сообщение клиента становится заявкой",
+    "fullDesc": "Приём и разбор звонков: запись разговора, расшифровка, краткая суть и автоматическая заявка или тикет по итогу. Пропущенные не теряются — из них собирается неразобранное в CRM.",
+    "features": [
+      "Запись сообщения на линии",
+      "Расшифровка речи в текст",
+      "Заявка с номером и адресом",
+      "Прослушивание рядом с обращением"
     ],
-    howItWorks: [
-      'В нерабочие часы звонок уходит на сценарий голосовой почты.',
-      'Запись транскрибируется и падает в инбокс дежурной смены с высоким приоритетом.',
+    "howItWorks": [
+      "Сообщение с автоответчика расшифровывается и превращается в обращение: оператор видит текст и слушает запись при необходимости."
     ],
-    plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/voice.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/voice_1.jpg", cap: "Голосовая почта: сообщения и заявки" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/voice_9e4921d5.jpg", cap: "Голосовая связь: провайдеры" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'Voicemail',
-    stats: 'Speech-to-Text',
+    "icon": "Voicemail",
+    "stats": "Speech-to-Text",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/voice.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/settings-services.html#voice",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/voice_1.jpg",
+        "cap": "Голосовая почта: сообщения и заявки"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/voice_9e4921d5.jpg",
+        "cap": "Голосовая связь: провайдеры"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.1.0",
+        "date": "19.08.2026",
+        "isCurrent": true,
+        "changelog": "Организация звонка определяется по номеру линии, разговоры и заявки больше не смешиваются между компаниями; добавлен голосовой ассистент."
+      },
+      {
+        "version": "1.0.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "Реестр провайдеров (Mango+Novofon), голосовая почта, click-to-call."
+      }
+    ]
   },
   {
-    id: 'landing',
-    code: 'landing',
-    name: 'Конструктор сайтов',
-    version: 'v1.4.0',
-    category: 'crm',
-    categoryName: 'Продажи',
-    isCore: false,
-    shortDesc: 'Конструктор посадочных страниц из 23 готовых блоков с формами заявок прямо в CRM',
-    fullDesc: 'Встроенный в биллинг конструктор современных сайтов и промо-страниц провайдера: тарифные сетки, калькуляторы скорости, блоки акций, проверка адреса по зонам покрытия и формы заявок с автосогласием 152-ФЗ, которые сразу создают сделки в CRM без сторонних вебмастеров.',
-    features: [
-      '23 готовых блока уровня современных телеком-сайтов (тарифы, команда, FAQ, отзывы)',
-      'Визуальный редактор без необходимости знать HTML и CSS',
-      'Интеграция с картой сети: проверка адреса посетителя прямо в форме',
-      'Привязка собственного домена с автоматическим выпуском SSL Let\'s Encrypt',
+    "id": "landing",
+    "code": "landing",
+    "name": "Лендинги",
+    "version": "v1.4.0",
+    "category": "crm",
+    "categoryName": "Продажи",
+    "isCore": false,
+    "shortDesc": "Посадочные страницы и формы заявок на своих доменах",
+    "fullDesc": "Конструктор сайтов и посадочных страниц провайдера: 23 блока, три варианта раскладки у каждого, темы, свой домен и приём заявок прямо в воронку CRM. Страницу собирает маркетолог мышью, разработчик не нужен.",
+    "features": [
+      "Страницы собираются из блоков, без вёрстки",
+      "Форма заявки сразу попадает в CRM",
+      "Проверка адреса по зонам покрытия",
+      "Свой домен и метрики на каждую страницу"
     ],
-    howItWorks: [
-      'Маркетолог собирает страницу из блоков и нажимает «Опубликовать».',
-      'Каждая отправка формы создаёт сделку в воронке продаж с UTM-метками источника.',
+    "howItWorks": [
+      "Страница публикуется на домене оператора и работает как источник в CRM: заявка создаёт сделку с источником, кампанией и адресом."
     ],
-    plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/landing.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_1.jpg", cap: "Список лендингов и их публикация" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_1_f908f062.jpg", cap: "Публичный сайт: floating-nav, hero, форма с согласием ПД" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_2_4c88e781.jpg", cap: "Редактор-конструктор: палитра блоков, live-превью, инспектор" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_3_192ff095.jpg", cap: "Список лендингов в биллинге" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_4_c1a71c0f.jpg", cap: "Мобильная версия" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_5_c6078dab.jpg", cap: "Тёмная тема" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_6_a8d0bbc2.webp", cap: "Блок «Слайдер»: hero с несколькими слайдами, фон из облака, стрелки и точки" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_7_07f967f8.webp", cap: "Переключение слайдов: автопрокрутка + навигация точками" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    icon: 'Layout',
-    stats: '23 блока',
+    "icon": "Layout",
+    "stats": "23 блока",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/landing.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/landing.html",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_1.jpg",
+        "cap": "Список лендингов и их публикация"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_1_f908f062.jpg",
+        "cap": "Публичный сайт: floating-nav, hero, форма с согласием ПД"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_2_4c88e781.jpg",
+        "cap": "Редактор-конструктор: палитра блоков, live-превью, инспектор"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_3_192ff095.jpg",
+        "cap": "Список лендингов в биллинге"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_4_c1a71c0f.jpg",
+        "cap": "Мобильная версия"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_5_c6078dab.jpg",
+        "cap": "Тёмная тема"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_6_a8d0bbc2.webp",
+        "cap": "Блок «Слайдер»: hero с несколькими слайдами, фон из облака, стрелки и точки"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/landing_7_07f967f8.webp",
+        "cap": "Переключение слайдов: автопрокрутка + навигация точками"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.4.0",
+        "date": "24.08.2026",
+        "isCurrent": true,
+        "changelog": "Проверка доступа к чужим страницам, источники заявок с UTM и устройством, публикация по своим доменам."
+      },
+      {
+        "version": "1.3.0",
+        "date": "12.08.2026",
+        "isCurrent": false,
+        "changelog": "Выбор раскладки у 19 секций, темы организаций с подбором по сайту, фоны для компьютера и телефона с генерацией, каталог иконок с русским поиском, проверка адреса по карте сети."
+      },
+      {
+        "version": "1.2.0",
+        "date": "15.07.2026",
+        "isCurrent": false,
+        "changelog": "— Блок «Слайдер» в hero-секции: слайды с автопрокруткой, стрелками и точками навигации — Видео-фон (зацикленный, без звука) и фоновые изображения — отдельно для десктопа и мобильного — Оверлей затемнения + настройки cover/contain, повтора и позиции фона — Эффекты появления контента (fade, сдвиг, зум, размытие, раскрытие, печать) — как в Revolution Slider — Эффекты фона hero: частицы, световые лучи (SunBeam), duotone, параллакс — Визуальный выбор иконок и редактор градиента в конструкторе — Готовые фирменные фоны слайдов и видео-loop (хранятся в облаке)"
+      },
+      {
+        "version": "1.1.0",
+        "date": "14.07.2026",
+        "isCurrent": false,
+        "changelog": "## 1.1.0 — Полный конструктор корп-сайтов (Ф5-Ф8) - +17 блоков-секций уровня smit34.ru: тарифы, услуги, команда, кейсы, калькулятор, отзывы, цифры, оборудование, галерея, FAQ, новости (модалка), услуги (сайдбар), контакты. - Floating-nav с мобильным меню и переключателем тёмной темы. - Согласие на обработку ПД (152-ФЗ) во всех формах: ссылка → модалка, текст генерирует AI из реквизитов организации. - AI-доводка: генерация целого сайта по брифу, рерайт блоков, SEO, alt-тексты, FAQ/features. - Готовые шаблоны сайтов (провайдер / IT-аутсорсинг / видеонаблюдение). - Аналитика страницы: показы, заявки, конверсия, UTM, динамика по дням. - Редактор: выбор блока кликом по превью, переключатель устройств, сворачивание меню. - Мульти-орг: фильтр по организации из шапки, бейдж организации в карточках."
+      }
+    ]
   },
   {
-    id: 'mailserv',
-    code: 'mailserv',
-    name: 'Почтовый сервер',
-    version: 'v3.2.0',
-    category: 'comms',
-    categoryName: 'Связь и поддержка',
-    isCore: false,
-    shortDesc: 'Корпоративная почта на своём сервере: Postfix, Dovecot, DKIM/DMARC и веб-клиент',
-    fullDesc: 'Полноценный автономный почтовый сервер: заведение корпоративных ящиков сотрудников (`support@`, `billing@`), веб-клиент SOGo, автоматическая генерация DKIM/SPF записей, спам-фильтрация Rspamd и интеграция ящиков с разбором выписок и приёмом тикетов поддержки.',
-    features: [
-      'Собственный защищённый почтовый сервер без абонентской платы сторонним сервисам',
-      'Автоматическая настройка DNS-записей (SPF, DKIM, DMARC) через Cloudflare API',
-      'Веб-интерфейс веб-почты для сотрудников компании',
-      'Служебные роли ящиков: приём тикетов, отправка уведомлений, забор выписок банка',
+    "id": "mailserv",
+    "code": "mailserv",
+    "name": "Почтовый сервер",
+    "version": "v3.2.0",
+    "category": "comms",
+    "categoryName": "Связь и поддержка",
+    "isCore": false,
+    "shortDesc": "Своя почта компании: домены, ящики сотрудников и ящики для биллинга",
+    "fullDesc": "Собственная почта провайдера: домены, ящики сотрудников и служебные адреса (noreply, поддержка, выписки), веб-почта и настроенные DNS-записи. Не нужно покупать почту на стороне и вручную прописывать SPF, DKIM и DMARC.",
+    "features": [
+      "Домены с проверкой доставляемости и настройкой DNS",
+      "Ящики сотрудников с квотами и владельцем",
+      "Роли ящика: обращения, голосовая почта, выписки, рассылки",
+      "Оформление страницы входа по организациям"
     ],
-    howItWorks: [
-      'Разворачивается в Docker-контуре в связке с Nginx и сертификатами Let\'s Encrypt.',
-      'Настройка нового ящика в панели занимает 30 секунд.',
+    "howItWorks": [
+      "Почта работает на своём сервере и управляется из биллинга.",
+      "Роль ящика прописывает настройки почты сама: назначили «Поддержку» — письма превращаются в обращения."
     ],
-    plans: ['Pro', 'Бизнес', 'Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/mailserv.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_1.jpg", cap: "Обзор: состояние сервера и доставляемость" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_2.jpg", cap: "Ящики: организация, роли, письма" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_3.jpg", cap: "Состояние сервера и ограничения" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_58758465.jpg", cap: "Почтовый сервер" }
+    "plans": [
+      "Pro",
+      "Бизнес",
+      "Enterprise"
     ],
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/mailserver-training.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/mailserver-training-poster.jpg',
-    icon: 'Mail',
-    stats: 'DKIM & Webmail',
+    "icon": "Mail",
+    "stats": "DKIM & Webmail",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/mailserv.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/mailserver-training.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/mailserver-training-poster.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/settings.html#mailserver",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_1.jpg",
+        "cap": "Обзор: состояние сервера и доставляемость"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_2.jpg",
+        "cap": "Ящики: организация, роли, письма"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_3.jpg",
+        "cap": "Состояние сервера и ограничения"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/mailserv_58758465.jpg",
+        "cap": "Почтовый сервер"
+      }
+    ],
+    "history": [
+      {
+        "version": "3.2.0",
+        "date": "24.08.2026",
+        "isCurrent": true,
+        "changelog": "Доступ к ящикам и доменам по организациям, роли ящика в списке, настройка колонок, работа с телефона, вход в ящик без пароля."
+      },
+      {
+        "version": "3.1.0",
+        "date": "19.08.2026",
+        "isCurrent": false,
+        "changelog": "Провижининг ящиков вынесен в общий сервис: автонастройка ящика для организаций, поддержки, банковских выписок и профиля сотрудника."
+      },
+      {
+        "version": "3.0.0",
+        "date": "09.07.2026",
+        "isCurrent": false,
+        "changelog": "Postfix+Dovecot+SOGo, DKIM, per-domain, автонастройка+DNS."
+      },
+      {
+        "version": "1.1.0",
+        "date": "24.06.2026",
+        "isCurrent": false,
+        "changelog": "— Домены и ящики из админки биллинга, SSO «Войти в ящик» — Мультидоменность с SNI-сертификатами, DNS-раздел (Cloudflare)"
+      }
+    ]
   },
   {
-    id: 'whitelabel',
-    code: 'whitelabel',
-    name: 'White-Label брендинг',
-    version: 'v1.5.0',
-    category: 'platform',
-    categoryName: 'Архитектура',
-    isCore: false,
-    shortDesc: 'Полная замена брендинга: ваши логотипы, домены, цвета и тексты без упоминания вендора',
-    fullDesc: 'Модуль кастомизации визуального стиля: убирает любые упоминания СмИТ и позволяет продавать сервис или предоставлять доступ абонентам и партнёрам под вашим собственным брендом. Настройка логотипов, favicon, цветовых схем админки и личного кабинета, кастомных CSS-стилей и служебных доменов.',
-    features: [
-      'Замена логотипа, названия системы и favicon во всех разделах',
-      'Индивидуальная цветовая палитра для светлой и тёмной темы',
-      'Кастомный домен панели управления и личного кабинета с собственным SSL',
-      'Брендированные шаблоны e-mail и SMS-уведомлений',
+    "id": "whitelabel",
+    "code": "whitelabel",
+    "name": "Whitelabel (свой бренд)",
+    "version": "v1.5.0",
+    "category": "platform",
+    "categoryName": "Архитектура",
+    "isCore": false,
+    "shortDesc": "Свой бренд: логотип, цвета и домены вместо наших",
+    "fullDesc": "Полная замена бренда: название продукта, логотипы для светлой и тёмной темы, favicon, цвета интерфейса, домен и подписи в письмах и документах. Клиент провайдера нигде не видит имя разработчика.",
+    "features": [
+      "Логотип и цвета во всех разделах",
+      "Свои домены кабинета и почты",
+      "Оформление страницы входа",
+      "Письма и документы под брендом оператора"
     ],
-    howItWorks: [
-      'Ассеты загружаются через админку и применяются ко всем точкам входа без пересборки контейнеров.',
+    "howItWorks": [
+      "Оформление задаётся один раз и применяется к панели, кабинету, почте и печатным документам, включая мобильные приложения."
     ],
-    plans: ['Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/whitelabel.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/whitelabel_1.jpg", cap: "Настройки бренда и оформления" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/whitelabel_2260ff24.jpg", cap: "Брендинг системы" }
+    "plans": [
+      "Enterprise"
     ],
-    icon: 'Sparkles',
-    stats: '100% White-Label',
+    "icon": "Sparkles",
+    "stats": "Свой бренд",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/whitelabel.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/extras.html#multi-org-brand",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/whitelabel_1.jpg",
+        "cap": "Настройки бренда и оформления"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/whitelabel_2260ff24.jpg",
+        "cap": "Брендинг системы"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.5.0",
+        "date": "09.07.2026",
+        "isCurrent": true,
+        "changelog": "Замена бренда в подвале, «О системе», ЛК."
+      },
+      {
+        "version": "1.0.0",
+        "date": "05.06.2026",
+        "isCurrent": false,
+        "changelog": "— Замена брендинга на собственный: имя продукта, логотип, футер — Пер-доменная страница входа почты и ЛК"
+      }
+    ]
   },
   {
-    id: 'games',
-    code: 'games',
-    name: 'Геймификация и акции',
-    version: 'v1.5.0',
-    category: 'platform',
-    categoryName: 'Маркетинг',
-    isCore: false,
-    shortDesc: 'Игровые механики удержания абонентов, колесо бонусов, промокоды и поощрение ранней оплаты',
-    fullDesc: 'Маркетинговый инструмент снижения оттока (churn rate): интерактивные мини-игры в личном кабинете абонента («Колесо фортуны», награды за непрерывный стаж, бонусы за пополнение баланса до 1-го числа месяца). Начисление бонусных баллов, которые абонент может обменять на скидку или доп. сервисы.',
-    features: [
-      'Интерактивное колесо бонусов и промо-акции внутри личного кабинета',
-      'Начисление баллов за своевременную оплату без ухода в блокировку',
-      'Списание бонусов в счёт абонентской платы или покупки ТВ-пакетов',
+    "id": "games",
+    "code": "games",
+    "name": "Игры / Маркетинг",
+    "version": "v1.5.0",
+    "category": "platform",
+    "categoryName": "Маркетинг",
+    "isCore": false,
+    "shortDesc": "Игры и акции для клиентов: колесо, рейтинг, бонусы",
+    "fullDesc": "Игровые механики удержания: «игра месяца», бонусы за оплату вовремя и активность в кабинете. Инструмент маркетинга, а не развлечение ради развлечения — снижает отток и оттягивает платёж ближе к началу месяца.",
+    "features": [
+      "Игровые механики в кабинете",
+      "Бонусы на счёт за участие",
+      "Рейтинг участников",
+      "Ограничения и правила акции"
     ],
-    howItWorks: [
-      'Абонент крутит рулетку или выполняет задание. Бонусный движок начисляет виртуальные баллы.',
+    "howItWorks": [
+      "Клиент играет в кабинете, выигрыш начисляется бонусом на счёт.",
+      "Правила и лимиты задаются оператором."
     ],
-    plans: ['Enterprise'],
-    img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/games.jpg',
-    shots: [
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/games_1.jpg", cap: "Рейтинг участников" },
-      { src: "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/games_d0c4349d.jpg", cap: "Маркетинг и игры" }
+    "plans": [
+      "Enterprise"
     ],
-    icon: 'Gamepad2',
-    stats: 'Бонусы и лояльность',
+    "icon": "Gamepad2",
+    "stats": "Бонусы и лояльность",
+    "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/games.jpg",
+    "doc": "https://docs.billing.smit34.ru/pages/reports.html#games",
+    "shots": [
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/games_1.jpg",
+        "cap": "Рейтинг участников"
+      },
+      {
+        "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/license/modules/screens/games_d0c4349d.jpg",
+        "cap": "Маркетинг и игры"
+      }
+    ],
+    "history": [
+      {
+        "version": "1.5.0",
+        "date": "09.07.2026",
+        "isCurrent": true,
+        "changelog": "Игровой модуль, игра месяца, мобильный API."
+      },
+      {
+        "version": "1.0.0",
+        "date": "02.06.2026",
+        "isCurrent": false,
+        "changelog": "— Игровой модуль в ЛК: «игра месяца», маркетинговые механики — Мобильный API, задания и награды"
+      }
+    ]
   }
 ];

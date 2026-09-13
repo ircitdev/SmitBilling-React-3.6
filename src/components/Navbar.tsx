@@ -230,7 +230,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 className="w-full py-2.5 rounded-xl font-semibold text-sm bg-slate-800 text-white flex items-center justify-center gap-2 border border-slate-700 cursor-pointer"
               >
                 <Play className="w-4 h-4 fill-current text-emerald-400" />
-                Смотреть видеопрезентацию (4 мин)
+                Смотреть видеопрезентацию (3 мин)
               </button>
             )}
 

@@ -210,7 +210,7 @@ export default function App() {
         {/* Mobile Subscriber Experience Showcase & App Mockup */}
         <MobileAppShowcase />
 
-        {/* Widgets Marketplace for amoCRM & Billing */}
+        {/* Витрина виджетов для CRM и панели биллинга */}
         <WidgetsMarketplace />
 
         {/* Architecture, Stack & Docker Deployment */}
@@ -264,7 +264,7 @@ export default function App() {
           <div className="w-5 h-5 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center">
             <Play className="w-3 h-3 fill-current ml-0.5" />
           </div>
-          <span className="hidden sm:inline">Видео 4 мин</span>
+          <span className="hidden sm:inline">Видео 3 мин</span>
         </button>
 
       </div>

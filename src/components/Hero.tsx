@@ -58,7 +58,7 @@ export const Hero: React.FC<HeroProps> = ({
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mb-8">
               Полный цикл телеком-провайдера на одном сервере: тарификация, RADIUS-авторизация,
               обязательный СОРМ-3, автоматический разбор банковских выписок по 54-ФЗ и AI-агент,
-              закрывающий <strong>73% обращений абонентов</strong> без участия оператора.
+              закрывающий <strong>около 73% обращений абонентов</strong> без участия оператора.
             </p>
 
             {/* Primary Action Buttons */}
@@ -80,7 +80,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <div className="w-6 h-6 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center">
                   <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                 </div>
-                <span>Видеообзор (4 мин)</span>
+                <span>Видеообзор (3 мин)</span>
               </button>
 
               <button
@@ -215,8 +215,8 @@ export const Hero: React.FC<HeroProps> = ({
                   </div>
 
                   <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 pt-1">
-                    <span>Active RADIUS Pool: 4 821 online</span>
-                    <span className="text-emerald-500 font-semibold">Ping 0.03 ms</span>
+                    <span>Пример экрана: сессия абонента</span>
+                    <span className="text-emerald-500 font-semibold">online</span>
                   </div>
                 </div>
               )}
@@ -229,7 +229,7 @@ export const Hero: React.FC<HeroProps> = ({
                       <span>+850.00 ₽</span>
                     </div>
                     <p className="text-slate-600 dark:text-slate-400">
-                      Автозачисление на Л/С SM-5552. Чек 54-ФЗ отправлен в ОФД АТОЛ.
+                      Автозачисление на Л/С SM-5552. Чек пробивает ЮKassa.
                     </p>
                   </div>
 
@@ -241,7 +241,7 @@ export const Hero: React.FC<HeroProps> = ({
 
                   <div className="text-xs text-slate-400 flex items-center justify-between">
                     <span>Фискализация: Чек #8912 в ОФД</span>
-                    <span className="text-emerald-500 font-medium">Комиссия 0%</span>
+                    <span className="text-emerald-500 font-medium">своя касса</span>
                   </div>
                 </div>
               )}
@@ -258,11 +258,11 @@ export const Hero: React.FC<HeroProps> = ({
                     </div>
                     «Здравствуйте, Иван! На вашем договоре SM-5552 баланс 0 ₽. Списание тарифа
                     было сегодня ночью. Вы можете подключить обещанный платёж на 5 дней прямо
-                    здесь или пополнить через СБП без комиссии.»
+                    здесь или пополнить баланс картой в личном кабинете.»
                   </div>
                   <div className="flex justify-end gap-2 pt-1">
                     <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-500 font-semibold">
-                      Закрыто AI за 4 сек
+                      Решено без оператора
                     </span>
                   </div>
                 </div>
@@ -283,7 +283,7 @@ export const Hero: React.FC<HeroProps> = ({
                       <Play className="w-6 h-6 fill-current ml-0.5" />
                     </button>
                     <span className="text-xs font-semibold text-white">
-                      Смотреть презентацию платформы (4:12)
+                      Смотреть презентацию платформы (2:46)
                     </span>
                   </div>
                 </div>

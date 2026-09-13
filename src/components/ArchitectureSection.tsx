@@ -15,8 +15,8 @@ export const ArchitectureSection: React.FC = () => {
             Проверенная надежность без микросервисного хаоса
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            Один мощный сервер под управлением Docker Compose. Монолитная надёжность, строгая типизация
-            и производительность PostgreSQL 17 с мгновенным откликом.
+            Один сервер под Docker Compose: PostgreSQL 17, Redis, Celery и FreeRADIUS.
+            Без зоопарка микросервисов — проще сопровождать и восстанавливать.
           </p>
         </div>
 
@@ -74,7 +74,7 @@ export const ArchitectureSection: React.FC = () => {
                 Nginx Reverse Proxy & TLS Let's Encrypt
               </div>
               <div className="text-xs text-slate-500 dark:text-slate-400">
-                Балансировка запросов, WAF-фильтрация и терминация HTTPS-сертификатов
+                Приём запросов и HTTPS-сертификаты Let's Encrypt
               </div>
             </div>
 

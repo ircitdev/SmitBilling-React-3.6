@@ -29,10 +29,10 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
             <span>Миграция без боли</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            Переезд с любого биллинга без простоя абонентов
+            Переезд с текущего биллинга без простоя абонентов
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-            Мы перенесли более 40 операторов. Абоненты продолжают пользоваться интернетом во время миграции, а сальдо сходится копейка в копейку.
+            Переносим клиентов, тарифы, лицевые счета, услуги и историю операций. Сначала на копии вашей базы — вы смотрите результат до того, как что-то переключается.
           </p>
         </div>
 
@@ -49,7 +49,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
                     <Server className="w-5 h-5" />
                   </span>
                   <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
-                    {sys.badge || '100% совместимость'}
+                    {sys.badge || 'Перенос базы'}
                   </span>
                 </div>
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
@@ -94,7 +94,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
                   Параллельная работа и сверка
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                  Оба биллинга работают одновременно несколько дней. Бухгалтерия сверяет начисления до нуля расхождений.
+                  Сравниваем балансы, тарифы и начисления с оригиналом. Расхождения видно построчно.
                 </p>
               </div>
             </div>
@@ -108,7 +108,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
                   Ночное переключение RADIUS
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                  Перенаправление порта 1812 на СмИТ Биллинг за 30 секунд. Клиентские роутеры остаются в сети.
+                  Повторный импорт свежих данных и перевод RADIUS на новый сервер — ночью, без простоя для абонентов.
                 </p>
               </div>
             </div>
@@ -118,7 +118,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
             <div className="flex items-center gap-3 text-slate-700 dark:text-slate-300 text-xs sm:text-sm">
               <ShieldCheck className="w-5 h-5 text-emerald-500 flex-shrink-0" />
               <span>
-                Полная гарантия сохранения лицевых счетов, истории платежей и договоров абонентов.
+                Ваша система работает, пока не проверите перенос на копии базы.
               </span>
             </div>
 
