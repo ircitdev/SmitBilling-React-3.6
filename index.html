@@ -71,7 +71,10 @@
         }
         if (e.readyState === 'complete') { later(); } else { m.addEventListener('load', later, {once: true}); }
       })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=111523440', 'ym');
-      ym(111523440, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+      // Вебвизор на телефонах выключен: запись экрана занимала до двух секунд
+      // главного потока. Посещения, цели и карта кликов считаются как раньше.
+      var ymPhone = !!(window.matchMedia && window.matchMedia('(max-width: 767px)').matches);
+      ym(111523440, 'init', {ssr:true, webvisor:!ymPhone, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
       window.ymGoal = function(g, p){ try { if (window.ym) ym(111523440, 'reachGoal', g, p || {}); } catch (e) {} };
     </script>
     <!-- /Yandex.Metrika counter (noscript — в начале body: в head div недопустим) -->
