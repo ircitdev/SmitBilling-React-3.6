@@ -117,7 +117,8 @@ const hashTarget = (href: string | null) => {
 // всё равно появляется целиком — и для поисковиков, и для поиска по странице.
 // Переход к якорю (из адреса или по ссылке) показывает всё сразу и доезжает до цели.
 function useStagedSections(total: number) {
-  const initialTarget = hashTarget(window.location.hash);
+  // При рендере вне браузера (prerender для поисковиков) window нет.
+  const initialTarget = typeof window === 'undefined' ? '' : hashTarget(window.location.hash);
   const [shown, setShown] = useState(initialTarget ? total : 0);
   const [painted, setPainted] = useState(false);
   const pendingTarget = useRef(initialTarget);
