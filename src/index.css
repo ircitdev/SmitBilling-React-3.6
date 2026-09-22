@@ -23,6 +23,58 @@ html {
   scroll-padding-top: 76px;
 }
 
+/* Полоса прокрутки в цветах сайта — вместо серой системной.
+   Ставится и на страницу, и на прокручиваемые блоки внутри (модалки,
+   списки), поэтому правила глобальные. Тонкая, без стрелок, дорожка
+   прозрачная — на светлом и тёмном фоне выглядит одинаково уместно.
+   На телефонах полоса и так системная поверх содержимого — там не трогаем. */
+@media (min-width: 640px) and (pointer: fine) {
+  * {
+    scrollbar-width: thin;                        /* Firefox */
+    scrollbar-color: rgb(148 163 184 / 0.55) transparent;
+  }
+  /* `.dark *` не покрывает сам <html>, на котором стоит класс, — а полоса
+     прокрутки страницы берёт стиль именно с него. Поэтому и он, и потомки. */
+  .dark,
+  .dark * {
+    scrollbar-color: rgb(71 85 105 / 0.75) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(148 163 184 / 0.55);
+    border-radius: 999px;
+    /* рамка прозрачным фоном: ползунок визуально тоньше дорожки */
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(16 185 129 / 0.85);     /* emerald-500 — цвет бренда */
+  }
+  *::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  .dark::-webkit-scrollbar-thumb,
+  .dark *::-webkit-scrollbar-thumb {
+    background-color: rgb(71 85 105 / 0.75);
+  }
+  .dark::-webkit-scrollbar-thumb:hover,
+  .dark *::-webkit-scrollbar-thumb:hover {
+    background-color: rgb(52 211 153 / 0.9);      /* emerald-400 в тёмной теме */
+  }
+
+  /* Ленты с намеренно скрытой полосой (.m-scroll) правило выше не возвращает */
+  .m-scroll::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Горизонтальная лента на телефоне: чипы-фильтры, тарифы, статьи блога.
    Полоса прокрутки скрыта, край ленты выходит за поля — видно, что можно листать. */
 .m-scroll {

@@ -11,6 +11,9 @@ import {
   Play,
   Image as ImageIcon,
   Maximize2,
+  Share2,
+  Check,
+  BookOpen,
 } from 'lucide-react';
 import { BillingModule, ScreenshotItem } from '../types';
 
@@ -28,6 +31,35 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
   onOpenDemo,
 }) => {
   const [selectedShot, setSelectedShot] = useState<ScreenshotItem | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // Ссылка на модуль всегда ведёт на основной домен, даже если витрина
+  // открыта на промежуточном (new./v0.) — делиться нужно рабочим адресом.
+  const shareUrl = module ? `https://billing.smit34.ru/#module-${module.code}` : '';
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+    } catch {
+      // clipboard недоступен (нет https или отказ в правах) — старый способ
+      const ta = document.createElement('textarea');
+      ta.value = shareUrl;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+      } catch {
+        /* показать «скопировано» всё равно нельзя — молча выходим */
+        document.body.removeChild(ta);
+        return;
+      }
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -74,6 +106,41 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
               className="w-full h-full object-cover opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-black/30" />
+
+            {/* Share link (copies to clipboard) */}
+            <button
+              onClick={handleShare}
+              aria-label={copied ? 'Ссылка скопирована' : 'Скопировать ссылку на модуль'}
+              title={copied ? 'Ссылка скопирована' : 'Скопировать ссылку на модуль'}
+              className="absolute top-4 left-4 h-9 px-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-md border border-slate-700/60 flex items-center gap-1.5 transition-colors cursor-pointer"
+            >
+              {copied ? (
+                <Check className="w-5 h-5 text-emerald-400" />
+              ) : (
+                <Share2 className="w-5 h-5" />
+              )}
+              {copied && <span className="text-xs font-semibold pr-0.5">Скопировано</span>}
+            </button>
+
+            {/* Developer name, centred above the cover */}
+            {module.developer && (
+              module.developerUrl ? (
+                <a
+                  href={module.developerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`Сайт разработчика: ${module.developer}`}
+                  className="absolute top-4 left-1/2 -translate-x-1/2 max-w-[45%] inline-flex items-center gap-1.5 h-9 px-3 rounded-xl bg-slate-900/80 hover:bg-slate-900 text-white backdrop-blur-md border border-slate-700/60 text-xs font-semibold transition-colors cursor-pointer"
+                >
+                  <span className="truncate">{module.developer}</span>
+                  <ExternalLink className="w-3.5 h-3.5 flex-shrink-0 opacity-80" />
+                </a>
+              ) : (
+                <span className="absolute top-4 left-1/2 -translate-x-1/2 max-w-[45%] inline-flex items-center h-9 px-3 rounded-xl bg-slate-900/70 text-white backdrop-blur-md border border-slate-700/60 text-xs font-semibold">
+                  <span className="truncate">{module.developer}</span>
+                </span>
+              )
+            )}
 
             {/* Top close button inside banner */}
             <button
@@ -299,6 +366,20 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
                 ))}
               </div>
             </div>
+          )}
+
+          {/* Documentation link */}
+          {module.doc && (
+            <a
+              href={module.doc}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold border border-emerald-500/40 text-emerald-700 dark:text-emerald-400 hover:bg-emerald-500/10 transition-colors cursor-pointer"
+            >
+              <BookOpen className="w-4 h-4" />
+              <span>Документация модуля</span>
+              <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+            </a>
           )}
         </div>
 
