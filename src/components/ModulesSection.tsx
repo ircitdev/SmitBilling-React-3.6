@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { Search, Layers, ArrowUpRight, Play, Image as ImageIcon, Check } from 'lucide-react';
 import { BILLING_MODULES } from '../data/modulesData';
+import { loadModules } from '../data/modulesCatalog';
 import { BillingModule, CategoryId } from '../types';
 
 interface ModulesSectionProps {
@@ -8,6 +9,9 @@ interface ModulesSectionProps {
 }
 
 export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModal }) => {
+  // Содержание каталога ведётся на сервере лицензий; до ответа показываем
+  // локальный снимок, чтобы раздел не был пустым.
+  const [modules, setModules] = useState<BillingModule[]>(BILLING_MODULES);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   // на телефоне 24 карточки — это 9 экранов; показываем первые, остальные по кнопке
@@ -27,8 +31,44 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
     { id: 'operations', label: 'Эксплуатация' },
   ];
 
+  // Каталог загружен (или попытка провалилась) — до этого момента карточку
+  // по ссылке не открываем: иначе она покажет локальный снимок без
+  // разработчика и свежей версии.
+  const [catalogReady, setCatalogReady] = useState(false);
+  useEffect(() => {
+    const ac = new AbortController();
+    loadModules(ac.signal)
+      .then(setModules)
+      .catch(() => {
+        /* сервер каталога недоступен — остаёмся на локальном снимке */
+      })
+      .finally(() => {
+        if (!ac.signal.aborted) setCatalogReady(true);
+      });
+    return () => ac.abort();
+  }, []);
+
+  // Ссылка вида #module-<code> открывает карточку модуля: этим делятся
+  // кнопкой «поделиться» в самой карточке.
+  const openedFromHash = useRef(false);
+  useEffect(() => {
+    if (!catalogReady) return;
+    const openFromHash = () => {
+      const m = /^#module-([\w-]+)$/.exec(window.location.hash || '');
+      if (!m) return;
+      const mod = modules.find((x) => x.code === m[1]);
+      if (mod) onOpenModuleModal(mod);
+    };
+    if (!openedFromHash.current) {
+      openedFromHash.current = true;
+      openFromHash();
+    }
+    window.addEventListener('hashchange', openFromHash);
+    return () => window.removeEventListener('hashchange', openFromHash);
+  }, [catalogReady, modules, onOpenModuleModal]);
+
   const filteredModules = useMemo(() => {
-    return BILLING_MODULES.filter((mod) => {
+    return modules.filter((mod) => {
       const matchCategory = selectedCategory === 'all' || mod.category === selectedCategory;
       const query = searchQuery.trim().toLowerCase();
       const matchSearch =
@@ -38,7 +78,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
         mod.categoryName.toLowerCase().includes(query);
       return matchCategory && matchSearch;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [modules, searchQuery, selectedCategory]);
 
   return (
     <section id="modules" className="relative py-14 sm:py-28 z-10">
@@ -47,7 +87,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
         <div className="text-center mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-3">
             <Layers className="w-3.5 h-3.5" />
-            <span>Каталог {BILLING_MODULES.length} модулей</span>
+            <span>Каталог {modules.length} модулей</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
             Модульная архитектура: подключайте только нужное
@@ -66,7 +106,7 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
             <input
               id="module-search-input"
               type="text"
-              placeholder={`Поиск по ${BILLING_MODULES.length} модулям...`}
+              placeholder={`Поиск по ${modules.length} модулям...`}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"

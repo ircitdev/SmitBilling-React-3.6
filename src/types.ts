@@ -32,6 +32,9 @@ export interface BillingModule {
   vposter?: string;
   doc?: string;
   dev?: string;
+  /** Разработчик модуля и его сайт — из каталога сервера лицензий. */
+  developer?: string;
+  developerUrl?: string;
   shots?: Array<{ src: string; cap: string }>;
   history?: Array<{
     version: string;
