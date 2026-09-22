@@ -120,7 +120,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
       const industryModulesTax = Math.round(75000 + yearSubs * 15);
       const totalIndustryAvgCost = industryPerSubFee + industryBaseAndSla + industryModulesTax;
 
-      // 3. СмИТ Биллинг 3.6 has flat predictable license cost regardless of growth
+      // 3. СмИТ Биллинг 3.7 has flat predictable license cost regardless of growth
       const smitCost = annualCost;
       
       // Savings calculations
@@ -189,7 +189,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
           </h2>
           <p className="text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Укажите размер абонентской базы. Интерактивная модель рассчитает окупаемость,
-            высвобождение бюджета и 5-летний кумулятивный эффект от перехода на СмИТ Биллинг 3.6.
+            высвобождение бюджета и 5-летний кумулятивный эффект от перехода на СмИТ Биллинг 3.7.
           </p>
         </div>
 
@@ -716,7 +716,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                                 </span>
                               </div>
                               <div className="flex justify-between text-slate-300">
-                                <span className="text-emerald-400 font-medium">СмИТ Биллинг 3.6:</span>
+                                <span className="text-emerald-400 font-medium">СмИТ Биллинг 3.7:</span>
                                 <span className="font-mono font-bold text-white">
                                   {item.smitCost.toLocaleString('ru-RU')} ₽
                                 </span>
@@ -797,7 +797,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                       />
                       <Bar
                         dataKey="smitCost"
-                        name="СмИТ Биллинг 3.6 (Фиксированная цена) (₽)"
+                        name="СмИТ Биллинг 3.7 (Фиксированная цена) (₽)"
                         fill="url(#smitBarGradient)"
                         radius={[6, 6, 0, 0]}
                         maxBarSize={34}
@@ -867,7 +867,7 @@ export const Calculator: React.FC<CalculatorProps> = ({
                 <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 text-slate-600 dark:text-slate-300">
                   <div className="w-2 h-2 rounded-full bg-emerald-500 mt-1.5 shrink-0" />
                   <div>
-                    <span className="font-semibold text-slate-900 dark:text-white block mb-0.5">СмИТ Биллинг 3.6:</span>
+                    <span className="font-semibold text-slate-900 dark:text-white block mb-0.5">СмИТ Биллинг 3.7:</span>
                     Всего {costPerSubscriberPerMonth} ₽/мес на абонента при прозрачной фиксированной стоимости без «налога» на прирост вашей абонентской базы.
                   </div>
                 </div>

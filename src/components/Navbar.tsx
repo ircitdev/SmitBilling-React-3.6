@@ -54,7 +54,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-baseline gap-1.5 font-bold tracking-tight text-base sm:text-lg">
             <span>СмИТ Биллинг</span>
             <span className="text-xs font-semibold px-1.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
-              3.6
+              3.7
             </span>
           </div>
         </a>

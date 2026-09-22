@@ -42,7 +42,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>Релиз 3.6: Python 3.11 · FreeRADIUS 3.2 · СОРМ-3 · AI-агент</span>
+              <span>Релиз 3.7: Python 3.11 · FreeRADIUS 3.2 · СОРМ-3 · AI-агент</span>
             </div>
 
             {/* Main Title */}

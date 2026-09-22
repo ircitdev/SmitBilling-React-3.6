@@ -14,7 +14,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({
   onClose,
   videoUrl = 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/platform-promo.mp4',
   posterUrl = 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/platform-promo-poster.jpg',
-  title = 'СмИТ Биллинг 3.6 — Видеопрезентация платформы',
+  title = 'СмИТ Биллинг 3.7 — Видеопрезентация платформы',
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 

@@ -435,7 +435,7 @@ export default function App() {
           onClose={() => setIsVideoModalOpen(false)}
           videoUrl={MEDIA_URLS.promoVideo}
           posterUrl={MEDIA_URLS.promoPoster}
-          title="СмИТ Биллинг 3.6 — Видеопрезентация платформы"
+          title="СмИТ Биллинг 3.7 — Видеопрезентация платформы"
         />
       </MountOnFirstOpen>
 
