@@ -74,24 +74,22 @@ await page.route('**/*', (route) => {
   return route.abort();
 });
 
-await page.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle', timeout: 60000 });
+// Секции монтируются по одной, когда браузер свободен (useStagedSections),
+// но при непустом якоре приложение показывает их все разом — этим и
+// пользуемся, иначе в HTML попадала бы случайная часть страницы.
+await page.goto(`http://localhost:${PORT}/#top`, { waitUntil: 'networkidle', timeout: 60000 });
 
-// Секции монтируются по одной, когда браузер свободен (useStagedSections).
-// Ждём, пока их число перестанет расти — значит отрисовались все.
+// Ждём, пока отрисуются все отложенные секции. Их число берём из самой
+// страницы: столько <section> у полностью собранного приложения.
+const EXPECTED_SECTIONS = 17;
 await page.waitForFunction(
-  () => {
-    const w = window;
-    const n = document.querySelectorAll('section, footer').length;
-    if (w.__prevCount === n) {
-      w.__same = (w.__same || 0) + 1;
-    } else {
-      w.__same = 0;
-      w.__prevCount = n;
-    }
-    return w.__same >= 4 && n > 5;
-  },
-  { timeout: 60000, polling: 400 },
+  (min) => document.querySelectorAll('section').length >= min,
+  EXPECTED_SECTIONS,
+  { timeout: 60000, polling: 300 },
 );
+// Последние секции дорисовываются в свободное время браузера — дадим их
+// анимациям и ленивым картинкам осесть, чтобы разметка была окончательной.
+await page.waitForTimeout(1500);
 
 const html = await page.evaluate(() => {
   // Модалки и всплывающие панели в статическую разметку не нужны.
@@ -112,9 +110,12 @@ const text = html
   .filter(Boolean)
   .join(' ');
 
-if (text.length < 2000 || headings < 3) {
+// Неполная страница хуже пустой: её не видно глазом, но в выдачу уедет
+// обрезанный текст. Поэтому требуем все секции, а не «хоть что-нибудь».
+if (sections < EXPECTED_SECTIONS || headings < 12 || text.length < 15000) {
   console.error(
-    `prerender: страница вышла пустой (${text.length} символов, ${headings} заголовков) — index.html не трогаем`,
+    `prerender: страница неполная (${sections} секций из ${EXPECTED_SECTIONS}, ` +
+      `${headings} заголовков, ${text.length} символов) — index.html не трогаем`,
   );
   process.exit(1);
 }
