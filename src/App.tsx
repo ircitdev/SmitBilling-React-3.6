@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import { StatsBar } from './components/StatsBar';
 import { BillingModule, ThemeMode } from './types';
 import { MEDIA_URLS } from './data/landingData';
+import { LANDING_IMAGES } from './data/landingImages';
 import { openAiChat, openBusinessCase } from './lib/aiWidget';
 import { Play } from 'lucide-react';
 
@@ -12,6 +13,10 @@ import { Play } from 'lucide-react';
 // Остальное грузится отдельными частями, калькулятор — вместе с библиотекой графиков.
 const chunks = {
   FeaturesBento: () => import('./components/FeaturesBento'),
+  ZooSection: () => import('./components/ZooSection'),
+  ClientStorySection: () => import('./components/ClientStorySection'),
+  ShowcaseSection: () => import('./components/ShowcaseSection'),
+  CaseStudySection: () => import('./components/CaseStudySection'),
   HowItWorksSection: () => import('./components/HowItWorksSection'),
   KnowledgeGraphSection: () => import('./components/KnowledgeGraphSection'),
   DemoSection: () => import('./components/DemoSection'),
@@ -37,6 +42,10 @@ const chunks = {
 const loadAllChunks = () => Promise.all(Object.values(chunks).map((load) => load()));
 
 const FeaturesBento = lazy(() => chunks.FeaturesBento().then((m) => ({ default: m.FeaturesBento })));
+const ZooSection = lazy(() => chunks.ZooSection().then((m) => ({ default: m.ZooSection })));
+const ClientStorySection = lazy(() => chunks.ClientStorySection().then((m) => ({ default: m.ClientStorySection })));
+const ShowcaseSection = lazy(() => chunks.ShowcaseSection().then((m) => ({ default: m.ShowcaseSection })));
+const CaseStudySection = lazy(() => chunks.CaseStudySection().then((m) => ({ default: m.CaseStudySection })));
 const HowItWorksSection = lazy(() => chunks.HowItWorksSection().then((m) => ({ default: m.HowItWorksSection })));
 const KnowledgeGraphSection = lazy(() => chunks.KnowledgeGraphSection().then((m) => ({ default: m.KnowledgeGraphSection })));
 const DemoSection = lazy(() => chunks.DemoSection().then((m) => ({ default: m.DemoSection })));
@@ -316,19 +325,89 @@ export default function App() {
     setSelectedModule(module);
   };
 
-  // Порядок секций на странице
+  // Порядок секций: от «что это» к «сколько стоит» и «как перейти».
+  // Сначала объясняем ценность (зоопарк систем → единая история клиента),
+  // потом показываем продукт, затем снимаем главный страх — переезд с
+  // работающего биллинга, — и только после этого говорим о цене.
   const sections: React.ReactElement[] = [
-    // Core Architecture & Features Bento Grid
+    // Зачем вообще менять: пять программ против одной
+    <ZooSection key="zoo" />,
+    // Направления продукта
     <FeaturesBento key="features" onOpenDemoModal={() => handleOpenDemo()} />,
-    // Запуск за три шага: Docker → инфраструктура → работает
-    <HowItWorksSection key="howitworks" />,
-    // Interactive Screenshots Gallery with Category Filters
+    // Один клиент — одна история: главное преимущество единой системы
+    <ClientStorySection key="client-story" />,
+    // Живые экраны системы
     <ScreenshotsGallery key="screenshots" />,
-    // Modules Catalog with Filters, Video badges and Detailed Modals
-    <ModulesSection key="modules" onOpenModuleModal={handleOpenModuleModal} />,
-    // Finance Automation with Video
-    <MoneyVideoSection key="money" onOpenDemoModal={() => handleOpenDemo()} />,
-    // Interactive ROI & Savings Calculator
+    // Карта сети
+    <ShowcaseSection
+      key="network"
+      id="network"
+      eyebrow="Сеть и оборудование"
+      title="Вся инфраструктура на одной карте"
+      lead="Узлы, трассы и охват — слой поверх той же базы, а не отдельная программа. Авария на узле сразу показывает, кого из абонентов она задела."
+      points={[
+        'Узлы, опоры и трассы с привязкой к адресам',
+        'Авария на узле — список задетых абонентов',
+        'Проверка технической возможности по адресу',
+        'План выездов монтажников и наряды в телефоне',
+      ]}
+      image={LANDING_IMAGES.networkMap}
+      dark
+    />,
+    // Поддержка
+    <ShowcaseSection
+      key="support"
+      id="support"
+      eyebrow="Поддержка"
+      title="Обращения из всех каналов — в одной ленте"
+      lead="Почта, Telegram, VK, MAX и звонки приходят в общий список. Оператор видит карточку клиента рядом с перепиской и не ищет его в другой программе."
+      points={[
+        'Письма, мессенджеры и соцсети одной лентой',
+        'Карточка клиента рядом с перепиской',
+        'Запись звонка и его разбор в том же обращении',
+        'База знаний для операторов и готовые ответы',
+      ]}
+      image={LANDING_IMAGES.support}
+      flip
+    />,
+    // AI
+    <ShowcaseSection
+      key="ai"
+      id="ai"
+      eyebrow="Автоматизация"
+      title="Помощник, который смотрит в ваши данные"
+      lead="Отвечает абонентам на первой линии, готовит сводки и замечает то, что человек пропустит: всплеск переподключений на узле, необычный отток, забытые начисления."
+      points={[
+        'Отвечает абонентам в чате и в личном кабинете',
+        'Передаёт разговор человеку, когда не уверен',
+        'Замечает отклонения в сети и в деньгах',
+        'Разбирает записи звонков и пишет сводку',
+      ]}
+      image={LANDING_IMAGES.ai}
+    />,
+    // Переезд со старого биллинга — главный страх покупателя
+    <MigrationSection key="migrate" onOpenDemoModal={() => handleOpenDemo()} />,
+    // Кейс: переезд уже состоялся
+    <CaseStudySection key="case" />,
+    // СОРМ и безопасность
+    <ShowcaseSection
+      key="security"
+      id="security"
+      eyebrow="Требования и контроль"
+      title="СОРМ, права доступа и резервные копии"
+      lead="Система стоит на вашем сервере: данные абонентов не уезжают к подрядчику. Выгрузки по требованиям готовятся из той же базы, без отдельной программы."
+      points={[
+        'Выгрузки СОРМ в формате вашего вендора',
+        'Права по разделам и журнал действий сотрудников',
+        'Резервные копии по расписанию и проверка восстановления',
+        'Фискализация платежей и обмен с 1С',
+      ]}
+      image={LANDING_IMAGES.security}
+      flip
+      dark
+    />,
+    // Тарифы и расчёт выгоды
+    <PricingSection key="pricing" onSelectPlan={(plan) => handleOpenDemo(plan)} />,
     <Calculator
       key="calculator"
       onSelectPlan={(plan, subs) => handleOpenDemo(plan, subs)}
@@ -338,30 +417,28 @@ export default function App() {
         void openBusinessCase({ subscribers: subs }, () => handleOpenDemo('Pro', subs));
       }}
     />,
-    // Mobile Subscriber Experience Showcase & App Mockup
-    <MobileAppShowcase key="mobile" />,
-    // Витрина виджетов для CRM и панели биллинга
-    <WidgetsMarketplace key="widgets" />,
-    // Architecture, Stack & Docker Deployment
-    <ArchitectureSection key="architecture" onOpenDemoModal={() => handleOpenDemo()} />,
-    // Граф знаний: интерактивная карта архитектуры в документации
-    <KnowledgeGraphSection key="graph" />,
-    // Ready Out-of-the-Box Integrations Catalog
+    // Каталог модулей
+    <ModulesSection key="modules" onOpenModuleModal={handleOpenModuleModal} />,
+    // Интеграции и API
     <IntegrationsSection key="integrations" />,
-    // Migration Guide from Existing Billing Systems
-    <MigrationSection key="migrate" onOpenDemoModal={() => handleOpenDemo()} />,
-    // Developer REST API & Webhooks Console
     <ApiExplorer key="api" />,
-    // Transparent Pricing Plans
-    <PricingSection key="pricing" onSelectPlan={(plan) => handleOpenDemo(plan)} />,
-    // Посмотрите в действии: видеопрезентация и PDF для руководства
+    // Запуск и архитектура
+    <HowItWorksSection key="howitworks" />,
+    <ArchitectureSection key="architecture" onOpenDemoModal={() => handleOpenDemo()} />,
+    // Посмотреть в действии
     <DemoSection key="demo" onOpenVideoModal={() => setIsVideoModalOpen(true)} />,
-    // Audio Podcast for ISP Engineers and Executives
-    <PodcastSection key="podcast" />,
-    // Knowledge Base & Blog Articles
-    <BlogSection key="blog" />,
-    // Searchable Telecom FAQ
+    // Вопросы перед покупкой
     <FaqSection key="faq" onOpenAiDrawer={handleOpenAiChat} onOpenDemoModal={() => handleOpenDemo()} />,
+
+    // Ниже — разделы для тех, кто уже заинтересовался. На первом знакомстве
+    // они уводят от заявки, поэтому стоят после FAQ. Чтобы вернуть любой из
+    // них выше, достаточно перенести строку.
+    <MoneyVideoSection key="money" onOpenDemoModal={() => handleOpenDemo()} />,
+    <MobileAppShowcase key="mobile" />,
+    <WidgetsMarketplace key="widgets" />,
+    <KnowledgeGraphSection key="graph" />,
+    <PodcastSection key="podcast" />,
+    <BlogSection key="blog" />,
   ];
   const shownSections = useStagedSections(sections.length);
   const allSectionsShown = shownSections >= sections.length;

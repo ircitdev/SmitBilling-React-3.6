@@ -81,7 +81,10 @@ await page.goto(`http://localhost:${PORT}/#top`, { waitUntil: 'networkidle', tim
 
 // Ждём, пока отрисуются все отложенные секции. Их число берём из самой
 // страницы: столько <section> у полностью собранного приложения.
-const EXPECTED_SECTIONS = 17;
+// Столько <section> у полностью собранной страницы. Если добавили или убрали
+// секцию — поправить здесь, иначе сборка упадёт с понятной ошибкой (это лучше,
+// чем молча выложить обрезанную страницу).
+const EXPECTED_SECTIONS = 24;
 await page.waitForFunction(
   (min) => document.querySelectorAll('section').length >= min,
   EXPECTED_SECTIONS,
@@ -112,7 +115,7 @@ const text = html
 
 // Неполная страница хуже пустой: её не видно глазом, но в выдачу уедет
 // обрезанный текст. Поэтому требуем все секции, а не «хоть что-нибудь».
-if (sections < EXPECTED_SECTIONS || headings < 12 || text.length < 15000) {
+if (sections < EXPECTED_SECTIONS || headings < 18 || text.length < 22000) {
   console.error(
     `prerender: страница неполная (${sections} секций из ${EXPECTED_SECTIONS}, ` +
       `${headings} заголовков, ${text.length} символов) — index.html не трогаем`,
