@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Play, Check, Wallet, FileText } from 'lucide-react';
-import { LANDING_IMAGES, LANDING_ROBOTS } from '../data/landingImages';
+import { LANDING_IMAGES, LANDING_ROBOTS, LANDING_NOTES } from '../data/landingImages';
 
 interface HeroProps {
   onOpenDemoModal: () => void;
@@ -100,6 +100,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal, onOpenVideoModal })
               alt={LANDING_IMAGES.dashboard.alt}
               fetchPriority="high"
               className="relative z-10 w-full h-auto rounded-2xl shadow-2xl lg:[transform:perspective(1600px)_rotateY(-14deg)_rotateX(3deg)]"
+            />
+
+            {/* Неоновая подпись над экраном — как в макете */}
+            <img
+              src={LANDING_NOTES.platform.src}
+              alt={LANDING_NOTES.platform.alt}
+              loading="lazy"
+              className="hidden xl:block absolute z-30 -top-20 right-[6%] w-[200px] h-auto pointer-events-none select-none"
             />
 
             {/* Фигура — перед экраном, правым краем выходит за него */}
