@@ -5,7 +5,7 @@ import { Hero } from './components/Hero';
 import { StatsBar } from './components/StatsBar';
 import { BillingModule, ThemeMode } from './types';
 import { MEDIA_URLS } from './data/landingData';
-import { LANDING_IMAGES } from './data/landingImages';
+import { LANDING_IMAGES, LANDING_BACKDROPS, LANDING_ROBOTS } from './data/landingImages';
 import { openAiChat, openBusinessCase } from './lib/aiWidget';
 import { Play } from 'lucide-react';
 
@@ -17,6 +17,7 @@ const chunks = {
   ClientStorySection: () => import('./components/ClientStorySection'),
   ShowcaseSection: () => import('./components/ShowcaseSection'),
   CaseStudySection: () => import('./components/CaseStudySection'),
+  FinalCtaSection: () => import('./components/FinalCtaSection'),
   HowItWorksSection: () => import('./components/HowItWorksSection'),
   KnowledgeGraphSection: () => import('./components/KnowledgeGraphSection'),
   DemoSection: () => import('./components/DemoSection'),
@@ -46,6 +47,7 @@ const ZooSection = lazy(() => chunks.ZooSection().then((m) => ({ default: m.ZooS
 const ClientStorySection = lazy(() => chunks.ClientStorySection().then((m) => ({ default: m.ClientStorySection })));
 const ShowcaseSection = lazy(() => chunks.ShowcaseSection().then((m) => ({ default: m.ShowcaseSection })));
 const CaseStudySection = lazy(() => chunks.CaseStudySection().then((m) => ({ default: m.CaseStudySection })));
+const FinalCtaSection = lazy(() => chunks.FinalCtaSection().then((m) => ({ default: m.FinalCtaSection })));
 const HowItWorksSection = lazy(() => chunks.HowItWorksSection().then((m) => ({ default: m.HowItWorksSection })));
 const KnowledgeGraphSection = lazy(() => chunks.KnowledgeGraphSection().then((m) => ({ default: m.KnowledgeGraphSection })));
 const DemoSection = lazy(() => chunks.DemoSection().then((m) => ({ default: m.DemoSection })));
@@ -352,6 +354,7 @@ export default function App() {
         'План выездов монтажников и наряды в телефоне',
       ]}
       image={LANDING_IMAGES.networkMap}
+      backdrop={LANDING_BACKDROPS.network}
       dark
     />,
     // Поддержка
@@ -368,6 +371,7 @@ export default function App() {
         'База знаний для операторов и готовые ответы',
       ]}
       image={LANDING_IMAGES.support}
+      robot={LANDING_ROBOTS.boyThumb}
       flip
     />,
     // AI
@@ -384,6 +388,7 @@ export default function App() {
         'Разбирает записи звонков и пишет сводку',
       ]}
       image={LANDING_IMAGES.ai}
+      robot={LANDING_ROBOTS.girlBust}
     />,
     // Переезд со старого биллинга — главный страх покупателя
     <MigrationSection key="migrate" onOpenDemoModal={() => handleOpenDemo()} />,
@@ -403,6 +408,7 @@ export default function App() {
         'Фискализация платежей и обмен с 1С',
       ]}
       image={LANDING_IMAGES.security}
+      backdrop={LANDING_BACKDROPS.server}
       flip
       dark
     />,
@@ -439,6 +445,10 @@ export default function App() {
     <KnowledgeGraphSection key="graph" />,
     <PodcastSection key="podcast" />,
     <BlogSection key="blog" />,
+
+    // Последний экран перед подвалом: к нему читатель приходит,
+    // уже посмотрев продукт, цену и условия переезда.
+    <FinalCtaSection key="final-cta" onOpenDemoModal={() => handleOpenDemo()} />,
   ];
   const shownSections = useStagedSections(sections.length);
   const allSectionsShown = shownSections >= sections.length;

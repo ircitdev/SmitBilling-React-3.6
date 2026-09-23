@@ -20,6 +20,10 @@ interface ShowcaseSectionProps {
   flip?: boolean;
   /** Тёмная подложка: так секции карты и безопасности отделяются от соседних. */
   dark?: boolean;
+  /** Фоновая текстура секции — уходит под затемнение, читаемости не мешает. */
+  backdrop?: string;
+  /** Фигура-маскот сбоку. Прячется на узких экранах: там важнее текст. */
+  robot?: LandingImage;
 }
 
 export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
@@ -31,14 +35,30 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
   image,
   flip = false,
   dark = false,
+  backdrop,
+  robot,
 }) => (
   <section
     id={id}
-    className={`relative py-14 sm:py-24 z-10 ${
+    className={`relative py-14 sm:py-24 z-10 overflow-hidden ${
       dark ? 'bg-slate-900 dark:bg-slate-950/60' : ''
     }`}
   >
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {backdrop && (
+      <>
+        <img
+          src={backdrop}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none select-none"
+        />
+        {/* Затемнение поверх фона: без него текст на светлых участках теряется */}
+        <div className="absolute inset-0 bg-slate-950/70 pointer-events-none" />
+      </>
+    )}
+
+    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
         <div className={flip ? 'lg:order-2' : ''}>
           <div
@@ -82,7 +102,20 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
           </ul>
         </div>
 
-        <div className={flip ? 'lg:order-1' : ''}>
+        <div className={`relative ${flip ? 'lg:order-1' : ''}`}>
+          {robot && (
+            <img
+              src={robot.src}
+              width={robot.width}
+              height={robot.height}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              className={`hidden xl:block absolute z-20 -bottom-10 w-[34%] max-w-[230px] h-auto pointer-events-none select-none drop-shadow-2xl ${
+                flip ? '-left-16' : '-right-16'
+              }`}
+            />
+          )}
           <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-sm bg-slate-950">
             <img
               src={image.src}
