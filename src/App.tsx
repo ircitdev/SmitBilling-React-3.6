@@ -5,7 +5,7 @@ import { Hero } from './components/Hero';
 import { StatsBar } from './components/StatsBar';
 import { BillingModule, ThemeMode } from './types';
 import { MEDIA_URLS } from './data/landingData';
-import { LANDING_IMAGES, LANDING_BACKDROPS, LANDING_ROBOTS } from './data/landingImages';
+import { LANDING_IMAGES, LANDING_BACKDROPS, LANDING_ROBOTS, LANDING_NOTES } from './data/landingImages';
 import { openAiChat, openBusinessCase } from './lib/aiWidget';
 import { Play } from 'lucide-react';
 
@@ -372,6 +372,7 @@ export default function App() {
       ]}
       image={LANDING_IMAGES.support}
       robot={LANDING_ROBOTS.boyThumb}
+      note={LANDING_NOTES.client}
       flip
     />,
     // AI

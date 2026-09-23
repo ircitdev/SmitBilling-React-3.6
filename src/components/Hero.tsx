@@ -1,6 +1,6 @@
 import React from 'react';
 import { CheckCircle2, ArrowRight, Sparkles, Play } from 'lucide-react';
-import { LANDING_IMAGES, LANDING_ROBOTS } from '../data/landingImages';
+import { LANDING_IMAGES, LANDING_ROBOTS, LANDING_NOTES } from '../data/landingImages';
 
 interface HeroProps {
   onOpenDemoModal: () => void;
@@ -110,6 +110,14 @@ export const Hero: React.FC<HeroProps> = ({
                 alt={LANDING_IMAGES.dashboard.alt}
                 fetchPriority="high"
                 className="relative z-10 w-full h-auto drop-shadow-2xl"
+              />
+
+              {/* Неоновая подпись над экраном — как в тёмной версии макета */}
+              <img
+                src={LANDING_NOTES.platform.src}
+                alt={LANDING_NOTES.platform.alt}
+                loading="lazy"
+                className="hidden xl:block absolute z-30 -top-14 -right-4 w-[210px] h-auto pointer-events-none select-none"
               />
 
               {/* Робот стоит рядом с экраном, заходя за его правый край */}

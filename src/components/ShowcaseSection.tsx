@@ -24,6 +24,8 @@ interface ShowcaseSectionProps {
   backdrop?: string;
   /** Фигура-маскот сбоку. Прячется на узких экранах: там важнее текст. */
   robot?: LandingImage;
+  /** Рукописная подпись рядом с фигурой — из макета. */
+  note?: { src: string; alt: string };
 }
 
 export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
@@ -37,6 +39,7 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
   dark = false,
   backdrop,
   robot,
+  note,
 }) => (
   <section
     id={id}
@@ -103,6 +106,16 @@ export const ShowcaseSection: React.FC<ShowcaseSectionProps> = ({
         </div>
 
         <div className={`relative ${flip ? 'lg:order-1' : ''}`}>
+          {robot && note && (
+            <img
+              src={note.src}
+              alt={note.alt}
+              loading="lazy"
+              className={`hidden xl:block absolute z-30 -top-8 w-[150px] h-auto pointer-events-none select-none ${
+                flip ? 'left-0' : 'right-0'
+              }`}
+            />
+          )}
           {robot && (
             <img
               src={robot.src}
