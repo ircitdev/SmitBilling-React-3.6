@@ -1,6 +1,6 @@
 import React from 'react';
-import { CheckCircle2, ArrowRight, Sparkles, Play } from 'lucide-react';
-import { LANDING_IMAGES, LANDING_ROBOTS, LANDING_NOTES } from '../data/landingImages';
+import { ArrowRight, Play, Check, Wallet, FileText } from 'lucide-react';
+import { LANDING_IMAGES, LANDING_ROBOTS } from '../data/landingImages';
 
 interface HeroProps {
   onOpenDemoModal: () => void;
@@ -8,132 +8,140 @@ interface HeroProps {
   onOpenVideoModal: () => void;
 }
 
-export const Hero: React.FC<HeroProps> = ({
-  onOpenDemoModal,
-  onOpenAiDrawer,
-  onOpenVideoModal,
-}) => {
+/**
+ * Первый экран по макету: слева текст и два действия, справа — дашборд
+ * под углом, перед ним фигура, вокруг парят карточки-уведомления.
+ *
+ * Карточки набраны текстом, а не взяты картинкой: так они читаются
+ * экранным диктором, ищутся по странице и не мылятся на плотных экранах.
+ */
 
-  return (
-    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden z-10">
-      {/* Subtle radial glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
+/** Карточки-уведомления вокруг дашборда. */
+const NOTIFICATIONS = [
+  {
+    icon: Wallet,
+    title: 'Платёж получен',
+    lines: ['+1 250 ₽ · Л/с 110301'],
+    // положение подобрано так, чтобы не перекрывать KPI на дашборде
+    className: 'left-[-6%] top-[14%]',
+    tone: 'emerald' as const,
+  },
+  {
+    icon: FileText,
+    title: 'Новая заявка',
+    lines: ['ул. Лесная, 12 · Подключение'],
+    className: 'right-[-4%] top-[42%]',
+    tone: 'slate' as const,
+  },
+  {
+    icon: Check,
+    title: 'Сеть в норме',
+    lines: ['248 узлов · без аварий'],
+    className: 'left-[2%] bottom-[8%]',
+    tone: 'emerald' as const,
+  },
+];
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-          {/* Left Column: Heading, Subheading & CTAs */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left">
-            {/* Version & Status Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 mb-6">
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
-              <span>Релиз 3.7: Python 3.11 · FreeRADIUS 3.2 · СОРМ-3 · AI-агент</span>
-            </div>
+export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal, onOpenVideoModal }) => (
+  <section className="relative pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden z-10">
+    {/* Мягкое свечение за композицией — как в макете */}
+    <div className="absolute top-1/3 right-0 w-[700px] h-[700px] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
 
-            {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12] mb-6">
-              Весь оператор связи —{' '}
-              <span className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-                в одной системе
-              </span>
-            </h1>
-
-            {/* Description */}
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mb-8">
-              Биллинг, сеть, CRM, поддержка, СОРМ, документы и помощник — на единой клиентской
-              базе, на вашем сервере. Без зоопарка отдельных сервисов, между которыми данные
-              переносят руками.
-            </p>
-
-            {/* Primary Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 w-full sm:w-auto mb-8">
-              <button
-                id="hero-demo-cta"
-                onClick={onOpenDemoModal}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-600 hover:shadow-xl hover:shadow-emerald-500/35 transition-all cursor-pointer"
-              >
-                <span>Запросить демо-стенд</span>
-                <ArrowRight className="w-5 h-5" />
-              </button>
-
-              <button
-                id="hero-video-cta"
-                onClick={onOpenVideoModal}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-base font-semibold bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-sm transition-all cursor-pointer"
-              >
-                <div className="w-6 h-6 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center">
-                  <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
-                </div>
-                <span>Видеообзор (3 мин)</span>
-              </button>
-
-              <button
-                id="hero-ai-cta"
-                onClick={onOpenAiDrawer}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-semibold bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25 transition-all cursor-pointer"
-              >
-                <Sparkles className="w-4 h-4 text-emerald-500" />
-                <span>Спросить AI</span>
-              </button>
-            </div>
-
-            {/* Quick Guarantees / Bullets */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>Перенос базы за 1 день</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>Развёртывание в Docker</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                <span>Без роялти за абонента</span>
-              </div>
-            </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+        {/* Слева: заголовок и действия */}
+        <div className="lg:col-span-5 flex flex-col items-start text-left">
+          <div className="text-[11px] sm:text-xs font-bold tracking-[0.12em] uppercase text-slate-500 dark:text-slate-400 mb-4">
+            Надёжная платформа для операторов связи
           </div>
 
-          {/* Справа: дашборд и робот — композиция из макета.
-              Фигура вынесена за пределы текстовой колонки и на узких
-              экранах прячется: там она только отнимала бы место у сути. */}
-          <div className="lg:col-span-5 relative">
-            <div className="absolute -inset-6 bg-gradient-to-tr from-emerald-500/20 via-teal-500/10 to-transparent rounded-[2rem] blur-2xl pointer-events-none" />
+          <h1 className="text-[2rem] sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.1] mb-5">
+            Весь оператор связи —{' '}
+            <span className="text-emerald-600 dark:text-emerald-400">в одной системе</span>
+          </h1>
 
-            <div className="relative">
-              <img
-                src={LANDING_IMAGES.dashboard.src}
-                width={LANDING_IMAGES.dashboard.width}
-                height={LANDING_IMAGES.dashboard.height}
-                alt={LANDING_IMAGES.dashboard.alt}
-                fetchPriority="high"
-                className="relative z-10 w-full h-auto drop-shadow-2xl"
-              />
+          <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed mb-8">
+            Биллинг, сеть, CRM, поддержка, СОРМ, документы и помощник — на единой клиентской
+            базе, на вашем сервере. Без зоопарка отдельных сервисов.
+          </p>
 
-              {/* Неоновая подпись над экраном — как в тёмной версии макета */}
-              <img
-                src={LANDING_NOTES.platform.src}
-                alt={LANDING_NOTES.platform.alt}
-                loading="lazy"
-                className="hidden xl:block absolute z-30 -top-14 -right-4 w-[210px] h-auto pointer-events-none select-none"
-              />
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+            <button
+              id="hero-demo-cta"
+              onClick={onOpenDemoModal}
+              className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-base font-semibold bg-slate-900 dark:bg-white text-white dark:text-slate-900 shadow-lg hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors cursor-pointer"
+            >
+              <span>Получить демо</span>
+              <ArrowRight className="w-[18px] h-[18px]" aria-hidden="true" />
+            </button>
 
-              {/* Робот стоит рядом с экраном, заходя за его правый край */}
-              <img
-                src={LANDING_ROBOTS.girlPoint.src}
-                width={LANDING_ROBOTS.girlPoint.width}
-                height={LANDING_ROBOTS.girlPoint.height}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-                className="hidden xl:block absolute z-20 -right-16 -bottom-8 w-[46%] max-w-[300px] h-auto pointer-events-none select-none drop-shadow-2xl"
-              />
-            </div>
+            <button
+              id="hero-video-cta"
+              onClick={onOpenVideoModal}
+              className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl text-base font-semibold text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+            >
+              <span className="w-7 h-7 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
+                <Play className="w-3.5 h-3.5 fill-current ml-0.5" aria-hidden="true" />
+              </span>
+              <span>Посмотреть систему</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Справа: дашборд под углом, фигура и уведомления */}
+        <div className="lg:col-span-7 relative">
+          <div className="relative mx-auto max-w-[640px] lg:max-w-none">
+            {/* Дашборд повёрнут в перспективе — приём из макета.
+                На узких экранах поворот убираем: там он только мельчит текст. */}
+            <img
+              src={LANDING_IMAGES.dashboard.src}
+              width={LANDING_IMAGES.dashboard.width}
+              height={LANDING_IMAGES.dashboard.height}
+              alt={LANDING_IMAGES.dashboard.alt}
+              fetchPriority="high"
+              className="relative z-10 w-full h-auto rounded-2xl shadow-2xl lg:[transform:perspective(1600px)_rotateY(-14deg)_rotateX(3deg)]"
+            />
+
+            {/* Фигура — перед экраном, правым краем выходит за него */}
+            <img
+              src={LANDING_ROBOTS.girlPoint.src}
+              width={LANDING_ROBOTS.girlPoint.width}
+              height={LANDING_ROBOTS.girlPoint.height}
+              alt=""
+              aria-hidden="true"
+              className="hidden lg:block absolute z-20 right-[-8%] bottom-[-12%] w-[42%] max-w-[320px] h-auto pointer-events-none select-none drop-shadow-2xl"
+            />
+
+            {/* Уведомления вокруг — показывают, что система живёт */}
+            {NOTIFICATIONS.map(({ icon: Icon, title, lines, className, tone }) => (
+              <div
+                key={title}
+                className={`hidden md:flex absolute z-30 items-start gap-2.5 max-w-[215px] px-3.5 py-2.5 rounded-xl bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border border-slate-200/80 dark:border-slate-700/80 shadow-xl ${className}`}
+              >
+                <span
+                  className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                    tone === 'emerald'
+                      ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+                      : 'bg-slate-500/15 text-slate-600 dark:text-slate-300'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[13px] font-bold text-slate-900 dark:text-white leading-tight">
+                    {title}
+                  </span>
+                  {lines.map((l) => (
+                    <span key={l} className="block text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
+                      {l}
+                    </span>
+                  ))}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
