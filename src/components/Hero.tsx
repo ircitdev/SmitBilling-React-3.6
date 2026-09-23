@@ -23,7 +23,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal, onOpenVideoModal })
     <div className="absolute top-1/3 right-0 w-[700px] h-[700px] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
 
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
         {/* Слева: заголовок и действия */}
         <div className="lg:col-span-5 flex flex-col items-start text-left">
           <div className="text-[11px] sm:text-xs font-bold tracking-[0.12em] uppercase text-slate-500 dark:text-slate-400 mb-4">
@@ -77,12 +77,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal, onOpenVideoModal })
               className="relative z-10 w-full h-auto rounded-2xl shadow-2xl lg:[transform:perspective(1600px)_rotateY(-14deg)_rotateX(3deg)]"
             />
 
-            {/* Неоновая подпись над экраном — как в макете */}
+            {/* Неоновая подпись — только в тёмной теме: светлый неон на белом
+                фоне почти не виден, в макете он и был на тёмном. */}
             <img
               src={LANDING_NOTES.platform.src}
               alt={LANDING_NOTES.platform.alt}
               loading="lazy"
-              className="hidden xl:block absolute z-30 -top-20 right-[6%] w-[200px] h-auto pointer-events-none select-none"
+              className="hidden dark:xl:block absolute z-30 -top-16 right-[-6%] w-[190px] h-auto pointer-events-none select-none"
             />
 
             {/* Фигура — перед экраном, правым краем выходит за него */}
@@ -92,7 +93,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal, onOpenVideoModal })
               height={LANDING_ROBOTS.girlPoint.height}
               alt=""
               aria-hidden="true"
-              className="hidden lg:block absolute z-20 right-[-8%] bottom-[-12%] w-[42%] max-w-[320px] h-auto pointer-events-none select-none drop-shadow-2xl"
+              className="hidden xl:block absolute z-20 -right-28 -bottom-14 w-[185px] h-auto pointer-events-none select-none drop-shadow-2xl"
             />
 
           </div>
