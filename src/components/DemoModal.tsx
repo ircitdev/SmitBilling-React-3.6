@@ -4,11 +4,12 @@ import { DemoFormData } from '../types';
 import { playSuccessChime } from '../utils/audioFeedback';
 import { reachGoal } from '../lib/aiWidget';
 
-// Заявка уходит так же, как с прежнего billing.smit34.ru: в Telegram-топик LEADS
-// группы «СМИТ CRM». Токен бота и ключ DaData живут в nginx-прокси на сервере
-// (/api/demo-lead, /api/inn-check, /api/whoami), в браузер они не попадают.
-const LEADS_CHAT = '-1002910452601';
-const LEADS_THREAD = '23487';
+// Заявки принимает сервер лицензий: сохраняет в журнал заявок и сам
+// отправляет в группу лидов, заводя тему под каждую. Группа и бот
+// настраиваются там же, в разделе AI-виджетов.
+// Ключ DaData остаётся в nginx-прокси на сервере (/api/inn-check,
+// /api/whoami) — в браузер он не попадает.
+const LEAD_ENDPOINT = 'https://license.billing.smit34.ru/api/plan-chat/lead/';
 
 const STATUS_RU: Record<string, string> = {
   ACTIVE: 'действующая',
@@ -144,6 +145,30 @@ function companyBlock(c: CompanyInfo | null): string {
   return lines.join('\n');
 }
 
+// Заявку помним сутки: человек уже оставил контакты, и вторая форма подряд
+// только подталкивает отправить дубль. Хранение — в браузере: это удобство
+// для посетителя, а не учёт, и уезжать на сервер ему незачем.
+const SENT_KEY = 'smit_demo_sent_at';
+const SENT_TTL = 24 * 60 * 60 * 1000;
+
+function wasSentRecently(): boolean {
+  try {
+    const at = Number(localStorage.getItem(SENT_KEY) || 0);
+    return at > 0 && Date.now() - at < SENT_TTL;
+  } catch {
+    // приватный режим или запрет на хранение — просто покажем форму
+    return false;
+  }
+}
+
+function rememberSent(): void {
+  try {
+    localStorage.setItem(SENT_KEY, String(Date.now()));
+  } catch {
+    /* не смогли запомнить — не беда, форма останется доступной */
+  }
+}
+
 type InnStatus = 'idle' | 'checking' | 'valid' | 'notfound' | 'error';
 
 interface DemoModalProps {
@@ -178,7 +203,10 @@ export const DemoModal: React.FC<DemoModalProps> = ({
     selectedPlan: preselectedPlan,
     comment: initialComment,
   });
-  const [website, setWebsite] = useState(''); // ловушка для ботов — человек поле не видит
+  // Ловушка для ботов: человек поля не видит, бот заполняет его автоматически.
+  // Имя намеренно бессмысленное — поле с именем вроде website подхватывает
+  // автозаполнение браузера, и тогда живой посетитель молча считается ботом.
+  const [trapValue, setTrapValue] = useState('');
   const [innStatus, setInnStatus] = useState<InnStatus>('idle');
   const [company, setCompany] = useState<CompanyInfo | null>(null);
   const [stage, setStage] = useState<'' | 'inn' | 'send'>('');
@@ -200,7 +228,8 @@ export const DemoModal: React.FC<DemoModalProps> = ({
   // Каждое открытие — чистая форма, как на прежнем сайте, и цель в Метрике.
   useEffect(() => {
     if (!isOpen) return;
-    setIsSuccess(false);
+    // Уже отправлял за последние сутки — показываем подтверждение, а не форму.
+    setIsSuccess(wasSentRecently());
     setSubmitError('');
     reachGoal('demo_open');
   }, [isOpen]);
@@ -276,7 +305,10 @@ export const DemoModal: React.FC<DemoModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError('');
-    if (website) {
+    if (trapValue) {
+      // Не показываем ошибку: боту знать о ловушке незачем. Но в консоль
+      // пишем — иначе срабатывание на живом посетителе остаётся незаметным.
+      console.warn('[demo] заявка не отправлена: сработала защита от ботов');
       onClose();
       return;
     }
@@ -305,7 +337,7 @@ export const DemoModal: React.FC<DemoModalProps> = ({
         /* без IP заявка всё равно ценна */
       }
 
-      const text =
+      const comment =
         '🎯 <b>Заявка на демо</b> — billing.smit34.ru\n\n' +
         '👤 <b>Имя:</b> ' + esc(formData.name.trim()) + '\n' +
         '📧 <b>Email:</b> ' + esc(formData.email.trim()) + '\n' +
@@ -322,23 +354,26 @@ export const DemoModal: React.FC<DemoModalProps> = ({
         '↩️ <b>Referrer:</b> ' + esc(document.referrer || 'нет') + '\n' +
         '📄 <b>Страница:</b> ' + esc(location.href);
 
-      const body = new URLSearchParams({
-        chat_id: LEADS_CHAT,
-        message_thread_id: LEADS_THREAD,
-        parse_mode: 'HTML',
-        disable_web_page_preview: 'true',
-        text,
-      });
-      const r = await fetch('/api/demo-lead', {
+      const r = await fetch(LEAD_ENDPOINT, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          company: formData.companyName.trim() || c.value,
+          contact_name: formData.name.trim(),
+          contact_type: 'phone',
+          contact_value: formData.phone,
+          subscribers: formData.subscribersCount,
+          comment: comment,
+          page_url: location.href,
+          session_id: 'demo-form-' + Date.now().toString(36),
+        }),
       });
       const d = (await r.json().catch(() => null)) as { ok?: boolean } | null;
       if (!d || !d.ok) throw new Error('lead');
 
       if (formData.companyName) localStorage.setItem('smit_demo_company', formData.companyName);
       reachGoal('lead', { tariff: formData.selectedPlan });
+      rememberSent();
       setIsSuccess(true);
       playSuccessChime();
     } catch {
@@ -388,11 +423,14 @@ export const DemoModal: React.FC<DemoModalProps> = ({
               {/* Ловушка для ботов */}
               <input
                 type="text"
-                name="website"
-                value={website}
-                onChange={(e) => setWebsite(e.target.value)}
+                name="cf-field-2"
+                value={trapValue}
+                onChange={(e) => setTrapValue(e.target.value)}
                 tabIndex={-1}
                 autoComplete="off"
+                data-1p-ignore
+                data-lpignore="true"
+                data-form-type="other"
                 aria-hidden="true"
                 className="absolute -left-[9999px] w-px h-px opacity-0"
               />
