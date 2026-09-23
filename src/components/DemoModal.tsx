@@ -404,21 +404,25 @@ export const DemoModal: React.FC<DemoModalProps> = ({
           <X className="w-4 h-4" />
         </button>
 
+        {/* Шапка одна на оба состояния: после отправки человек остаётся
+            в том же окне, а не оказывается в другой карточке. */}
+        <div className="mb-6">
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-2">
+            <Sparkles className="w-3 h-3" />
+            <span>Демонстрация без обязательств</span>
+          </div>
+          <h3 id="demo-modal-title" className="text-2xl font-extrabold text-slate-900 dark:text-white">
+            {isSuccess ? 'Заявка принята' : 'Запросить демонстрацию'}
+          </h3>
+          <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
+            {isSuccess
+              ? 'Спасибо! Мы уже видим вашу заявку.'
+              : 'Покажем СмИТ Биллинг на ваших задачах и ответим на вопросы.'}
+          </p>
+        </div>
+
         {!isSuccess ? (
           <div>
-            <div className="mb-6">
-              <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-2">
-                <Sparkles className="w-3 h-3" />
-                <span>Демонстрация без обязательств</span>
-              </div>
-              <h3 id="demo-modal-title" className="text-2xl font-extrabold text-slate-900 dark:text-white">
-                Запросить демонстрацию
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-1">
-                Покажем СмИТ Биллинг на ваших задачах и ответим на вопросы.
-              </p>
-            </div>
-
             <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               {/* Ловушка для ботов */}
               <input
@@ -619,10 +623,17 @@ export const DemoModal: React.FC<DemoModalProps> = ({
               </div>
             </div>
 
-            <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white">Заявка отправлена!</h3>
             <p className="text-sm text-slate-600 dark:text-slate-300 max-w-sm mx-auto leading-relaxed">
-              Мы свяжемся с вами в ближайшее время — по телефону {formData.phone} или на{' '}
-              <strong>{formData.email}</strong>.
+              {formData.phone || formData.email ? (
+                <>
+                  Мы свяжемся с вами в ближайшее время — по телефону {formData.phone} или на{' '}
+                  <strong>{formData.email}</strong>.
+                </>
+              ) : (
+                /* Подтверждение показано по памяти о вчерашней отправке: полей
+                   формы уже нет, и подставлять в текст нечего. */
+                <>Мы уже получили вашу заявку и свяжемся с вами в ближайшее время.</>
+              )}
             </p>
 
             <div className="flex items-center justify-center gap-3 pt-2">
