@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Play, Check, Wallet, FileText } from 'lucide-react';
+import { ArrowRight, Play } from 'lucide-react';
 import { LANDING_IMAGES, LANDING_ROBOTS, LANDING_NOTES } from '../data/landingImages';
 
 interface HeroProps {
@@ -9,38 +9,13 @@ interface HeroProps {
 }
 
 /**
- * Первый экран по макету: слева текст и два действия, справа — дашборд
- * под углом, перед ним фигура, вокруг парят карточки-уведомления.
+ * Первый экран: слева текст и два действия, справа — дашборд, перед ним
+ * фигура.
  *
- * Карточки набраны текстом, а не взяты картинкой: так они читаются
- * экранным диктором, ищутся по странице и не мылятся на плотных экранах.
+ * Карточек-уведомлений в коде нет намеренно: они уже нарисованы на самой
+ * картинке дашборда. Свои поверх давали дубли — два «платежа» и две
+ * «заявки» на одном экране.
  */
-
-/** Карточки-уведомления вокруг дашборда. */
-const NOTIFICATIONS = [
-  {
-    icon: Wallet,
-    title: 'Платёж получен',
-    lines: ['+1 250 ₽ · Л/с 110301'],
-    // положение подобрано так, чтобы не перекрывать KPI на дашборде
-    className: 'left-[-6%] top-[14%]',
-    tone: 'emerald' as const,
-  },
-  {
-    icon: FileText,
-    title: 'Новая заявка',
-    lines: ['ул. Лесная, 12 · Подключение'],
-    className: 'right-[-4%] top-[42%]',
-    tone: 'slate' as const,
-  },
-  {
-    icon: Check,
-    title: 'Сеть в норме',
-    lines: ['248 узлов · без аварий'],
-    className: 'left-[2%] bottom-[8%]',
-    tone: 'emerald' as const,
-  },
-];
 
 export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal, onOpenVideoModal }) => (
   <section className="relative pt-28 pb-16 md:pt-32 md:pb-24 overflow-hidden z-10">
@@ -120,33 +95,6 @@ export const Hero: React.FC<HeroProps> = ({ onOpenDemoModal, onOpenVideoModal })
               className="hidden lg:block absolute z-20 right-[-8%] bottom-[-12%] w-[42%] max-w-[320px] h-auto pointer-events-none select-none drop-shadow-2xl"
             />
 
-            {/* Уведомления вокруг — показывают, что система живёт */}
-            {NOTIFICATIONS.map(({ icon: Icon, title, lines, className, tone }) => (
-              <div
-                key={title}
-                className={`hidden md:flex absolute z-30 items-start gap-2.5 max-w-[215px] px-3.5 py-2.5 rounded-xl bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm border border-slate-200/80 dark:border-slate-700/80 shadow-xl ${className}`}
-              >
-                <span
-                  className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
-                    tone === 'emerald'
-                      ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
-                      : 'bg-slate-500/15 text-slate-600 dark:text-slate-300'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" aria-hidden="true" />
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-[13px] font-bold text-slate-900 dark:text-white leading-tight">
-                    {title}
-                  </span>
-                  {lines.map((l) => (
-                    <span key={l} className="block text-[11px] text-slate-500 dark:text-slate-400 leading-snug">
-                      {l}
-                    </span>
-                  ))}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
       </div>
