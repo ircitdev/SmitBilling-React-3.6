@@ -5,6 +5,7 @@ import {
   DownloadCloud,
   CheckCircle2,
   ExternalLink,
+  Share2,
   ChevronRight,
   X,
   Sparkles,
@@ -18,6 +19,36 @@ import LiveCover from './LiveCover';
 export const WidgetsMarketplace: React.FC = () => {
   const [selectedCat, setSelectedCat] = useState<string>('all');
   const [activeWidget, setActiveWidget] = useState<WidgetItem | null>(null);
+  const [copied, setCopied] = useState(false);
+
+  // Ссылка всегда ведёт на основной домен, даже если витрина открыта на
+  // промежуточном: делиться нужно рабочим адресом.
+  const shareUrl = activeWidget
+    ? `https://billing.smit34.ru/#widget-${activeWidget.id}`
+    : '';
+
+  const handleShare = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+    } catch {
+      // буфера нет (не https или отказ в правах) — запасной способ
+      const ta = document.createElement('textarea');
+      ta.value = shareUrl;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+      } catch {
+        document.body.removeChild(ta);
+        return;
+      }
+      document.body.removeChild(ta);
+    }
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  };
   // Каталог виджетов ведётся на сервере лицензий; до ответа показываем
   // локальный снимок, чтобы раздел не был пустым.
   const [widgets, setWidgets] = useState<WidgetItem[]>(WIDGETS_DATA);
@@ -169,6 +200,45 @@ export const WidgetsMarketplace: React.FC = () => {
                 <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
                   {activeWidget.title || activeWidget.name}
                 </h3>
+
+                {/* Разработчик и ссылка на виджет — как в окне модуля */}
+                <div className="flex flex-wrap items-center gap-2 mt-2">
+                  {activeWidget.developer && (
+                    activeWidget.developerUrl ? (
+                      <a
+                        href={activeWidget.developerUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={`Сайт разработчика: ${activeWidget.developer}`}
+                        className="inline-flex items-center gap-1.5 h-8 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-emerald-500/50 text-xs font-semibold transition-colors cursor-pointer"
+                      >
+                        <span className="truncate max-w-[10rem]">{activeWidget.developer}</span>
+                        <ExternalLink className="w-3.5 h-3.5 flex-shrink-0 opacity-80" />
+                      </a>
+                    ) : (
+                      <span className="inline-flex items-center h-8 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-semibold">
+                        <span className="truncate max-w-[10rem]">{activeWidget.developer}</span>
+                      </span>
+                    )
+                  )}
+
+                  <button
+                    type="button"
+                    onClick={handleShare}
+                    aria-label={copied ? 'Ссылка скопирована' : 'Скопировать ссылку на виджет'}
+                    title={copied ? 'Ссылка скопирована' : 'Скопировать ссылку на виджет'}
+                    className="inline-flex items-center gap-1.5 h-8 px-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:border-emerald-500/50 text-xs font-semibold transition-colors cursor-pointer"
+                  >
+                    <Share2 className="w-3.5 h-3.5 flex-shrink-0 opacity-80" />
+                    <span>{copied ? 'Скопировано' : 'Поделиться'}</span>
+                  </button>
+
+                  {activeWidget.targetName && (
+                    <span className="inline-flex items-center h-8 px-3 rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
+                      {activeWidget.targetName}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 

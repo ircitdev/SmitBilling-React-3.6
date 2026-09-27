@@ -80,6 +80,7 @@ function merge(local: WidgetItem | undefined, remote: CatalogWidget): WidgetItem
     features: remote.features.length ? remote.features : base.features,
     how: remote.how_it_works.length ? remote.how_it_works : base.how,
     developer: remote.developer || base.developer,
+    developerUrl: remote.developer_url || base.developerUrl,
     targetName: remote.target_name || base.targetName,
     // оформление — своё: обложка и ролик по коду виджета
     cover: base.cover || `${COVERS}/widget-${remote.slug}.png`,

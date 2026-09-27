@@ -393,6 +393,16 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
           <button
             onClick={() => {
               onClose();
+              // Демонстрацию заводит помощник: он знает про стенд и может
+              // сразу ответить на вопросы по модулю. Форма заявки остаётся
+              // запасным путём, если помощник не загрузился.
+              const w = (window as unknown as {
+                SmitWidget?: { ask?: (text: string) => void };
+              }).SmitWidget;
+              if (w && typeof w.ask === 'function') {
+                w.ask(`Привет, хочу попробовать работу модуля ${module.name} на демо-стенде`);
+                return;
+              }
               if (typeof onSelectModuleForDemo === 'function') {
                 onSelectModuleForDemo(module.name);
               } else if (typeof onOpenDemo === 'function') {

@@ -68,6 +68,8 @@ export interface WidgetItem {
   /** Живая обложка: короткий ролик, играет при наведении. */
   coverVideo?: string;
   developer?: string;
+  /** Сайт разработчика — из каталога сервера лицензий. */
+  developerUrl?: string;
   /** Куда встаёт виджет — человеческим языком, из каталога. */
   targetName?: string;
   features: string[];
