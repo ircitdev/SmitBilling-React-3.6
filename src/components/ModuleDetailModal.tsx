@@ -16,6 +16,7 @@ import {
   BookOpen,
 } from 'lucide-react';
 import { BillingModule, ScreenshotItem } from '../types';
+import LiveCover from './LiveCover';
 
 interface ModuleDetailModalProps {
   module: BillingModule | null;
@@ -99,10 +100,11 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
         {/* Module Cover Image Banner (if exists) */}
         {module.img && (
           <div className="relative h-44 sm:h-56 w-full overflow-hidden bg-slate-950 flex-shrink-0 border-b border-slate-800">
-            <img
-              loading="lazy"
-              src={module.img}
+            <LiveCover
+              video={module.cover}
+              image={module.img}
               alt={module.name}
+              autoPlay
               className="w-full h-full object-cover opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-black/30" />

@@ -149,10 +149,11 @@ export const WidgetsMarketplace: React.FC = () => {
             {/* Header */}
             <div className="flex items-center gap-4 mb-6">
               <div className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 flex-shrink-0">
-                <img
-                  loading="lazy"
-                  src={activeWidget.cover || activeWidget.image || activeWidget.shots?.[0]}
+                <LiveCover
+                  video={activeWidget.coverVideo}
+                  image={activeWidget.cover || activeWidget.image || activeWidget.shots?.[0]}
                   alt={activeWidget.title || activeWidget.name}
+                  autoPlay
                   className="w-full h-full object-cover"
                 />
               </div>

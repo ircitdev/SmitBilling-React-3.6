@@ -17,9 +17,12 @@ interface Props {
   image?: string;
   alt: string;
   className?: string;
+  /** Играть постоянно, не дожидаясь наведения — для окна модуля. */
+  autoPlay?: boolean;
 }
 
-export default function LiveCover({ video, image, alt, className = '' }: Props) {
+export default function LiveCover({ video, image, alt, className = '',
+                                    autoPlay = false }: Props) {
   const ref = useRef<HTMLVideoElement>(null);
 
   if (!video) {
@@ -51,16 +54,18 @@ export default function LiveCover({ video, image, alt, className = '' }: Props) 
       muted
       loop
       playsInline
-      preload="none"
+      preload={autoPlay ? 'auto' : 'none'}
+      autoPlay={autoPlay}
       aria-label={alt}
       className={className}
-      onMouseEnter={play}
-      onMouseLeave={stop}
-      onFocus={play}
-      onBlur={stop}
+      onMouseEnter={autoPlay ? undefined : play}
+      onMouseLeave={autoPlay ? undefined : stop}
+      onFocus={autoPlay ? undefined : play}
+      onBlur={autoPlay ? undefined : stop}
       // на телефоне наведения нет: ролик стартует, когда карточка видна
       onLoadedData={() => {
-        if (window.matchMedia('(hover: none)').matches) play();
+        // в окне играем всегда; на телефоне наведения нет — тоже играем
+        if (autoPlay || window.matchMedia('(hover: none)').matches) play();
       }}
     />
   );
