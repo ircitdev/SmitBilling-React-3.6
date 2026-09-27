@@ -3,6 +3,7 @@ import { Search, Layers, ArrowUpRight, Play, Image as ImageIcon, Check } from 'l
 import { BILLING_MODULES } from '../data/modulesData';
 import { loadModules } from '../data/modulesCatalog';
 import { BillingModule, CategoryId } from '../types';
+import LiveCover from './LiveCover';
 
 interface ModulesSectionProps {
   onOpenModuleModal: (module: BillingModule) => void;
@@ -147,11 +148,11 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
               {/* Module Image Thumbnail */}
               {mod.img && (
                 <div className="relative w-28 shrink-0 sm:w-full sm:aspect-[16/9] overflow-hidden bg-slate-950">
-                  <img
-                    src={mod.img}
+                  <LiveCover
+                    video={mod.cover}
+                    image={mod.img}
                     alt={mod.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-black/30" />
 

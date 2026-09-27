@@ -28,6 +28,8 @@ export interface BillingModule {
   badge?: string;
   stats?: string;
   img?: string;
+  /** Живая обложка карточки: короткий ролик, играет при наведении. */
+  cover?: string;
   video?: string;
   vposter?: string;
   doc?: string;
@@ -63,7 +65,11 @@ export interface WidgetItem {
   fullDesc?: string;
   image?: string;
   cover?: string;
+  /** Живая обложка: короткий ролик, играет при наведении. */
+  coverVideo?: string;
   developer?: string;
+  /** Куда встаёт виджет — человеческим языком, из каталога. */
+  targetName?: string;
   features: string[];
   how: string[];
   howItWorks?: string | string[];

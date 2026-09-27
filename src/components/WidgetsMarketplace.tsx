@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Boxes,
   Tag,
@@ -11,11 +11,26 @@ import {
   Info,
 } from 'lucide-react';
 import { WIDGETS_DATA } from '../data/landingData';
+import { loadWidgets } from '../data/widgetsCatalog';
 import { WidgetItem } from '../types';
+import LiveCover from './LiveCover';
 
 export const WidgetsMarketplace: React.FC = () => {
   const [selectedCat, setSelectedCat] = useState<string>('all');
   const [activeWidget, setActiveWidget] = useState<WidgetItem | null>(null);
+  // Каталог виджетов ведётся на сервере лицензий; до ответа показываем
+  // локальный снимок, чтобы раздел не был пустым.
+  const [widgets, setWidgets] = useState<WidgetItem[]>(WIDGETS_DATA);
+
+  useEffect(() => {
+    const ac = new AbortController();
+    loadWidgets(ac.signal)
+      .then(setWidgets)
+      .catch(() => {
+        /* сервер каталога недоступен — остаёмся на локальном снимке */
+      });
+    return () => ac.abort();
+  }, []);
 
   const categories = [
     { id: 'all', label: 'Все виджеты' },
@@ -25,8 +40,8 @@ export const WidgetsMarketplace: React.FC = () => {
   ];
 
   const filteredWidgets = selectedCat === 'all'
-    ? WIDGETS_DATA
-    : WIDGETS_DATA.filter((w) => w.cat === selectedCat);
+    ? widgets
+    : widgets.filter((w) => w.cat === selectedCat);
 
   return (
     <section id="widgets" className="py-14 sm:py-28 relative">
@@ -72,11 +87,11 @@ export const WidgetsMarketplace: React.FC = () => {
             >
               {/* Widget Cover Image */}
               <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
-                <img
-                  src={widget.cover || widget.image || widget.shots?.[0]}
+                <LiveCover
+                  video={widget.coverVideo}
+                  image={widget.cover || widget.image || widget.shots?.[0]}
                   alt={widget.title || widget.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
                 />
                 <div className="absolute top-3 right-3 px-2.5 py-1 rounded-md bg-slate-900/80 backdrop-blur-md border border-slate-700/60 text-emerald-400 font-mono text-xs font-bold">
                   {widget.version}
