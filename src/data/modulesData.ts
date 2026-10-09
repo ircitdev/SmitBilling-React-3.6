@@ -1397,8 +1397,8 @@ export const BILLING_MODULES: BillingModule[] = [
     "stats": "Штрихкод & Серийники",
     "img": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/stock.jpg",
     "cover": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/site/modules/module-stock.mp4",
-    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20.mp4",
-    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20-poster.jpg",
+    "video": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-10-09.mp4",
+    "vposter": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-10-09-poster.jpg",
     "doc": "https://docs.billing.smit34.ru/pages/stock.html",
     "shots": [
       {
