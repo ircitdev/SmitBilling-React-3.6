@@ -507,8 +507,8 @@ export const BILLING_MODULES: BillingModule[] = [
     ],
     plans: ['Pro', 'Бизнес', 'Enterprise'],
     img: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/stock.jpg',
-    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20.mp4',
-    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-08-20-poster.jpg',
+    video: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-10-09.mp4',
+    vposter: 'https://storage.googleapis.com/uspeshnyy-projects/smit/billing/video/smit_stock_training_2026-10-09-poster.jpg',
     shots: [
           {
                 "src": "https://storage.googleapis.com/uspeshnyy-projects/smit/billing/landing_site/assets/modules/shots/stock-1.png",
