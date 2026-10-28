@@ -48,9 +48,9 @@ export const Hero: React.FC<HeroProps> = ({
               </span>
               {/* На телефоне перечень технологий не читается и ломает строку —
                   там остаётся только номер релиза. */}
-              <span className="sm:hidden">Релиз 3.7</span>
+              <span className="sm:hidden">Релиз 3.9</span>
               <span className="hidden sm:inline">
-                Релиз 3.7: Python 3.11 · FreeRADIUS 3.2 · СОРМ-3 · AI-агент
+                Релиз 3.9: Python 3.11 · FreeRADIUS 3.2 · СОРМ-3 · AI-агент
               </span>
             </div>
 

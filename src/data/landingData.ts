@@ -556,6 +556,7 @@ export const INTEGRATION_GROUPS: import('../types').IntegrationGroup[] = [
       { name: 'ВКонтакте', description: 'Чат сообщества и виджет авторизации', iconType: 'message-circle' },
       { name: 'MAX', description: 'Мессенджер: чат поддержки и боты', iconType: 'messages-square' },
       { name: 'SMS Aero', description: 'Доставка SMS с кодами авторизации и напоминаниями', iconType: 'phone' },
+      { name: 'СмИТ SMS Gateway', description: 'SMS со своих SIM-карт: телефоны-шлюзы с приложением СмИТ', iconType: 'phone' },
       { name: 'Firebase FCM', description: 'Нативные push-сообщения на iOS и Android', iconType: 'bell' },
       { name: 'SMTP / DKIM / DMARC', description: 'Почта со своего домена: счета, акты, уведомления', iconType: 'mail' },
     ],

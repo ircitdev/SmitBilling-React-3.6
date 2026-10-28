@@ -49,7 +49,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenDemo, onOpenAi }) => {
               </div>
               <div className="flex flex-col">
                 <span className="font-extrabold text-base tracking-tight text-white leading-none">
-                  СмИТ <span className="text-emerald-400">Биллинг</span> 3.7
+                  СмИТ <span className="text-emerald-400">Биллинг</span> 3.9
                 </span>
                 <span className="text-[10px] text-slate-400 font-mono tracking-wider">
                   Единая платформа · 25 модулей

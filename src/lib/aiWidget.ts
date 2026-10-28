@@ -17,6 +17,7 @@ declare global {
   interface Window {
     SmitWidget?: SmitWidgetApi;
     ymGoal?: (goal: string, params?: Record<string, unknown>) => void;
+    SmitDemoBook?: (p: { plan?: string; subscribers?: number }) => void;
   }
 }
 

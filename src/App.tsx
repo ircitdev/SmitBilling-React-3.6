@@ -365,13 +365,18 @@ export default function App() {
   };
 
   const handleOpenDemo = (
-    planName = 'Pro',
-    subscribers = 1500,
+    planName?: string,
+    subscribers?: number,
     companyName = '',
     comment = ''
   ) => {
-    setSelectedPlanForDemo(planName);
-    setSubscriberCountForDemo(subscribers);
+    // Запись на демо через виджет (public/hero-demo-sidebar.js), своё окно — запасной путь
+    if (window.SmitDemoBook) {
+      window.SmitDemoBook({ plan: planName, subscribers });
+      return;
+    }
+    setSelectedPlanForDemo(planName ?? 'Pro');
+    setSubscriberCountForDemo(subscribers ?? 1500);
     setDemoCompanyName(companyName);
     setDemoComment(comment);
     setIsDemoModalOpen(true);
@@ -559,7 +564,7 @@ export default function App() {
           onClose={() => setIsVideoModalOpen(false)}
           videoUrl={MEDIA_URLS.promoVideo}
           posterUrl={MEDIA_URLS.promoPoster}
-          title="СмИТ Биллинг 3.7 — Видеопрезентация платформы"
+          title="СмИТ Биллинг 3.9 — Видеопрезентация платформы"
         />
       </MountOnFirstOpen>
 
