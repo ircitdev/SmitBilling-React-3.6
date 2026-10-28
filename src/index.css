@@ -18,9 +18,13 @@ body:has(.fixed.inset-0.z-50) > #smit-ai-widget {
   display: none !important;
 }
 
-/* Якоря не прячутся под фиксированной шапкой (64px) */
+/* Якоря не прячутся под фиксированной шапкой (64px).
+   Плавность — для переходов по меню: страница не прыгает к секции, а
+   доезжает. Правило ниже (prefers-reduced-motion) её отключает, когда
+   человек попросил систему не анимировать. */
 html {
   scroll-padding-top: 76px;
+  scroll-behavior: smooth;
 }
 
 /* Полоса прокрутки в цветах сайта — вместо серой системной.
@@ -167,4 +171,339 @@ html {
 
 .animate-sparkle-float {
   animation: sparkleFloat 1.2s ease-out forwards;
+}
+
+/* Горизонтальной прокрутки на странице быть не должно: её создавали
+   декоративные пятна-подсветки шире экрана. Сами пятна ограничены по ширине,
+   а это правило — страховка, чтобы новый широкий элемент не сдвинул вёрстку
+   вбок. Прокрутку внутри блоков (таблицы, ленты карточек) оно не трогает. */
+html, body {
+    overflow-x: clip;
+    max-width: 100%;
+}
+
+/* Матовое стекло: плотная подложка, светлая рамка и блики по краям.
+   На размытие фона (backdrop-filter) не опираемся: оно отключается, когда у
+   любого предка есть overflow, mask или filter — а такие предки на странице
+   почти у каждой карточки, и эффект пропадал. Поэтому объём делают градиент,
+   рамка и два блика: сверху и по левому краю. Выглядит одинаково везде. */
+.glass-card {
+  position: relative;
+  background:
+    linear-gradient(160deg,
+      rgba(255, 255, 255, 0.92) 0%,
+      rgba(246, 250, 252, 0.84) 46%,
+      rgba(238, 246, 250, 0.9) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow:
+    0 10px 34px rgba(15, 23, 32, 0.1),
+    0 2px 8px rgba(15, 23, 32, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 1px 0 0 rgba(255, 255, 255, 0.7);
+  /* размытие оставляем как приятное дополнение там, где оно всё же работает */
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+}
+
+html.dark .glass-card {
+  background:
+    linear-gradient(160deg,
+      rgba(30, 41, 66, 0.92) 0%,
+      rgba(19, 28, 48, 0.86) 46%,
+      rgba(13, 20, 36, 0.92) 100%);
+  border-color: rgba(148, 163, 184, 0.24);
+  box-shadow:
+    0 12px 38px rgba(0, 0, 0, 0.46),
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Блик по верхнему краю — от него стекло читается как объём. */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent 38%),
+    radial-gradient(120% 80% at 8% 0%, rgba(255, 255, 255, 0.5), transparent 55%);
+}
+
+html.dark .glass-card::before {
+  background:
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.11), transparent 40%),
+    radial-gradient(120% 80% at 8% 0%, rgba(110, 231, 183, 0.1), transparent 58%);
+}
+
+/* Мобильное меню: стекло и плавное открытие. Раньше оно возникало рывком —
+   теперь выезжает сверху и так же уезжает обратно. */
+.nav-drawer {
+  background: rgba(2, 6, 23, 0.72);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  transform-origin: top center;
+}
+
+@keyframes navDrawerIn {
+  from { opacity: 0; transform: translateY(-12px) scaleY(0.98); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes navDrawerOut {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(-12px) scaleY(0.98); }
+}
+
+.nav-drawer-in  { animation: navDrawerIn 0.22s ease-out both; }
+.nav-drawer-out { animation: navDrawerOut 0.2s ease-in both; pointer-events: none; }
+
+/* Переключение темы: новая картинка раскрывается кругом от кнопки.
+   Стандартное перекрёстное затухание отключаем — иначе оно накладывается на
+   круг и обе темы просвечивают друг через друга. Старый слой стоит
+   неподвижно, новый растёт поверх (см. withThemeTransition в App). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) { z-index: 0; }
+::view-transition-new(root) { z-index: 1; }
+
+/* Стекло поверх заливки: для кнопок, у которых свой цвет и его нельзя терять
+   (главное действие страницы). Блик и мягкая рамка те же, что у .glass-card,
+   но фон остаётся кнопочным. */
+.glass-tint {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 8px 26px rgba(16, 122, 87, 0.28),
+              inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  overflow: hidden;
+}
+
+.glass-tint::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to bottom,
+              rgba(255, 255, 255, 0.28), transparent 46%);
+}
+
+/* Сфера первого экрана.
+   Контейнер накрывает первый экран и карточки статистики, а холст прилипает
+   к верху: при прокрутке сфера стоит на месте, пока блок не уйдёт вверх.
+   Контейнеру нельзя задавать overflow — прилипание тогда отключается. */
+.tf-holder {
+  --tf-mask: linear-gradient(to bottom, black 0%, black 55%, transparent 88%);
+  overflow: visible;
+}
+
+.tf-holder > canvas {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: block;
+}
+
+/* Бело-зелёная дымка слева поверх сферы: каркас уходит под заголовок мягко,
+   а не обрывается краем маски. */
+.tf-holder::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to right,
+              rgba(236, 253, 245, 0.85) 0%,
+              rgba(209, 250, 229, 0.45) 22%,
+              rgba(209, 250, 229, 0.12) 42%,
+              transparent 62%);
+}
+
+html.dark .tf-holder::after {
+  background: linear-gradient(to right,
+              rgba(6, 26, 20, 0.9) 0%,
+              rgba(6, 40, 30, 0.5) 24%,
+              rgba(16, 185, 129, 0.08) 46%,
+              transparent 66%);
+}
+
+@media (min-width: 640px) {
+  .tf-holder {
+    /* на десктопе сфера прижата вправо — растворяем её слева, чтобы каркас
+       не лез под заголовок */
+    --tf-mask: linear-gradient(to right, transparent, black 18%, black 100%);
+    overflow: hidden;
+  }
+
+  .tf-holder > canvas { position: static; height: 100%; }
+}
+
+/* ── Эффекты карточек ──────────────────────────────────────────────────────
+   Три класса, которые сочетаются между собой: подсветка за курсором,
+   проявляющаяся градиентная рамка и подъём карточки. Координаты курсора
+   ставит общий обработчик (smit-cards.ts) в переменные --mx/--my. */
+
+/* Подсветка следует за курсором. На телефоне курсора нет — там класс ничего
+   не делает и карточка выглядит как обычно. */
+.card-spot {
+  position: relative;
+  isolation: isolate;
+}
+
+.card-spot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(16, 185, 129, 0.16),
+    transparent 70%
+  );
+}
+
+html.dark .card-spot::after {
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(16, 185, 129, 0.26),
+    transparent 70%
+  );
+}
+
+.card-spot:hover::after,
+.card-spot:focus-within::after { opacity: 1; }
+
+/* Градиентная рамка: в покое обычная, при наведении наливается цветом.
+   Рисуется как подложка под содержимым, поэтому не сдвигает вёрстку. */
+.card-edge {
+  position: relative;
+}
+
+.card-edge::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: linear-gradient(135deg,
+              rgba(16, 185, 129, 0.9), rgba(45, 212, 191, 0.45), transparent 65%);
+  /* оставляем только рамку: заливку вырезаем маской */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+.card-edge:hover::before,
+.card-edge:focus-within::before { opacity: 1; }
+
+/* Карточка приподнимается. Тень и сдвиг небольшие: список из десятка
+   карточек при сильном подъёме начинает «плавать». */
+.card-lift {
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.card-lift:hover,
+.card-lift:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 38px rgba(15, 23, 32, 0.12);
+}
+
+html.dark .card-lift:hover,
+html.dark .card-lift:focus-within {
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+}
+
+/* Движение выключено — оставляем только смену цвета, без подъёма. */
+@media (prefers-reduced-motion: reduce) {
+  .card-lift:hover,
+  .card-lift:focus-within { transform: none; }
+}
+
+/* Уведомление о куках: приезжает снизу и так же уходит. */
+@keyframes cookieIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes cookieOut {
+  from { opacity: 1; transform: none; }
+  to   { opacity: 0; transform: translateY(16px); }
+}
+
+.cookie-in  { animation: cookieIn 0.34s cubic-bezier(.22,1,.36,1) both; }
+.cookie-out { animation: cookieOut 0.24s ease-in both; }
+
+/* На узком экране размытие фона отключаем совсем: мобильные браузеры его
+   часто игнорируют, и карточка получалась просто полупрозрачной — сквозь неё
+   просвечивал текст. Вместо размытия плотный фон: выглядит так же. */
+@media (max-width: 767.98px) {
+  .nav-drawer {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(2, 6, 23, 0.97);
+  }
+}
+
+/* Заголовок первого экрана проявляется по буквам: фраза как будто
+   набирается. Разбивку делает RevealText, здесь — само движение. */
+@keyframes rvChar {
+  from { opacity: 0; transform: translateY(0.4em) rotate(2deg); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Слово целиком: перенос строки идёт по словам, а не по буквам —
+   иначе заголовок разрывается посередине слова. */
+.rv-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.rv-char {
+  display: inline-block;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.rv-on .rv-char {
+  animation: rvChar 0.5s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+/* Бейдж над заголовком выходит следом, чуть позже текста. */
+@keyframes badgeIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+.badge-in { animation: badgeIn 0.5s cubic-bezier(.2,.7,.3,1) 0.15s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-char, .rv-on .rv-char, .badge-in { animation: none; opacity: 1; }
+}
+
+/* Первый экран выходит по очереди: заголовок по буквам (RevealText), следом
+   описание, кнопки и макет справа. Задержки подобраны так, чтобы движение
+   читалось как одна волна, а не как три независимых появления. */
+@keyframes heroFade {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.hero-fade { animation: heroFade 0.6s cubic-bezier(.2,.7,.3,1) both; }
+.hero-fade-1 { animation-delay: 0.45s; }
+.hero-fade-2 { animation-delay: 0.6s; }
+.hero-fade-3 { animation-delay: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fade { animation: none; opacity: 1; transform: none; }
 }

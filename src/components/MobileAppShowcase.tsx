@@ -30,7 +30,11 @@ export const MobileAppShowcase: React.FC = () => {
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
-              Абоненты решают все вопросы в приложении
+              Личный кабинет и Мобильное приложение
+            {/* Вторая часть — пояснение: мельче и фирменным зелёным. */}
+            <span className="block mt-1.5 text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              все вопросы в приложении
+            </span>
             </h2>
 
             <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">

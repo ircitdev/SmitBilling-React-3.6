@@ -7,8 +7,8 @@ export const PRICING_PLANS: PricingPlan[] = [
     id: 'start',
     name: 'Старт',
     description: 'Базовый биллинг + СОРМ',
-    monthlyPrice: 9900,
-    annualPrice: 99000,
+    monthlyPrice: 12500,
+    annualPrice: 125000,
     modulesIncluded: 4,
     features: [
       'Базовые модули: биллинг-ядро, интернет-доступ (FreeRADIUS), отчёты, карта сети',
@@ -24,17 +24,15 @@ export const PRICING_PLANS: PricingPlan[] = [
     id: 'pro',
     name: 'Pro',
     description: 'Полный набор для роста',
-    monthlyPrice: 24900,
-    annualPrice: 249000,
-    modulesIncluded: 14,
+    monthlyPrice: 25000,
+    annualPrice: 250000,
+    modulesIncluded: 12,
     highlighted: true,
     badge: 'Популярный выбор',
     features: [
       'Всё, что входит в «Старт»',
       'Банковские выписки',
       'Фискализация 54-ФЗ',
-      'Склад (ТМЦ и оборудование)',
-      'Поддержка и CRM / Продажи',
       'Голосовая связь',
       'IPTV и видеонаблюдение',
       'Лендинги',
@@ -47,11 +45,13 @@ export const PRICING_PLANS: PricingPlan[] = [
     id: 'business',
     name: 'Бизнес',
     description: 'Всё для среднего оператора',
-    monthlyPrice: 37900,
-    annualPrice: 379000,
+    monthlyPrice: 35000,
+    annualPrice: 350000,
     modulesIncluded: 17,
     features: [
       'Всё, что входит в «Pro»',
+      'Склад (ТМЦ и оборудование)',
+      'Поддержка и CRM / Продажи',
       'AI-ассистент',
       'IP-телефония',
       'Мультиорганизация: несколько юрлиц в одной установке',
@@ -63,8 +63,8 @@ export const PRICING_PLANS: PricingPlan[] = [
     id: 'enterprise',
     name: 'Enterprise',
     description: 'Максимум + white-label',
-    monthlyPrice: 49900,
-    annualPrice: 499000,
+    monthlyPrice: 50000,
+    annualPrice: 500000,
     modulesIncluded: 20,
     features: [
       'Всё, что входит в «Бизнес»',
@@ -588,7 +588,7 @@ export const INTEGRATION_GROUPS: import('../types').IntegrationGroup[] = [
 export const MIGRATION_SYSTEMS = [
   {
     name: 'Carbon Billing 4',
-    description: 'Структуру его базы система унаследовала — перенос идёт напрямую, без промежуточных выгрузок.',
+    description: 'Перенос идёт напрямую из базы, без промежуточных выгрузок и ручной сверки.',
     badge: 'Перенос напрямую',
   },
   {
@@ -605,5 +605,68 @@ export const MIGRATION_SYSTEMS = [
     name: 'Самописные БД и 1С',
     description: 'Разбираем вашу схему и пишем импорт под неё — так уже переносили базы из Expert Billing.',
     badge: 'Импорт под схему',
+  },
+];
+
+// Честное сравнение с двумя основными игроками рынка РФ.
+// Источник — наши разборы на portal /plan2026/compare/carbon и /lanbilling
+// (снято 04.09.2026). Там же перечислены наши пробелы: часть из них
+// вынесена сюда намеренно. Сравнение, в котором мы хороши во всём, читают
+// как рекламу и не верят ни одной строке.
+export interface CompareRow {
+  feature: string;
+  smit: 'yes' | 'no' | 'partial';
+  carbon: 'yes' | 'no' | 'partial';
+  lanbilling: 'yes' | 'no' | 'partial';
+  note?: string;
+}
+
+export const COMPARE_ROWS: CompareRow[] = [
+  {
+    feature: 'AI-агент в поддержке абонентов',
+    smit: 'yes', carbon: 'no', lanbilling: 'no',
+    note: 'Отвечает на обращения и передаёт оператору, когда не справляется',
+  },
+  {
+    feature: 'CRM с воронками и заявками',
+    smit: 'yes', carbon: 'no', lanbilling: 'no',
+    note: 'Отдельной системы под продажи и монтажи не нужно',
+  },
+  {
+    feature: 'Склад, монтажи и наряды',
+    smit: 'yes', carbon: 'no', lanbilling: 'no',
+  },
+  {
+    feature: 'Несколько юрлиц в одной установке',
+    smit: 'yes', carbon: 'no', lanbilling: 'no',
+  },
+  {
+    feature: 'Разбор банковских выписок и чеки 54-ФЗ',
+    smit: 'yes', carbon: 'partial', lanbilling: 'partial',
+    note: 'У обоих — через обмен с 1С, у нас разбирается на месте',
+  },
+  {
+    feature: 'СОРМ-3 по приказу №573',
+    smit: 'yes', carbon: 'yes', lanbilling: 'yes',
+  },
+  {
+    feature: 'Цены опубликованы на сайте',
+    smit: 'yes', carbon: 'yes', lanbilling: 'no',
+    note: 'У LANBilling — по запросу',
+  },
+  {
+    feature: 'Обмен с 1С',
+    smit: 'partial', carbon: 'yes', lanbilling: 'yes',
+    note: 'У нас выгрузка документов для бухгалтерии',
+  },
+  {
+    feature: 'Реестр российского ПО',
+    smit: 'partial', carbon: 'yes', lanbilling: 'yes',
+    note: 'Нужен для тендеров с требованием отечественного ПО — спросите нас о статусе',
+  },
+  {
+    feature: 'DPI-фильтрация по реестру РКН',
+    smit: 'no', carbon: 'yes', lanbilling: 'no',
+    note: 'У Carbon отдельный продукт; мы работаем с внешними решениями',
   },
 ];

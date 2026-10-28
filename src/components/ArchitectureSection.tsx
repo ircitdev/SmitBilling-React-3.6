@@ -1,4 +1,5 @@
 import React from 'react';
+import ShootingStarsGrid from './backgrounds/ShootingStarsGrid';
 import { Cpu, ArrowDown } from 'lucide-react';
 
 export const ArchitectureSection: React.FC = () => {
@@ -12,7 +13,11 @@ export const ArchitectureSection: React.FC = () => {
             <span>Инженерный стек</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
-            Проверенная надежность без микросервисного хаоса
+            Проверенная надёжность
+            {/* Вторая часть — пояснение: мельче и фирменным зелёным. */}
+            <span className="block mt-1.5 text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              без микросервисного хаоса
+            </span>
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Один сервер под Docker Compose: PostgreSQL 17, Redis, Celery и FreeRADIUS.
@@ -21,7 +26,8 @@ export const ArchitectureSection: React.FC = () => {
         </div>
 
         {/* Full Layered Architecture Map */}
-        <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl p-6 sm:p-10 shadow-xl">
+        <div className="relative rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl p-6 sm:p-10 shadow-xl overflow-hidden">
+          <ShootingStarsGrid />
           <div className="text-center mb-8">
             <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">
               Логическая схема распределения потоков

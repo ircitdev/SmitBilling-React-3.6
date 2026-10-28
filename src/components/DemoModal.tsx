@@ -553,10 +553,10 @@ export const DemoModal: React.FC<DemoModalProps> = ({
                     onChange={(e) => setFormData({ ...formData, selectedPlan: e.target.value })}
                     className={`${inputBase} ${inputOk} cursor-pointer`}
                   >
-                    <option value="Старт">Старт (9 900 ₽/мес)</option>
-                    <option value="Pro">Pro (24 900 ₽/мес)</option>
-                    <option value="Бизнес">Бизнес (37 900 ₽/мес)</option>
-                    <option value="Enterprise">Enterprise (49 900 ₽/мес)</option>
+                    <option value="Старт">Старт (12 500 ₽/мес)</option>
+                    <option value="Pro">Pro (25 000 ₽/мес)</option>
+                    <option value="Бизнес">Бизнес (35 000 ₽/мес)</option>
+                    <option value="Enterprise">Enterprise (50 000 ₽/мес)</option>
                     <option value="Индивидуальный">Индивидуальный набор</option>
                     {!['Старт', 'Pro', 'Бизнес', 'Enterprise', 'Индивидуальный'].includes(formData.selectedPlan) && (
                       <option value={formData.selectedPlan}>{formData.selectedPlan}</option>

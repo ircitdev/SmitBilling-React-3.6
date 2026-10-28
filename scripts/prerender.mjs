@@ -94,6 +94,9 @@ await page.waitForTimeout(1500);
 const html = await page.evaluate(() => {
   // Модалки и всплывающие панели в статическую разметку не нужны.
   document.querySelectorAll('[role="dialog"], .fixed.inset-0').forEach((el) => el.remove());
+  // Занавес перехода страница добавляет себе сама при загрузке. Если запечь
+  // его сюда, на готовой странице окажется два занавеса вместо одного.
+  document.querySelectorAll('.sptr, .sptr-mark').forEach((el) => el.remove());
   return '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
 });
 

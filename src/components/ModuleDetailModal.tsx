@@ -25,6 +25,61 @@ interface ModuleDetailModalProps {
   onOpenDemo?: (moduleName?: string) => void;
 }
 
+/**
+ * Список изменений версии.
+ *
+ * С сервера changelog приходит строками: часть начинается с маркера («•» или
+ * «—»), иногда первая строка — вводная фраза без маркера. Раньше всё это
+ * выводилось одним абзацем: переносы в HTML схлопываются, и маркеры оказывались
+ * посреди текста сплошной простынёй. Разбираем на заголовок и список.
+ */
+function ChangelogBody({ text }: { text: string }) {
+  const lines = (text || '')
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter(Boolean);
+
+  if (!lines.length) return null;
+
+  const isBullet = (l: string) => /^[•\-—–*]\s*/.test(l);
+  const strip = (l: string) => l.replace(/^[•\-—–*]\s*/, '');
+
+  // Вводная фраза: первая строка без маркера, когда дальше идёт список.
+  const lead = !isBullet(lines[0]) && lines.length > 1 ? lines[0] : null;
+  const rest = lead ? lines.slice(1) : lines;
+  const items = rest.map(strip).filter(Boolean);
+
+  // Одна строка без маркера — это просто абзац, список из неё не делаем.
+  if (!lead && items.length === 1) {
+    return (
+      <p className="text-slate-600 dark:text-slate-400 pl-5 leading-relaxed">
+        {items[0]}
+      </p>
+    );
+  }
+
+  return (
+    <div className="pl-5">
+      {lead && (
+        <p className="text-slate-700 dark:text-slate-300 font-medium mb-1.5 leading-relaxed">
+          {lead}
+        </p>
+      )}
+      <ul className="space-y-1.5">
+        {items.map((item, i) => (
+          <li key={i} className="flex gap-2 text-slate-600 dark:text-slate-400">
+            <span
+              aria-hidden="true"
+              className="mt-[0.45em] w-1 h-1 rounded-full bg-emerald-500/70 flex-shrink-0"
+            />
+            <span className="leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
   module,
   onClose,
@@ -121,7 +176,13 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
               ) : (
                 <Share2 className="w-5 h-5" />
               )}
-              {copied && <span className="text-xs font-semibold pr-0.5">Скопировано</span>}
+              {/* На телефоне подпись расталкивала ряд и сдвигала имя
+                  разработчика по центру — там остаётся один значок. */}
+              {copied && (
+                <span className="hidden sm:inline text-xs font-semibold pr-0.5">
+                  Скопировано
+                </span>
+              )}
             </button>
 
             {/* Developer name, centred above the cover */}
@@ -361,9 +422,7 @@ export const ModuleDetailModal: React.FC<ModuleDetailModalProps> = ({
                       <span>Версия {hist.version}</span>
                       <span className="text-slate-400 font-normal">({hist.date})</span>
                     </div>
-                    <p className="text-slate-600 dark:text-slate-400 pl-5">
-                      {hist.changelog}
-                    </p>
+                    <ChangelogBody text={hist.changelog} />
                   </div>
                 ))}
               </div>

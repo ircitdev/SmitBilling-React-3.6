@@ -1,4 +1,5 @@
 import React from 'react';
+import KineticGrid from './backgrounds/KineticGrid';
 import {
   DollarSign,
   Play,
@@ -19,6 +20,7 @@ interface MoneyVideoSectionProps {
 export const MoneyVideoSection: React.FC<MoneyVideoSectionProps> = ({ onOpenDemoModal }) => {
   return (
     <section id="money" className="py-14 sm:py-28 relative overflow-hidden bg-slate-900 text-white">
+      <KineticGrid />
       {/* Glow Effects */}
       <div className="absolute top-1/4 -right-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 -left-40 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -33,8 +35,9 @@ export const MoneyVideoSection: React.FC<MoneyVideoSectionProps> = ({ onOpenDemo
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-6">
-              Деньги без бухгалтера —{' '}
-              <span className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
+              Деньги без бухгалтера —
+              {/* Вторая часть — пояснение: с новой строки и мельче. */}
+              <span className="block mt-1.5 text-xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
                 за четыре минуты
               </span>
             </h2>

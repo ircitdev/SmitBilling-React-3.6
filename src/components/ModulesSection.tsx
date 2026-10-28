@@ -17,17 +17,19 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
   const [selectedCategory, setSelectedCategory] = useState<CategoryId>('all');
   // на телефоне 24 карточки — это 9 экранов; показываем первые, остальные по кнопке
   const [showAll, setShowAll] = useState(false);
-  const MOBILE_LIMIT = 8;
+  // Восемь карточек — и на телефоне, и на десктопе: каталог из 26 модулей
+  // целиком отодвигал остальную страницу далеко вниз.
+  const PREVIEW_LIMIT = 8;
 
   const categories: Array<{ id: CategoryId; label: string }> = [
-    { id: 'all', label: 'Все модули' },
+    { id: 'all', label: 'Все' },
     { id: 'core', label: 'Ядро' },
-    { id: 'network', label: 'Сеть и RADIUS' },
-    { id: 'crm', label: 'Продажи и CRM' },
-    { id: 'comms', label: 'Связь и Поддержка' },
+    { id: 'network', label: 'Сеть' },
+    { id: 'crm', label: 'Продажи' },
+    { id: 'comms', label: 'Поддержка' },
     { id: 'finance', label: 'Финансы' },
-    { id: 'gov', label: 'Госрегулирование' },
-    { id: 'media', label: 'Медиа и ТВ' },
+    { id: 'gov', label: 'Госрегуляции' },
+    { id: 'media', label: 'Медиа' },
     { id: 'platform', label: 'Платформа' },
     { id: 'operations', label: 'Эксплуатация' },
   ];
@@ -91,7 +93,11 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
             <span>Каталог {modules.length} модулей</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
-            Модульная архитектура: подключайте только нужное
+            Модульная архитектура:
+            {/* Вторая часть — пояснение, поэтому мельче и фирменным зелёным. */}
+            <span className="block mt-1.5 text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              подключайте только нужное
+            </span>
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Базовое ядро уже включает абонентскую базу и RADIUS. Любой дополнительный модуль
@@ -115,7 +121,9 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
           </div>
 
           {/* Category Pills */}
-          <div className="m-scroll flex flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-visible gap-1.5 justify-start sm:justify-center w-[calc(100%+2rem)] sm:w-auto -mx-4 px-4 sm:mx-0 sm:px-0 md:w-auto">
+          {/* Одна строка: раньше ряд переносился на вторую и разрывал шапку.
+              Если подписи всё же не влезли — ряд прокручивается вбок. */}
+          <div className="m-scroll flex flex-nowrap overflow-x-auto gap-1.5 justify-start lg:justify-center w-[calc(100%+2rem)] sm:w-auto -mx-4 px-4 sm:mx-0 sm:px-0 md:w-auto">
             {categories.map((cat) => (
               <button
                 key={cat.id}
@@ -141,8 +149,8 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
               tabIndex={0}
               onClick={() => onOpenModuleModal(mod)}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenModuleModal(mod); } }}
-              className={`group relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all cursor-pointer flex-row sm:flex-col justify-between overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-                !showAll && idx >= MOBILE_LIMIT ? 'hidden sm:flex' : 'flex'
+              className={`card-spot card-edge group relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 shadow-sm hover:shadow-xl hover:shadow-emerald-500/5 transition-all cursor-pointer flex-row sm:flex-col justify-between overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
+                !showAll && idx >= PREVIEW_LIMIT ? 'hidden' : 'flex'
               }`}
             >
               {/* Module Image Thumbnail */}
@@ -169,9 +177,15 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
                   {/* Media Indicators (Video & Shots) */}
                   <div className="absolute bottom-1.5 left-1.5 right-1.5 sm:bottom-2.5 sm:left-2.5 sm:right-2.5 flex flex-wrap items-center gap-1 sm:gap-1.5">
                     {mod.video && (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[10px] shadow-sm">
+                      <span
+                        title="Есть видео о модуле"
+                        aria-label="Есть видео о модуле"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-emerald-500 text-slate-950 font-bold text-[10px] shadow-sm"
+                      >
                         <Play className="w-2.5 h-2.5 fill-current" />
-                        <span>Видео</span>
+                        {/* На телефоне метка занимала место рядом с обложкой —
+                            оставляем значок, слово возвращается с sm. */}
+                        <span className="hidden sm:inline">Видео</span>
                       </span>
                     )}
                     {mod.shots && mod.shots.length > 0 && (
@@ -217,12 +231,12 @@ export const ModulesSection: React.FC<ModulesSectionProps> = ({ onOpenModuleModa
           ))}
         </div>
 
-        {!showAll && filteredModules.length > MOBILE_LIMIT && (
-          <div className="mt-5 sm:hidden">
+        {!showAll && filteredModules.length > PREVIEW_LIMIT && (
+          <div className="mt-5 flex justify-center">
             <button
               type="button"
               onClick={() => setShowAll(true)}
-              className="w-full py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-sm font-semibold text-slate-800 dark:text-slate-100 cursor-pointer"
+              className="w-full sm:w-auto sm:px-8 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-emerald-500/50 text-sm font-semibold text-slate-800 dark:text-slate-100 transition-colors cursor-pointer"
             >
               Показать все модули ({filteredModules.length})
             </button>

@@ -1,4 +1,5 @@
 import React from 'react';
+import ParticlesBg from './backgrounds/ParticlesBg';
 import {
   ArrowRightLeft,
   ShieldCheck,
@@ -21,6 +22,7 @@ interface MigrationSectionProps {
 export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoModal }) => {
   return (
     <section id="migrate" className="py-14 sm:py-28 relative bg-slate-50 dark:bg-slate-900/50">
+      <ParticlesBg />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
@@ -29,7 +31,11 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
             <span>Миграция без боли</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            Переезд с текущего биллинга без простоя абонентов
+            Переезд с текущего биллинга
+            {/* Вторая часть — пояснение: мельче и фирменным зелёным. */}
+            <span className="block mt-1.5 text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              без простоя
+            </span> абонентов
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
             Переносим клиентов, тарифы, лицевые счета, услуги и историю операций. Сначала на копии вашей базы — вы смотрите результат до того, как что-то переключается.
@@ -41,7 +47,7 @@ export const MigrationSection: React.FC<MigrationSectionProps> = ({ onOpenDemoMo
           {MIGRATION_SYSTEMS.map((sys) => (
             <div
               key={sys.name}
-              className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-emerald-500/40 transition-all flex flex-col justify-between"
+              className="card-lift card-spot p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm hover:border-emerald-500/40 transition-all flex flex-col justify-between"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">

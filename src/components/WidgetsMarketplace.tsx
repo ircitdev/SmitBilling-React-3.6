@@ -20,6 +20,11 @@ export const WidgetsMarketplace: React.FC = () => {
   const [selectedCat, setSelectedCat] = useState<string>('all');
   const [activeWidget, setActiveWidget] = useState<WidgetItem | null>(null);
   const [copied, setCopied] = useState(false);
+  // На десктопе показываем шесть виджетов: каталог целиком отодвигал
+  // следующие секции далеко вниз. На телефоне это лента с прокруткой —
+  // там ограничение не нужно.
+  const [showAllWidgets, setShowAllWidgets] = useState(false);
+  const WIDGET_PREVIEW = 6;
 
   // Ссылка всегда ведёт на основной домен, даже если витрина открыта на
   // промежуточном: делиться нужно рабочим адресом.
@@ -84,7 +89,11 @@ export const WidgetsMarketplace: React.FC = () => {
             <span>Маркетплейс расширений</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            Виджеты для CRM и панели биллинга
+            Виджеты для CRM
+            {/* Вторая часть — пояснение: мельче и фирменным зелёным. */}
+            <span className="block mt-1.5 text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              и панели биллинга
+            </span>
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
             Ставятся из каталога в карточку сделки или на дашборд CRM: соседи по адресу, итоги чат-ботов, воронка, источники заявок и отдача рекламы.
@@ -110,11 +119,13 @@ export const WidgetsMarketplace: React.FC = () => {
 
         {/* Grid of Widget Cards */}
         <div className="m-scroll flex sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 overflow-x-auto sm:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 sm:mx-0 sm:px-0 sm:pb-0">
-          {filteredWidgets.map((widget) => (
+          {filteredWidgets.map((widget, idx) => (
             <div
               key={widget.id}
               onClick={() => setActiveWidget(widget)}
-              className="group shrink-0 w-[85%] sm:w-auto snap-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex flex-col cursor-pointer"
+              className={`group shrink-0 w-[85%] sm:w-auto snap-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 overflow-hidden shadow-sm hover:shadow-xl hover:border-emerald-500/40 transition-all duration-300 flex-col cursor-pointer ${
+                !showAllWidgets && idx >= WIDGET_PREVIEW ? 'flex sm:hidden' : 'flex'
+              }`}
             >
               {/* Widget Cover Image */}
               <div className="relative aspect-[16/9] overflow-hidden bg-slate-950">
@@ -156,6 +167,18 @@ export const WidgetsMarketplace: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {!showAllWidgets && filteredWidgets.length > WIDGET_PREVIEW && (
+          <div className="mt-6 hidden sm:flex justify-center">
+            <button
+              type="button"
+              onClick={() => setShowAllWidgets(true)}
+              className="sm:px-8 py-3.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-emerald-500/50 text-sm font-semibold text-slate-800 dark:text-slate-100 transition-colors cursor-pointer"
+            >
+              Показать все виджеты ({filteredWidgets.length})
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Widget Detail Modal */}
@@ -179,7 +202,9 @@ export const WidgetsMarketplace: React.FC = () => {
 
             {/* Header */}
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 flex-shrink-0">
+              {/* На десктопе обложка вдвое крупнее: в окне она была
+                  значком размером с иконку и не показывала сам виджет. */}
+              <div className="w-14 h-14 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 flex-shrink-0">
                 <LiveCover
                   video={activeWidget.coverVideo}
                   image={activeWidget.cover || activeWidget.image || activeWidget.shots?.[0]}

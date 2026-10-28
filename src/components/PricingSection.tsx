@@ -28,7 +28,11 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPlan, on
             <span>Прозрачные тарифы</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
-            Лицензия по составу модулей
+            Лицензия
+            {/* Вторая часть — пояснение: мельче и фирменным зелёным. */}
+            <span className="block mt-1.5 text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              по составу модулей
+            </span>
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Цены без НДС (УСН), обновления и базовая поддержка включены. Цена не зависит от числа

@@ -1,4 +1,8 @@
 import React, { useState, useEffect, useRef, lazy, Suspense, startTransition } from 'react';
+import { CookieNotice } from './components/CookieNotice';
+import { useCardSpotlight } from './components/useCardSpotlight';
+import TopologyField from './components/backgrounds/TopologyField';
+import Reveal from './components/Reveal';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -24,6 +28,7 @@ const chunks = {
   ArchitectureSection: () => import('./components/ArchitectureSection'),
   IntegrationsSection: () => import('./components/IntegrationsSection'),
   MigrationSection: () => import('./components/MigrationSection'),
+  CompareSection: () => import('./components/CompareSection'),
   ApiExplorer: () => import('./components/ApiExplorer'),
   PricingSection: () => import('./components/PricingSection'),
   PodcastSection: () => import('./components/PodcastSection'),
@@ -49,6 +54,7 @@ const WidgetsMarketplace = lazy(() => chunks.WidgetsMarketplace().then((m) => ({
 const ArchitectureSection = lazy(() => chunks.ArchitectureSection().then((m) => ({ default: m.ArchitectureSection })));
 const IntegrationsSection = lazy(() => chunks.IntegrationsSection().then((m) => ({ default: m.IntegrationsSection })));
 const MigrationSection = lazy(() => chunks.MigrationSection().then((m) => ({ default: m.MigrationSection })));
+const CompareSection = lazy(() => chunks.CompareSection().then((m) => ({ default: m.CompareSection })));
 const ApiExplorer = lazy(() => chunks.ApiExplorer().then((m) => ({ default: m.ApiExplorer })));
 const PricingSection = lazy(() => chunks.PricingSection().then((m) => ({ default: m.PricingSection })));
 const PodcastSection = lazy(() => chunks.PodcastSection().then((m) => ({ default: m.PodcastSection })));
@@ -116,6 +122,52 @@ const hashTarget = (href: string | null) => {
 // два десятка секций держали поток на телефоне несколько секунд. Текст страницы
 // всё равно появляется целиком — и для поисковиков, и для поиска по странице.
 // Переход к якорю (из адреса или по ссылке) показывает всё сразу и доезжает до цели.
+/**
+ * Сменить тему с раскрытием круга от точки нажатия.
+ *
+ * Браузер показывает новую картинку поверх старой, а мы вырезаем её кругом,
+ * растущим от кнопки до дальнего угла экрана. Если браузер не умеет View
+ * Transitions или человек попросил не анимировать — просто меняем тему.
+ */
+function withThemeTransition(apply: () => void, origin?: { x: number; y: number }) {
+  const doc = document as Document & {
+    startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+  };
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!doc.startViewTransition || reduce) {
+    apply();
+    return;
+  }
+
+  const x = origin?.x ?? window.innerWidth / 2;
+  const y = origin?.y ?? 0;
+  // радиус до самого дальнего угла — иначе круг не накроет экран целиком
+  const r = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y),
+  );
+
+  const t = doc.startViewTransition(apply);
+  t.ready.then(() => {
+    document.documentElement.animate(
+      {
+        clipPath: [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${r}px at ${x}px ${y}px)`,
+        ],
+      },
+      {
+        duration: 480,
+        easing: 'ease-in-out',
+        pseudoElement: '::view-transition-new(root)',
+      },
+    );
+  }).catch(() => {
+    // переход мог быть прерван новым нажатием — тема всё равно применилась
+  });
+}
+
 function useStagedSections(total: number) {
   // При рендере вне браузера (prerender для поисковиков) window нет.
   const initialTarget = typeof window === 'undefined' ? '' : hashTarget(window.location.hash);
@@ -193,6 +245,23 @@ function useStagedSections(total: number) {
 }
 
 export default function App() {
+  // Плавающие кнопки показываем, когда человек ушёл ниже третьего экрана:
+  // раньше они висели поверх первого экрана с самого начала.
+  const [farEnough, setFarEnough] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setFarEnough((prev) => {
+      const now = window.scrollY > window.innerHeight * 2;
+      return now === prev ? prev : now;
+    });
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Подсветка карточек за курсором — один обработчик на страницу.
+  useCardSpotlight();
+
   // Theme state: supports 'system' | 'dark' | 'light' with automatic OS preference sync
   const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
     if (typeof window !== 'undefined') {
@@ -276,7 +345,8 @@ export default function App() {
   }, [themeMode]);
 
   // Toggle theme cycling: system -> explicit opposite -> other -> back to system
-  const handleToggleTheme = () => {
+  const handleToggleTheme = (origin?: { x: number; y: number }) => {
+    withThemeTransition(() => {
     setThemeMode((prev) => {
       if (prev === 'system') {
         // From system, switch to the opposite of current system theme
@@ -287,10 +357,11 @@ export default function App() {
         return 'system';
       }
     });
+    }, origin);
   };
 
-  const handleSetThemeMode = (mode: ThemeMode) => {
-    setThemeMode(mode);
+  const handleSetThemeMode = (mode: ThemeMode, origin?: { x: number; y: number }) => {
+    withThemeTransition(() => setThemeMode(mode), origin);
   };
 
   const handleOpenDemo = (
@@ -316,19 +387,35 @@ export default function App() {
     setSelectedModule(module);
   };
 
-  // Порядок секций на странице
+  // Порядок секций: от «что это» к «как купить и внедрить».
+  //
+  // 1. Знакомство — возможности, как выглядит, из чего собрано.
+  // 2. Деньги — что автоматизирует, сколько сэкономит, сколько стоит.
+  // 3. Внедрение — с чем сравнить, как переехать, как поднять, чем расширить.
+  // 4. Доверие — демо, подкаст, статьи, вопросы.
+  //
+  // Порядок задаётся здесь; переходы из меню идут по id секций, а не по
+  // позиции, поэтому перестановка ссылки не ломает.
   const sections: React.ReactElement[] = [
+    // ── Знакомство ────────────────────────────────────────────────────────
     // Core Architecture & Features Bento Grid
     <FeaturesBento key="features" onOpenDemoModal={() => handleOpenDemo()} />,
-    // Запуск за три шага: Docker → инфраструктура → работает
-    <HowItWorksSection key="howitworks" />,
+    // Посмотрите в действии: видеопрезентация и PDF для руководства.
+    // Раньше стояла пятнадцатой, после цен, хотя это самый быстрый способ
+    // понять продукт — подняли к началу.
+    <DemoSection key="demo" onOpenVideoModal={() => setIsVideoModalOpen(true)} />,
     // Interactive Screenshots Gallery with Category Filters
     <ScreenshotsGallery key="screenshots" />,
+    // Mobile Subscriber Experience Showcase & App Mockup
+    <MobileAppShowcase key="mobile" />,
     // Modules Catalog with Filters, Video badges and Detailed Modals
     <ModulesSection key="modules" onOpenModuleModal={handleOpenModuleModal} />,
+
+    // ── Деньги ────────────────────────────────────────────────────────────
     // Finance Automation with Video
     <MoneyVideoSection key="money" onOpenDemoModal={() => handleOpenDemo()} />,
-    // Interactive ROI & Savings Calculator
+    // Interactive ROI & Savings Calculator — сразу перед тарифами: посчитал
+    // выгоду и тут же видит цену. Раньше их разделяли шесть секций.
     <Calculator
       key="calculator"
       onSelectPlan={(plan, subs) => handleOpenDemo(plan, subs)}
@@ -338,24 +425,30 @@ export default function App() {
         void openBusinessCase({ subscribers: subs }, () => handleOpenDemo('Pro', subs));
       }}
     />,
-    // Mobile Subscriber Experience Showcase & App Mockup
-    <MobileAppShowcase key="mobile" />,
-    // Витрина виджетов для CRM и панели биллинга
-    <WidgetsMarketplace key="widgets" />,
-    // Architecture, Stack & Docker Deployment
-    <ArchitectureSection key="architecture" onOpenDemoModal={() => handleOpenDemo()} />,
-    // Граф знаний: интерактивная карта архитектуры в документации
-    <KnowledgeGraphSection key="graph" />,
-    // Ready Out-of-the-Box Integrations Catalog
-    <IntegrationsSection key="integrations" />,
-    // Migration Guide from Existing Billing Systems
-    <MigrationSection key="migrate" onOpenDemoModal={() => handleOpenDemo()} />,
-    // Developer REST API & Webhooks Console
-    <ApiExplorer key="api" />,
     // Transparent Pricing Plans
     <PricingSection key="pricing" onSelectPlan={(plan) => handleOpenDemo(plan)} />,
-    // Посмотрите в действии: видеопрезентация и PDF для руководства
-    <DemoSection key="demo" onOpenVideoModal={() => setIsVideoModalOpen(true)} />,
+
+    // ── Внедрение ─────────────────────────────────────────────────────────
+    // Сравнение — перед миграцией: сначала «с чем сравнить», потом «как
+    // переехать». Прежде звали переезжать до того, как показали разницу.
+    <CompareSection key="compare" onOpenDemoModal={() => handleOpenDemo()} />,
+    // Migration Guide from Existing Billing Systems
+    <MigrationSection key="migrate" onOpenDemoModal={() => handleOpenDemo()} />,
+    // Запуск за три шага: Docker → инфраструктура → работает. Стояло вторым,
+    // когда читатель ещё не понял, что за продукт внедряет.
+    <HowItWorksSection key="howitworks" />,
+    // Architecture, Stack & Docker Deployment
+    <ArchitectureSection key="architecture" onOpenDemoModal={() => handleOpenDemo()} />,
+    // Ready Out-of-the-Box Integrations Catalog
+    <IntegrationsSection key="integrations" />,
+    // Витрина виджетов для CRM и панели биллинга
+    <WidgetsMarketplace key="widgets" />,
+    // Developer REST API & Webhooks Console
+    <ApiExplorer key="api" />,
+
+    // ── Доверие ───────────────────────────────────────────────────────────
+    // Граф знаний: интерактивная карта архитектуры в документации
+    <KnowledgeGraphSection key="graph" />,
     // Audio Podcast for ISP Engineers and Executives
     <PodcastSection key="podcast" />,
     // Knowledge Base & Blog Articles
@@ -384,19 +477,43 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main className="relative">
-        {/* Hero Section with Live Interactive Mockup and Video Play */}
-        <Hero
-          onOpenDemoModal={() => handleOpenDemo()}
-          onOpenAiDrawer={handleOpenAiChat}
-          onOpenVideoModal={() => setIsVideoModalOpen(true)}
+        {/* Первый экран и карточки статистики под общим фоном: сфера живёт
+            здесь, а не внутри Hero, — у той секции overflow:hidden, и на
+            телефоне он обрезал сферу по высоте одного экрана.
+            Первый экран выходит сразу, не дожидаясь прокрутки. */}
+        <div className="relative">
+        <TopologyField />
+        {/* Место под робота: сцену рисует отдельный скрипт public/robot.js.
+            В React-компоненте эффект пересоздавался при каждом изменении
+            размера холста, и загрузка модели обрывалась. */}
+        <div
+          id="robot-slot"
+          aria-hidden="true"
+          className="pointer-events-none absolute right-[-2%] xl:right-[0%] bottom-[-3rem] w-[22rem] h-[28rem] xl:w-[27rem] xl:h-[34rem] z-20 hidden lg:block"
         />
+        {/* Содержимое поверх фона: сфера лежит нулевым слоем, а не
+            отрицательным — тот уходил под фон страницы и был не виден. */}
+        <div className="relative z-10">
+        <Reveal immediate>
+          <Hero
+            onOpenDemoModal={() => handleOpenDemo()}
+            onOpenAiDrawer={handleOpenAiChat}
+            onOpenVideoModal={() => setIsVideoModalOpen(true)}
+          />
+        </Reveal>
 
-        {/* Real-time Telemetry & Stats Bar */}
+        {/* Real-time Telemetry & Stats Bar.
+            Сфера первого экрана держится до карточек со статистикой: её
+            контейнер накрывает оба блока, поэтому она перестаёт двигаться
+            ровно здесь, а не по отмеренной на глаз высоте. */}
         <StatsBar />
+        </div>
+        </div>
 
+        {/* Секции выходят по мере приближения к экрану — см. Reveal. */}
         {sections.slice(0, shownSections).map((section) => (
           <Suspense key={section.key} fallback={null}>
-            {section}
+            <Reveal>{section}</Reveal>
           </Suspense>
         ))}
         {/* пока секции появляются, страница не обрывается сразу за первым экраном */}
@@ -413,8 +530,14 @@ export default function App() {
         </Suspense>
       )}
 
-      {/* Кнопка видео — над круглой кнопкой AI-виджета (она в правом нижнем углу) */}
-      <div className="fixed bottom-24 right-6 z-40 flex flex-col items-end gap-2.5">
+      {/* Кнопка видео — над круглой кнопкой AI-виджета (она в правом нижнем
+          углу). Появляется не сразу: на первом экране свои кнопки, и ещё
+          одна поверх них только мешает. */}
+      <div
+        className={`fixed bottom-24 right-6 z-40 flex flex-col items-end gap-2.5 transition-all duration-500 ${
+          farEnough ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'
+        }`}
+      >
         {/* Floating Quick Video Button */}
         <button
           onClick={() => setIsVideoModalOpen(true)}
@@ -469,6 +592,9 @@ export default function App() {
           onClose={() => setIsDemoModalOpen(false)}
         />
       </MountOnFirstOpen>
+      {/* Уведомление о куках — появляется через минуту. */}
+      <CookieNotice />
+
     </div>
   );
 }

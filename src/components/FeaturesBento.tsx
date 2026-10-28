@@ -40,7 +40,7 @@ export const FeaturesBento: React.FC = () => {
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Card 1: RADIUS (Featured Wide) */}
-          <div className="lg:col-span-2 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-white via-slate-50 to-emerald-500/5 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/20 backdrop-blur-xl shadow-xl flex flex-col justify-between group hover:border-emerald-500/40 transition-all">
+          <div className="card-spot card-edge lg:col-span-2 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-white via-slate-50 to-emerald-500/5 dark:from-slate-900 dark:via-slate-900 dark:to-emerald-950/20 backdrop-blur-xl shadow-xl flex flex-col justify-between group hover:border-emerald-500/40 transition-all">
             <div>
               <div className="flex items-center justify-between mb-4">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 flex items-center justify-center border border-emerald-500/25">

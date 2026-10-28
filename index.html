@@ -124,6 +124,27 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/111523440" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Занавес при уходе со страницы: тот же, что в блоге.
+         Якорные ссылки внутри страницы он не трогает. -->
+    <!-- Прелоадер первой загрузки: показывается до остального кода,
+         поэтому подключается без defer. -->
+    <script src="/preloader.js"></script>
+    <script src="/page-transition.js" defer></script>
+    <!-- Робот в первом экране: своя сцена, вне React.
+         Карта импортов обязательна: GLTFLoader внутри себя пишет
+         import from 'three' — без карты браузер такое имя не разрешает,
+         загрузчик молча падает, и робот не появляется.
+         Файлы лежат локально: внешний CDN отвечал слишком долго. -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/vendor/three/build/three.module.js",
+          "three/": "/vendor/three/",
+          "three/addons/": "/vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="/robot.js" defer></script>
   </body>
 </html>
 

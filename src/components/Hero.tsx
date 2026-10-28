@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import RevealText from './RevealText';
 import {
   ShieldCheck,
   CheckCircle2,
@@ -28,45 +29,61 @@ export const Hero: React.FC<HeroProps> = ({
   const [activeTab, setActiveTab] = useState<'session' | 'payment' | 'ai' | 'video'>('session');
 
   return (
-    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden z-10">
+    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
       {/* Subtle radial glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Подсветка: на телефоне пятно в 600px вылезало за правый край и
+          растягивало страницу — там оно по ширине экрана. */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,100vw)] h-[600px] bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-3xl pointer-events-none -z-10" />
+
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Heading, Subheading & CTAs */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Version & Status Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 mb-6">
+            <div className="badge-in inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 dark:bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/25 mb-6">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span>Релиз 3.7: Python 3.11 · FreeRADIUS 3.2 · СОРМ-3 · AI-агент</span>
+              {/* На телефоне перечень технологий не читается и ломает строку —
+                  там остаётся только номер релиза. */}
+              <span className="sm:hidden">Релиз 3.7</span>
+              <span className="hidden sm:inline">
+                Релиз 3.7: Python 3.11 · FreeRADIUS 3.2 · СОРМ-3 · AI-агент
+              </span>
             </div>
 
             {/* Main Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12] mb-6">
+            {/* Заголовок проявляется по буквам — см. RevealText. */}
+            <RevealText as="h1" className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12] mb-6">
               Современный{' '}
               <span className="bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
                 биллинг
               </span>{' '}
-              для операторов связи — и AI, отвечающий абонентам
-            </h1>
+              для операторов связи{' '}
+              {/* Дополнение к главной мысли: меньше и мягче, чтобы в заголовке
+                  читалась иерархия, а не две равные по весу фразы. */}
+              <span className="block sm:inline text-xl sm:text-3xl lg:text-4xl font-bold text-slate-500 dark:text-slate-400 mt-1 sm:mt-0">
+                — и AI, отвечающий абонентам
+              </span>
+            </RevealText>
 
             {/* Description */}
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mb-8">
+            {/* На телефоне абзац длинный: мельче кегль и меньше отступ снизу,
+                чтобы кнопки попадали на первый экран. */}
+            <p className="hero-fade hero-fade-1 text-sm sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-2xl mb-6 sm:mb-8">
               Полный цикл телеком-провайдера на одном сервере: тарификация, RADIUS-авторизация,
               обязательный СОРМ-3, автоматический разбор банковских выписок по 54-ФЗ и AI-агент,
               закрывающий <strong>около 73% обращений абонентов</strong> без участия оператора.
             </p>
 
             {/* Primary Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3.5 w-full sm:w-auto mb-8">
+            <div className="hero-fade hero-fade-2 flex flex-wrap items-center gap-3.5 w-full sm:w-auto mb-8">
               <button
                 id="hero-demo-cta"
                 onClick={onOpenDemoModal}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-600 hover:shadow-xl hover:shadow-emerald-500/35 transition-all cursor-pointer"
+                className="glass-tint w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-base font-semibold bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25 hover:from-emerald-600 hover:to-teal-600 hover:shadow-xl hover:shadow-emerald-500/35 transition-all cursor-pointer"
               >
                 <span>Запросить демо-стенд</span>
                 <ArrowRight className="w-5 h-5" />
@@ -75,18 +92,21 @@ export const Hero: React.FC<HeroProps> = ({
               <button
                 id="hero-video-cta"
                 onClick={onOpenVideoModal}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-base font-semibold bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 shadow-sm transition-all cursor-pointer"
+                /* На телефоне стоит в одну строку со «Спросить AI»: обе
+                   кнопки по половине ширины, подпись без длительности. */
+                className="glass-card relative flex-1 sm:flex-none sm:w-auto inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-3.5 rounded-xl text-sm sm:text-base font-semibold text-slate-800 dark:text-slate-200 transition-all cursor-pointer"
               >
                 <div className="w-6 h-6 rounded-full bg-emerald-500/15 text-emerald-500 flex items-center justify-center">
                   <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                 </div>
-                <span>Видеообзор (3 мин)</span>
+                <span className="sm:hidden">Видеообзор</span>
+                <span className="hidden sm:inline">Видеообзор (3 мин)</span>
               </button>
 
               <button
                 id="hero-ai-cta"
                 onClick={onOpenAiDrawer}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-semibold bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25 transition-all cursor-pointer"
+                className="flex-1 sm:flex-none sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl text-sm font-semibold bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border border-emerald-500/25 transition-all cursor-pointer"
               >
                 <Sparkles className="w-4 h-4 text-emerald-500" />
                 <span>Спросить AI</span>
@@ -111,11 +131,11 @@ export const Hero: React.FC<HeroProps> = ({
           </div>
 
           {/* Right Column: Live Interactive Mock Console */}
-          <div className="lg:col-span-5 relative">
+          <div className="hero-fade hero-fade-3 lg:col-span-5 relative">
             {/* Ambient blur backdrop */}
             <div className="absolute -inset-1.5 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-3xl blur-xl" />
 
-            <div className="relative rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl shadow-2xl p-5 sm:p-6">
+            <div className="glass-card relative rounded-2xl shadow-2xl p-5 sm:p-6">
               {/* Window Bar */}
               <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800 mb-4">
                 <div className="flex items-center gap-2">
@@ -128,12 +148,14 @@ export const Hero: React.FC<HeroProps> = ({
                 </div>
                 <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
                   <Activity className="w-3 h-3 animate-pulse" />
-                  ONLINE
+                  {/* На телефоне подпись занимала место в узкой шапке макета —
+                      остаётся значок, смысл держит заголовок. */}
+                  <span className="hidden sm:inline">ONLINE</span>
                 </span>
               </div>
 
               {/* Mode switch tabs */}
-              <div className="grid grid-cols-4 gap-1 p-1 bg-slate-100 dark:bg-slate-800/80 rounded-lg mb-4 text-[11px] font-medium">
+              <div className="grid grid-cols-3 gap-1 p-1 bg-slate-100 dark:bg-slate-800/80 rounded-lg mb-4 text-[11px] font-medium">
                 <button
                   onClick={() => setActiveTab('session')}
                   className={`py-1.5 rounded-md transition-colors cursor-pointer ${
@@ -163,17 +185,6 @@ export const Hero: React.FC<HeroProps> = ({
                   }`}
                 >
                   AI-чат
-                </button>
-                <button
-                  onClick={() => setActiveTab('video')}
-                  className={`py-1.5 rounded-md transition-colors cursor-pointer flex items-center justify-center gap-1 ${
-                    activeTab === 'video'
-                      ? 'bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 shadow-sm font-semibold'
-                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-                  }`}
-                >
-                  <Play className="w-2.5 h-2.5 fill-current" />
-                  <span>Видео</span>
                 </button>
               </div>
 

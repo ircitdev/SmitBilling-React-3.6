@@ -1,8 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BookOpen, Calendar, Clock, ArrowRight } from 'lucide-react';
 import { BLOG_ARTICLES } from '../data/landingData';
 
+/** Список статей блога: собирается на сервере из самих страниц. */
+const POSTS_URL = '/blog/posts.json';
+
 export const BlogSection: React.FC = () => {
+  // Зафиксированный список — запасной: если файл недоступен, секция не пустеет.
+  const [articles, setArticles] = useState(BLOG_ARTICLES);
+  // Тему переключают кнопкой в шапке — следим за классом на корне.
+  const [dark, setDark] = useState(
+    typeof document !== 'undefined' &&
+    document.documentElement.classList.contains('dark'),
+  );
+
+  useEffect(() => {
+    const read = () => setDark(document.documentElement.classList.contains('dark'));
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => mo.disconnect();
+  }, []);
+
+  useEffect(() => {
+    let alive = true;
+    fetch(POSTS_URL)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((list) => {
+        if (!alive || !Array.isArray(list) || !list.length) return;
+        // файл отсортирован от свежих к старым — берём первые три
+        setArticles(list.slice(0, 3));
+      })
+      .catch(() => {
+        // блог мог быть недоступен — остаёмся на зафиксированном списке
+      });
+    return () => { alive = false; };
+  }, []);
+
   return (
     <section id="blog" className="py-14 sm:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,7 +47,11 @@ export const BlogSection: React.FC = () => {
             <span>База знаний и статьи</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-4">
-            Практика и опыт для операторов связи
+            Практика и опыт
+            {/* Вторая часть — пояснение: мельче и фирменным зелёным. */}
+            <span className="block mt-1.5 text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              для операторов связи
+            </span>
           </h2>
           <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
             Пошаговые руководства от инженеров: сдача СОРМ-3 по приказу №573, автоматизация банковских выписок и ведение картографии ВОЛС без потерь.
@@ -22,7 +60,7 @@ export const BlogSection: React.FC = () => {
 
         {/* 3 Articles Grid */}
         <div className="m-scroll flex md:grid md:grid-cols-3 gap-4 md:gap-8 overflow-x-auto md:overflow-visible snap-x snap-mandatory -mx-4 px-4 pb-2 md:mx-0 md:px-0 md:pb-0">
-          {BLOG_ARTICLES.map((article) => (
+          {articles.map((article) => (
             <a
               key={article.id}
               href={article.href}
@@ -30,8 +68,12 @@ export const BlogSection: React.FC = () => {
             >
               {/* Cover Image */}
               <div className="relative aspect-[16/10] overflow-hidden bg-slate-950">
+                {/* Обложка под тему: в тёмной — тёмная, в светлой — светлая.
+                    Тему на сайте переключают кнопкой, поэтому смотрим на класс
+                    на корне, а не на системную настройку — иначе при ручном
+                    переключении обложка осталась бы от другой темы. */}
                 <img
-                  src={article.cover}
+                  src={dark ? article.cover : (article.coverLight || article.cover)}
                   alt={article.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"

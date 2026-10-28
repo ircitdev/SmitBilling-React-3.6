@@ -222,7 +222,10 @@ export const TelecomTermTooltip: React.FC<TelecomTermTooltipProps> = ({
       {isOpen && (
         <div
           role="tooltip"
-          className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 sm:w-80 p-4 rounded-2xl border border-slate-700/80 bg-slate-900/95 backdrop-blur-xl shadow-2xl text-left animate-in fade-in zoom-in-95 duration-150 pointer-events-auto"
+          /* На телефоне окошко привязывалось к центру термина и у края экрана
+             вылезало за границу, растягивая страницу вбок. Там оно приезжает
+             снизу на всю ширину, как остальные окна; с sm — как раньше. */
+          className="fixed inset-x-3 bottom-3 z-50 w-auto p-4 rounded-2xl border border-slate-700/80 bg-slate-900/95 backdrop-blur-xl shadow-2xl text-left animate-in fade-in slide-in-from-bottom-4 duration-200 pointer-events-auto sm:absolute sm:inset-x-auto sm:bottom-full sm:left-1/2 sm:-translate-x-1/2 sm:mb-2 sm:w-80 sm:slide-in-from-bottom-0 sm:zoom-in-95"
         >
           {/* Header */}
           <div className="flex items-start justify-between gap-2 mb-2 pb-2 border-b border-slate-800">

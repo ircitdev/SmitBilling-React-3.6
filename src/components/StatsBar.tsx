@@ -1,4 +1,5 @@
 import React from 'react';
+import CountUp from './CountUp';
 import { Users, Bot, Layers, Zap } from 'lucide-react';
 
 export const StatsBar: React.FC = () => {
@@ -61,7 +62,8 @@ export const StatsBar: React.FC = () => {
                 </div>
 
                 <div className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-600 to-teal-500 dark:from-emerald-400 dark:to-teal-300 bg-clip-text text-transparent">
-                  {stat.value}
+                  {/* Число досчитывается от нуля при появлении карточки. */}
+                  <CountUp value={stat.value} />
                 </div>
                 <div className="text-sm font-semibold text-slate-800 dark:text-slate-200 mt-1">
                   {stat.label}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ParticlesBg from './backgrounds/ParticlesBg';
 import { Rocket, Terminal, Settings2, CheckCircle2 } from 'lucide-react';
 
 // «Запуск за три шага» — как на прежнем billing.smit34.ru: шаги переключаются сами,
@@ -42,6 +43,7 @@ export const HowItWorksSection: React.FC = () => {
 
   return (
     <section id="howitworks" className="relative py-14 sm:py-28 z-10">
+      <ParticlesBg />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 mb-4">
@@ -73,7 +75,7 @@ export const HowItWorksSection: React.FC = () => {
                   aria-selected={on}
                   aria-controls="hiw-panel"
                   onClick={() => setActive(i)}
-                  className={`text-left p-5 rounded-2xl border transition-all cursor-pointer ${
+                  className={`card-spot text-left p-5 rounded-2xl border transition-all cursor-pointer ${
                     on
                       ? 'border-emerald-500/50 bg-white dark:bg-slate-900 shadow-lg shadow-emerald-500/10'
                       : 'border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/50 hover:border-emerald-500/30'

@@ -185,7 +185,11 @@ export const Calculator: React.FC<CalculatorProps> = ({
             <span>Калькулятор окупаемости и 5-летней выгоды</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
-            Экономика внедрения и динамика ROI на 5 лет
+            Экономика внедрения
+            {/* Вторая часть — пояснение: мельче и фирменным зелёным. */}
+            <span className="block mt-1.5 text-xl sm:text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+              и динамика ROI на 5 лет
+            </span>
           </h2>
           <p className="text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
             Укажите размер абонентской базы. Интерактивная модель рассчитает окупаемость,
